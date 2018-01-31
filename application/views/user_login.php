@@ -37,26 +37,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="card-body">
               <h1>Login</h1>
               <p class="text-muted">Masuk menggunakan akun</p>
+              <?php
+                if (isset($logout_message)) {
+                echo "<div class='message'>";
+                echo $logout_message;
+                echo "</div>";
+                }
+              ?>
+              <?php
+                if (isset($message_display)) {
+                echo "<div class='message'>";
+                echo $message_display;
+                echo "</div>";
+                }
+              ?>
+              <?php echo form_open('User_login/user_login_process'); ?>
+              <?php
+                echo "<div class='error_msg'>";
+                if (isset($error_message)) {
+                echo $error_message;
+                }
+                echo validation_errors();
+                echo "</div>";
+              ?>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="icon-user"></i></span>
                 </div>
-                <input type="text" class="form-control" placeholder="Nim">
+                <input type="text" class="form-control" name="nim" id="nim" placeholder="NIM">
               </div>
               <div class="input-group mb-4">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="icon-lock"></i></span>
                 </div>
-                <input type="password" class="form-control" placeholder="Password">
+                <input type="password" name="password" id="password" class="form-control" placeholder="Password">
               </div>
               <div class="row">
                 <div class="col-6">
-                  <button type="button" class="btn btn-primary px-4">Login</button>
+                  <input type="submit" name="submit"  value="Login" class="btn btn-primary px-4"></button>
                 </div>
                 <div class="col-6 text-right">
                   <button type="button" class="btn btn-link px-0">Lupa Password?</button>
                 </div>
               </div>
+              <?php echo form_close(); ?>
             </div>
           </div>
           <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">

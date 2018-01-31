@@ -43,7 +43,7 @@ class Register extends CI_Controller
                 'required'      => 'Mohon isi %s.',
                 'numeric'      => 'Format NIM hanya angka.',
                 'is_unique'     => '%s sudah digunakan.',
-                'min_length'     => 'Jumlah digit NIM kurang.',
+                'min_length'     => 'Jumlah digit NIM kurang dari format.',
                 'max_length'     => 'Jumlah digit NIM melebihi format.',
         )
     );

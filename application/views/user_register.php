@@ -111,7 +111,7 @@
           </div>
           <div class="card-footer p-4">
             <div class="row">
-              <td align="center">Already have an account? <a href="auth/login/checkout">Login here</a></td>
+              <td align="left">Sudah Punya akun? <a href="<?php echo site_url('User_login'); ?>">Login disini</a></td>
             </div>
           </div>
 
@@ -126,7 +126,6 @@
   <script src="<?php echo base_url(); ?>assets/node_modules/jquery/dist/jquery.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/node_modules/popper.js/dist/umd/popper.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-
   <script type="text/javascript" src="<?php echo base_url(); ?>assets/src/js/jquery.backstretch.min.js"></script>
   <script>
       $.backstretch("<?php echo base_url(); ?>assets/src/img/dekanat.jpg", {speed: 500});
