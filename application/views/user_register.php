@@ -32,38 +32,83 @@
         <div class="card mx-4">
           <div class="card-body p-4">
             <h1>Register</h1>
-            <p class="text-muted">Create your account</p>
+            <p class="text-muted">Buat Akun Baru</p>
+            <?php echo form_open("register");?>
+
+            <?php echo form_error('namalengkap'); ?>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-user"></i></span>
               </div>
-              <input type="text" class="form-control" placeholder="Username">
+              <input type="text" class="form-control" name="namalengkap" value="<?php echo set_value('namalengkap'); ?>" placeholder="Nama Lengkap" size="50" />
             </div>
 
+            <?php echo form_error('jurusan'); ?>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-user"></i></span>
+              </div>
+              <!-- <select id="jurusan" name="jurusan" class="form-control">
+                <option <?php echo form_dropdown('jurusan', $jurusan, set_value('jurusan'));?>
+              </select> -->
+              <select id="jurusan" name="jurusan" class="form-control">
+                <option value="">Departemen/Jurusan</option>
+                <option value="1">Matematika</option>
+                <option value="2">Biologi</option>
+                <option value="3">Kimia</option>
+                <option value="4">Fisika</option>
+                <option value="5">Statistika</option>
+                <option value="6">informatika</option>
+              </select>
+            </div>
+
+            <?php echo form_error('nim'); ?>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-user"></i></span>
+              </div>
+              <input type="text" class="form-control" name="nim" value="<?php echo set_value('nim'); ?>" placeholder="Nomor Induk Mahasiswa (NIM)" size="14"/>
+            </div>
+
+            <?php echo form_error('email'); ?>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text">@</span>
               </div>
-              <input type="text" class="form-control" placeholder="Email">
+              <input type="text" class="form-control" name="email" value="<?php echo set_value('email'); ?>" placeholder="Email" size="50"/>
             </div>
 
+            <?php echo form_error('password'); ?>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-lock"></i></span>
               </div>
-              <input type="password" class="form-control" placeholder="Password">
+              <input type="text" class="form-control" name="password" value="<?php echo set_value('password'); ?>" placeholder="Password" size="50" />
             </div>
 
-            <div class="input-group mb-4">
+            <?php echo form_error('passwordconf'); ?>
+            <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-lock"></i></span>
               </div>
-              <input type="password" class="form-control" placeholder="Repeat password">
+              <input type="text" class="form-control" name="passwordconf" value="<?php echo set_value('password'); ?>" placeholder="Ulangi Password" size="50" />
             </div>
 
-            <button type="button" class="btn btn-block btn-success">Create Account</button>
+            <div class="input-group mb-3">
+              <input type="checkbox" id="agree" name="agree" value="agree"><p style="margin-left:5px; margin-top:-5px">
+                 Saya menyetujui segala ketentuan terkait keaslian pengisian data</p>
+            </div>
+
+
+
+            <div><input type="submit" value="Submit" class="btn btn-block btn-success"></div>
           </div>
-          
+          <div class="card-footer p-4">
+            <div class="row">
+              <td align="center">Already have an account? <a href="auth/login/checkout">Login here</a></td>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
