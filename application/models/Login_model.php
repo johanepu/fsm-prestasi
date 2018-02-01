@@ -41,6 +41,23 @@ Class Login_model extends CI_Model {
     }
   }
 
+  public function login_user($nim, $password){
+
+    $this->db->select('*');
+    $this->db->from('users');
+    $this->db->where('nim',$nim);
+    $this->db->where('password',$password);
+
+    if($query=$this->db->get())
+    {
+        $user_login =  $query->row_array();
+        return $user_login;
+    }
+    else{
+      return false;
+    }
+  }
+
 // Read data from database to show data in admin page
   public function read_user_information($nim) {
 

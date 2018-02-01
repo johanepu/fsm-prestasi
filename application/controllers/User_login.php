@@ -29,32 +29,6 @@ parent::__construct();
 		$this->load->view('user_register');
 	}
 
-// Validate and store registration data in database
-// public function new_user_registration() {
-
-// Check validation for user input in SignUp form
-// $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
-// $this->form_validation->set_rules('email_value', 'Email', 'trim|required|xss_clean');
-// $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
-// 	if ($this->form_validation->run() == FALSE) {
-// 		$this->load->view('registration_form');
-// 		} else {
-// 			$data = array(
-// 				'user_name' => $this->input->post('username'),
-// 				'user_email' => $this->input->post('email_value'),
-// 				'user_password' => $this->input->post('password')
-// 			);
-// 		$result = $this->login_database->registration_insert($data);
-// 		if ($result == TRUE) {
-// 			$data['message_display'] = 'Registration Successfully !';
-// 			$this->load->view('login_form', $data);
-// 		} else {
-// 			$data['message_display'] = 'Username already exist!';
-// 			$this->load->view('registration_form', $data);
-// 		}
-// 	}
-// }
-
 // Check for user login process
 public function user_login_process() {
 
@@ -78,7 +52,7 @@ public function user_login_process() {
 
 	if ($this->form_validation->run() == FALSE) {
 		if(isset($this->session->userdata['logged_in'])){
-		$this->load->view('user_home');
+			redirect('User_home', 'refresh');
 		}else{
 			$this->load->view('user_login');
 		}
@@ -87,25 +61,49 @@ public function user_login_process() {
 		'nim' => $this->input->post('nim'),
 		'password' => $this->input->post('password')
 		);
-		$result = $this->Login_model->login($data);
-		if ($result == TRUE) {
-			$nim = $this->input->post('nim');
-			$result = $this->Login_model->read_user_information($nim);
-				if ($result != false) {
-				$session_data = array(
-				'nim' => $result[0]->nim,
-				'email' => $result[0]->email,
-				);
-				// Add user data in session
-				$this->session->set_userdata('logged_in', $session_data);
-				$this->load->view('user_home');
+			$result=$this->Login_model->login_user($data['nim'],md5($data['password']));
+			// $result = $this->Login_model->login($data);
+			if($result)
+			{
+					$this->session->set_userdata('nim',$result['nim']);
+					$this->session->set_userdata('namalengkap',$result['namalengkap']);
+					$this->session->set_userdata('jurusan',$result['jurusan']);
+					$this->session->set_userdata('email',$result['email']);
+					// $sessionuser = $this->session->set_userdata('status');
+					redirect('User_home', 'refresh');
 				}
-		} else {
-			$data = array(
-			'error_message' => 'NIM atau password salah'
-			);
-			$this->load->view('user_login', $data);
-		}
+				else
+				{
+					$data = array(
+					'error_message' => 'Akun belum terdaftar'
+					);
+					$this->load->view('user_login', $data);
+				}
+		// if ($result == TRUE) {
+		// 	$nim = $this->input->post('nim');
+		// 	$result = $this->Login_model->read_user_information($nim);
+		// 		if ($result != false) {
+		// 		$session_data = array(
+		// 			'nim' => $result[0]->nim,
+		// 			'namalengkap' => $result[0]->namalengkap,
+		// 			'jurusan' => $result[0]->jurusan,
+		// 			'email' => $result[0]->email
+		// 		);
+		// 		// Add user data in session
+		// 		$this->session->set_userdata('logged_in', $session_data);
+		// 		//set session
+	  //     $this->session->set_userdata('nim',$session_data['nim']);
+	  //     $this->session->set_userdata('namalengkap',$result[0]->namalengkap);
+	  //     $this->session->set_userdata('jurusan',$result['jurusan']);
+	  //     $this->session->set_userdata('email',$result['email']);
+		// 		redirect('User_home', 'refresh');
+		// 		}
+		// } else {
+		// 	$data = array(
+		// 	'error_message' => 'NIM atau password salah'
+		// 	);
+		// 	$this->load->view('user_login', $data);
+		// }
 	}
 }
 
@@ -114,11 +112,15 @@ public function logout() {
 
 		// Removing session data
 		$sess_array = array(
-		'nim' => ''
+		'nim' => '',
+		'namalengkap' => '',
+		'jurusan' => '',
+		'email' => ''
 		);
 		$this->session->unset_userdata('logged_in', $sess_array);
+		$this->session->sess_destroy();
 		$data['message_display'] = 'Berhasil Logout';
-		$this->load->view('user_login', $data);
+		redirect('User_login', $data);
 	}
 
 }

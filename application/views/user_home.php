@@ -85,7 +85,7 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-          <img src="<?php echo base_url(); ?>assets/src/img/avatars/6.jpg" class="img-avatar" alt="<?php echo $this->session->userdata('namalengkap')?>">
+          <img src="<?php echo base_url(); ?>assets/src/img/avatars/6.jpg" class="img-avatar" alt="<?php echo $this->session->userdata('nim')?>">
         </a>
         <div class="dropdown-menu dropdown-menu-right">
           <div class="dropdown-header text-center">
