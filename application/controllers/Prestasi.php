@@ -25,4 +25,13 @@ class Prestasi extends CI_Controller {
 		$data['content'] = 'data_prestasi.php';
 		$this->load->view("user_template.php",$data);
 	}
+
+	public function addPrestasi()
+	{
+		// $this->load->view('user_home');
+		$data['content'] = 'add_prestasi.php';
+		$this->load->view("user_template.php",$data);
+	}
+
+
 }

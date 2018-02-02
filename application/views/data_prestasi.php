@@ -19,7 +19,7 @@
             <div class="card">
               <div class="card-header">
                 <i class="fa fa-align-justify"></i> Data Prestasi
-                <button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPrestasiModal" style="float: right;"><i class="fa fa-plus"></i>&nbsp; Tambah Prestasi</button>
+                <a  type="button" class="btn btn-primary" href="<?php echo site_url('addPrestasi'); ?>" style="float: right;"><i class="fa fa-plus"></i>&nbsp; Tambah Prestasi</a>
               </div>
               <div class="card-body">
                 <table class="table table-responsive-sm table-striped">
