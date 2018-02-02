@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User_home extends CI_Controller {
+class Prestasi extends CI_Controller {
 
 	public function __construct() {
 	parent::__construct();
@@ -22,7 +22,7 @@ class User_home extends CI_Controller {
 	public function index()
 	{
 		// $this->load->view('user_home');
-		$data['content'] = 'user_home.php';
+		$data['content'] = 'data_prestasi.php';
 		$this->load->view("user_template.php",$data);
 	}
 }
