@@ -92,9 +92,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="card-body text-center">
               <div>
                 <img width="180" src="<?php echo base_url(); ?>assets/src/img/logo_fsm_white.png">
-                <p>Aplikasi Perhitungan Poin Prestasi Mahasiswa
+                <h6>Aplikasi Perhitungan Poin Prestasi Mahasiswa
 Fakultas Sains dan Matematika
-Universitas Diponegoro</p>
+Universitas Diponegoro</h6>
                 <p>Belum punya akun?</p>
                 <a class="btn btn-outline-register" href="<?php echo site_url('register'); ?>"  >Buat Akun</a>
               </div>
