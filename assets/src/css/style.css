@@ -2726,6 +2726,16 @@ fieldset:disabled a.btn {
     .show > .btn-outline-secondary.dropdown-toggle:focus {
       box-shadow: 0 0 0 0.2rem rgba(164, 183, 193, 0.5); }
 
+.btn-outline-register {
+  color: #ffffff;
+  background-color: #3da6de;
+  background-image: none;
+  border-color: rgb(255, 255, 255) }
+  .btn-outline-register:hover {
+    color: #3da6de;
+    background-color: #ffffff;
+    border-color: #3da6de; }
+  
 .btn-outline-success {
   color: #4dbd74;
   background-color: transparent;

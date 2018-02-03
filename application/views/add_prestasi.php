@@ -31,9 +31,11 @@
                   </div>
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="text-input">Peringkat yang diraih</label>
-                    <div class="col-md-4">
+                    <div class="col-md-9">
                       <input type="text" id="peringkat_prestasi" name="peringkat_prestasi" class="form-control" placeholder="Misal Juara 1, Best Paper..">
                     </div>
+                  </div>
+                  <!-- <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="select1">Tipe Prestasi</label>
                     <div class="col-md-3">
                       <select id="tipe_prestasi" name="tipe_prestasi" class="form-control">
@@ -42,6 +44,19 @@
                         <option value="2">Individu</option>
                       </select>
                     </div>
+                  </div> -->
+                  <div class="form-group row">
+                    <label class="col-md-2 col-form-label">Tipe Prestasi</label>
+                    <div class="col-md-9 col-form-label">
+                      <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" type="radio" id="tipe_prestasi" value="1" name="tipe_prestasi">
+                        <label class="form-check-label" for="inline-radio1">Individu</label>
+                      </div>
+                      <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" type="radio" id="tipe_prestasi" value="2" name="tipe_prestasi">
+                        <label class="form-check-label" for="inline-radio2">Beregu/Kelompok</label>
+                      </div>
+                    </div>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="text-input">Posisi/Role</label>
@@ -49,24 +64,38 @@
                       <input type="text" id="role_prestasi" name="role_prestasi" class="form-control" placeholder="Role yang diambil misal Ketua/Anggota..">
                     </div>
                   </div>
-                  <div class="form-group row">
+                  <!-- <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="select1">Jenis Prestasi</label>
                     <div class="col-md-4">
                       <select id="jenis_prestasi" name="jenis_prestasi" class="form-control">
                         <option value="0">Pilih Jenis Prestasi</option>
                         <option value="1">Akademik</option>
                         <option value="2">Non-Akademik</option>
-                        <option value="3">Lainnya</option>
                       </select>
                     </div>
-                    <label class="col-md-2 col-form-label" for="select1">Skala Kegiatan</label>
-                    <div class="col-md-3">
+                  </div> -->
+                  <div class="form-group row">
+                    <label class="col-md-2 col-form-label">Jenis Prestasi</label>
+                    <div class="col-md-9 col-form-label">
+                      <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" type="radio" id="jenis_prestasi" value="1" name="jenis_prestasi">
+                        <label class="form-check-label" for="inline-radio1">Akademik</label>
+                      </div>
+                      <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" type="radio" id="jenis_prestasi" value="2" name="jenis_prestasi">
+                        <label class="form-check-label" for="inline-radio2">Non-Akademik</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                  <label class="col-md-2 col-form-label" for="select1">Skala Kegiatan</label>
+                  <div class="col-md-3">
                       <select id="level_prestasi" name="level_prestasi" class="form-control">
                         <option value="0">Pilih Skala Kegiatan</option>
-                        <option value="1">Regional</option>
+                        <option value="1">Lokal</option>
                         <option value="2">Nasional</option>
-                        <option value="3">Internasional</option>
-                        <option value="4">Institusi</option>
+                        <option value="3">Regional</option>
+                        <option value="4">Internasional</option>
                         <option value="5">Lainnya</option>
                       </select>
                     </div>

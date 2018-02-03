@@ -31,7 +31,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body class="app flex-row align-items-center">
   <div class="container">
     <div class="row justify-content-center">
+
       <div class="col-md-8">
+        <?php if($this->session->flashdata('status')){
+          echo $this->session->flashdata('status');
+        }
+        ?>
         <div class="card-group">
           <div class="card p-4">
             <div class="card-body">
@@ -86,9 +91,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
             <div class="card-body text-center">
               <div>
-                <h2>Register</h2>
-                <p>Klik tombol "Buat Akun" untuk membuat akun yang nantinya digunakan untuk login di sistem</p>
-                <a  href="<?php echo site_url('register'); ?>" class="btn btn-primary active mt-3" >Buat Akun</a>
+                <img width="180" src="<?php echo base_url(); ?>assets/src/img/logo_fsm_white.png">
+                <p>Aplikasi Perhitungan Poin Prestasi Mahasiswa
+Fakultas Sains dan Matematika
+Universitas Diponegoro</p>
+                <p>Belum punya akun?</p>
+                <a class="btn btn-outline-register" href="<?php echo site_url('register'); ?>"  >Buat Akun</a>
               </div>
             </div>
           </div>
