@@ -34,7 +34,13 @@
   <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="#"></a>
+  <!-- <a class="navbar-brand" href="#"></a> -->
+  <!-- <a href="<?php echo site_url('User_home'); ?>" class="logo-fsm">
+            <img src="<?php echo base_url(); ?>assets/src/img/logo fsm.png" alt="Logo" class="logo-fsm">
+        </a> -->
+  <a href="<?php echo site_url('User_home'); ?>" style="margin-left:20px; margin-right:45px"class="logo pointbtn">
+    <img width="100" src="<?php echo base_url(); ?>assets/src/img/logo_fsm.png">
+  </a>
   <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -86,9 +92,10 @@
   <?php $this->load->view('sidebar_user.php');  ?>
 <!-- End Sidebar -->
 <!-- Start Content -->
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
   <?php  $this->load->view($content);?>
 <!-- End Content -->
-//CONTENT
+</body>
 
 <footer class="app-footer">
 <span><a href="http://coreui.io">CoreUI</a> © 2018 creativeLabs.</span>

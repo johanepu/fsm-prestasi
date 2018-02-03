@@ -3952,6 +3952,17 @@ tbody.collapse.show {
   .navbar-brand:hover, .navbar-brand:focus {
     text-decoration: none; }
 
+.logo-fsm {
+  display: inline-block;
+  padding-top: 0.33594rem;
+  padding-bottom: 0.33594rem;
+  margin-right: 1rem;
+  font-size: 1.09375rem;
+  line-height: inherit;
+  white-space: nowrap; }
+  .logo-fsm:hover, .logo-fsm:focus {
+    text-decoration: none; }
+
 .navbar-nav {
   display: -ms-flexbox;
   display: flex;
@@ -10370,7 +10381,19 @@ base-chart.chart {
     padding: 0.5rem 1rem;
     margin-right: 0;
     background-color: #fff;
-    background-image: url("../img/logo.png");
+    /* background-image: url("../img/logo fsm.png"); */
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 70px auto;
+    border-bottom: 1px solid #a4b7c1; }
+  .app-header.navbar .logo-fsm {
+    display: inline-block;
+    width: 155px;
+    height: 55px;
+    padding: 0.5rem 1rem;
+    margin-right: 0;
+    background-color: #fff;
+    /* background-image: url("../img/logo fsm.png"); */
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 70px auto;
@@ -12367,6 +12390,13 @@ app-root {
 
 @media (max-width: 991.98px) {
   .app-header.navbar {
+    position: fixed !important;
+    z-index: 1020;
+    width: 100%;
+    text-align: center;
+    background-color: #fff;
+    border-bottom: 1px solid #a4b7c1; }
+  .app-header.logo-fsm {
     position: fixed !important;
     z-index: 1020;
     width: 100%;
