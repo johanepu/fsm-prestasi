@@ -22,17 +22,22 @@
                 Data Prestasi
               </div>
               <div class="card-body">
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+
+
+                  <?php echo form_open("addPrestasi");?>
+
+                  <?php echo form_error('nama_prestasi'); ?>
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="text-input">Nama Kegiatan</label>
                     <div class="col-md-9">
-                      <input type="text" id="nama_prestasi" name="nama_prestasi" class="form-control" placeholder="Masukkan nama kegiatan">
+                      <input type="text" id="nama_prestasi" name="nama_prestasi" class="form-control" value="<?php echo set_value('nama_prestasi'); ?>" placeholder="Masukkan nama kegiatan">
                     </div>
                   </div>
+                  <?php echo form_error('peringkat_prestasi'); ?>
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="text-input">Peringkat yang diraih</label>
                     <div class="col-md-9">
-                      <input type="text" id="peringkat_prestasi" name="peringkat_prestasi" class="form-control" placeholder="Misal Juara 1, Best Paper..">
+                      <input type="text" id="peringkat_prestasi" name="peringkat_prestasi" class="form-control" value="<?php echo set_value('peringkat_prestasi'); ?>" placeholder="Misal Juara 1, Best Paper..">
                     </div>
                   </div>
                   <!-- <div class="form-group row">
@@ -45,23 +50,25 @@
                       </select>
                     </div>
                   </div> -->
+                  <?php echo form_error('tipe_prestasi'); ?>
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label">Tipe Prestasi</label>
                     <div class="col-md-9 col-form-label">
                       <div class="form-check form-check-inline mr-1">
-                        <input class="form-check-input" type="radio" id="tipe_prestasi" value="1" name="tipe_prestasi">
+                        <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="individu" value="1" name="tipe_prestasi">
                         <label class="form-check-label" for="inline-radio1">Individu</label>
                       </div>
                       <div class="form-check form-check-inline mr-1">
-                        <input class="form-check-input" type="radio" id="tipe_prestasi" value="2" name="tipe_prestasi">
+                        <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="beregu" value="2" name="tipe_prestasi">
                         <label class="form-check-label" for="inline-radio2">Beregu/Kelompok</label>
                       </div>
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="text-input">Posisi/Role</label>
-                    <div class="col-md-9">
-                      <input type="text" id="role_prestasi" name="role_prestasi" class="form-control" placeholder="Role yang diambil misal Ketua/Anggota..">
+                  <?php echo form_error('role_prestasi'); ?>
+                  <div class="form-group row" >
+                    <label class="col-md-2 col-form-label" id="role_label" style="display:none" for="text-input">Posisi/Role</label>
+                    <div class="col-md-9" id="role_input" style="display:none">
+                      <input type="text" id="role_prestasi" name="role_prestasi" class="form-control" value="<?php echo set_value('role_prestasi'); ?>" placeholder="Role yang diambil misal Ketua/Anggota..">
                     </div>
                   </div>
                   <!-- <div class="form-group row">
@@ -74,6 +81,7 @@
                       </select>
                     </div>
                   </div> -->
+                  <?php echo form_error('jenis_prestasi'); ?>
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label">Jenis Prestasi</label>
                     <div class="col-md-9 col-form-label">
@@ -87,6 +95,7 @@
                       </div>
                     </div>
                   </div>
+                  <?php echo form_error('level_prestasi'); ?>
                   <div class="form-group row">
                   <label class="col-md-2 col-form-label" for="select1">Skala Kegiatan</label>
                   <div class="col-md-3">
@@ -100,17 +109,18 @@
                       </select>
                     </div>
                   </div>
+                  <?php echo form_error('deskripsi_prestasi'); ?>
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="textarea-input">Deskripsi Pencapaian</label>
                     <div class="col-md-9">
-                      <textarea id="textarea-input" name="textarea-input" rows="9" class="form-control" placeholder="Ceritakan lebih lanjut mengenai pencapaian anda.."></textarea>
+                      <textarea id="deskripsi_prestasi" name="deskripsi_prestasi" rows="9" class="form-control" value="<?php echo set_value('deskripsi_prestasi'); ?>" placeholder="Ceritakan lebih lanjut mengenai pencapaian anda.."></textarea>
                     </div>
                   </div>
 
-                </form>
+
               </div>
               <div class="card-footer" >
-                <button type="submit" style="float: right;" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Simpan</button>
+                <input type="submit" value="Submit" style="float: right;" class="btn btn-sm btn-primary">
                 <button type="reset" style="float: right; margin-right: 10px" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
               </div>
             </div>
@@ -143,3 +153,17 @@
   </main>
 
 </body>
+
+<script type="text/javascript">
+
+function TipeCheck() {
+    if (document.getElementById('beregu').checked) {
+        document.getElementById('role_label').style.display = 'block';
+        document.getElementById('role_input').style.display = 'block';
+    } else {
+        document.getElementById('role_label').style.display = 'none';
+        document.getElementById('role_input').style.display = 'none';
+    }
+  }
+
+</script>

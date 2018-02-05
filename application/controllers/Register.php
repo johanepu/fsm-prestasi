@@ -23,7 +23,7 @@ class Register extends CI_Controller
         'namalengkap', 'Nama Lengkap',
         'required|trim|alpha_numeric_spaces|is_unique[users.namalengkap]',
         array(
-                'required'      => 'Anda belum memilih %s.',
+                'required'      => 'Anda belum mengisi %s.',
                 'alpha_numeric_spaces'      => '%s tidak boleh berisi karakter lain',
                 'is_unique'     => 'Nama sudah digunakan.',
         )

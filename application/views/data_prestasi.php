@@ -1,5 +1,3 @@
-
-
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
   <!-- Main content -->
   <main class="main">
@@ -19,59 +17,34 @@
             <div class="card">
               <div class="card-header">
                 <i class="fa fa-align-justify"></i> Data Prestasi
-                <a  type="button" class="btn btn-primary" href="<?php echo site_url('addPrestasi'); ?>" style="float: right;"><i class="fa fa-plus"></i>&nbsp; Tambah Prestasi</a>
+                <a  type="button" class="btn btn-primary" href="<?php echo site_url('Prestasi/addPrestasi'); ?>" style="float: right;"><i class="fa fa-plus"></i>&nbsp; Tambah Prestasi</a>
               </div>
               <div class="card-body">
                 <table class="table table-responsive-sm table-striped">
                   <thead>
                     <tr>
-                      <th>Username</th>
-                      <th>Date registered</th>
-                      <th>Role</th>
-                      <th>Status</th>
+                      <th>No.</th>
+                      <th>Nama Prestasi</th>
+                      <th>Peringkat</th>
+                      <th>Jenis</th>
+                      <th>Level</th>
+                      <th>Tanggal Ubahan</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>Yiorgos Avraamu</td>
-                      <td>2012/01/01</td>
-                      <td>Member</td>
-                      <td>
-                        <span class="badge badge-success">Active</span>
-                      </td>
+                  <tbody id="tabel-prestasi">
+                    <?php
+                    $no = 1;
+                    foreach($prestasi as $p){
+                    ?>
+                    <tr id="<?php echo $p->id_prestasi?>">
+                      <td><?php echo $no++?></td>
+                      <td title="Data ini tidak dapat di ubah" ><?php echo $p->nama_prestasi; ?></td>
+                      <td title="Data ini tidak dapat di edit" ><?php echo $p->peringkat_prestasi; ?></td>
+                      <td title="Data ini tidak dapat di edit" ><?php echo $p->jenis_prestasi; ?></td>
+                      <td title="Data ini tidak dapat di edit" ><?php echo $p->level_prestasi; ?></td>
+                      <td title="Data ini tidak dapat di edit" ><?php echo $p->date_modified; ?></td>
                     </tr>
-                    <tr>
-                      <td>Avram Tarasios</td>
-                      <td>2012/02/01</td>
-                      <td>Staff</td>
-                      <td>
-                        <span class="badge badge-danger">Banned</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Quintin Ed</td>
-                      <td>2012/02/01</td>
-                      <td>Admin</td>
-                      <td>
-                        <span class="badge badge-secondary">Inactive</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Enéas Kwadwo</td>
-                      <td>2012/03/01</td>
-                      <td>Member</td>
-                      <td>
-                        <span class="badge badge-warning">Pending</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Agapetus Tadeáš</td>
-                      <td>2012/01/21</td>
-                      <td>Staff</td>
-                      <td>
-                        <span class="badge badge-success">Active</span>
-                      </td>
-                    </tr>
+                    <?php }?>
                   </tbody>
                 </table>
                 <ul class="pagination">
@@ -114,5 +87,4 @@
     </div>
     <!-- /.conainer-fluid -->
   </main>
-
 </body>
