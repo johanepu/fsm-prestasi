@@ -28,6 +28,10 @@
   <link type="text/css" href="<?php echo base_url(); ?>assets/src/css/style.css" rel="stylesheet">
   <!-- Styles required by this views -->
 
+  <!-- Include Date Range Picker -->
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/bootstrap-daterangepicker-master/daterangepicker.css" />
+
+
 </head>
 
 <header class="app-header navbar">
@@ -109,8 +113,8 @@
 <script src="<?php echo base_url(); ?>assets/node_modules/pace-progress/pace.min.js"></script>
 
 <!-- Plugins and scripts required by all views -->
-<script src="<?php echo base_url(); ?>assets/node_modules/chart.js/dist/Chart.min.js"></script>
-
+<script src="<?php echo base_url(); ?>assets/bootstrap-daterangepicker-master/daterangepicker.js"></script>
+<script src="<?php echo base_url(); ?>assets/bootstrap-daterangepicker-master/moment.min.js"></script>
 <!-- CoreUI main scripts -->
 
 <script src="<?php echo base_url(); ?>assets/src/js/app.js"></script>

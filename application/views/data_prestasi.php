@@ -29,7 +29,7 @@
                       <th>Tipe Prestasi</th>
                       <th>Jenis</th>
                       <th>Level</th>
-                      <th>Tanggal Ubahan</th>
+                      <th>Tanggal Kegiatan</th>
                     </tr>
                   </thead>
                   <tbody id="tabel-prestasi">
@@ -69,7 +69,7 @@
                           echo '<span class="label label-warning label-mini">Internasional</span>';
                       }
                       ?></td>
-                      <td title="Data ini tidak dapat di edit" ><?php echo $p->date_modified; ?></td>
+                      <td title="Data ini tidak dapat di edit" ><?php echo $p->tgl_prestasi_start; ?></td>
                     </tr>
                     <?php }?>
                   </tbody>

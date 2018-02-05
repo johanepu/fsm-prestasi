@@ -116,13 +116,22 @@
                   <?php echo form_error('level_prestasi'); ?>
 
                   <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="textarea-input">Deskripsi Pencapaian</label>
-                    <div class="col-md-9">
-                      <div class='input-group date' id='datetimepicker1'>
-                          <input type='text' class="form-control" />
-                          <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                          </span>
+                    <label class="col-md-2 col-form-label" for="textarea-input">Tanggal Kegiatan</label>
+                      <div class="col-md-3">
+                        <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fa fa-calendar-check-o"></i></span>
+                        </div>
+                        <input id="date_start" name="date_start" class="form-control" value="<?php echo set_value('date_start'); ?>" type="date">
+                      </div>
+                      </div>
+                    <label class="col-md-2 col-form-label" for="textarea-input">Tanggal Selesai</label>
+                      <div class="col-md-3">
+                        <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
+                        </div>
+                        <input id="date_end" name="date_end" class="form-control" value="<?php echo set_value('date_end'); ?>" type="date">
                       </div>
                     </div>
                   </div>
@@ -174,15 +183,14 @@
 
 <script type="text/javascript">
 
-function TipeCheck() {
-    if (document.getElementById('beregu').checked) {
-        document.getElementById('role_label').style.display = 'block';
-        document.getElementById('role_input').style.display = 'block';
-    } else {
-        document.getElementById('role_label').style.display = 'none';
-        document.getElementById('role_input').style.display = 'none';
+  function TipeCheck() {
+      if (document.getElementById('beregu').checked) {
+          document.getElementById('role_label').style.display = 'block';
+          document.getElementById('role_input').style.display = 'block';
+      } else {
+          document.getElementById('role_label').style.display = 'none';
+          document.getElementById('role_input').style.display = 'none';
+      }
     }
-  }
-
 
 </script>

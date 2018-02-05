@@ -130,6 +130,23 @@ class Prestasi extends CI_Controller {
 		);
 
 		$this->form_validation->set_rules(
+				'date_start', 'Tanggal Kegiatan',
+				'required',
+				array(
+								'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+								'
+				)
+		);
+
+		$this->form_validation->set_rules(
 				'deskripsi_prestasi', 'Deskripsi pencapaian',
 				'required',
 				array(
@@ -170,6 +187,8 @@ class Prestasi extends CI_Controller {
 				'level_prestasi'    		=> $level_prestasi,
 				'deskripsi_prestasi'    		=> $this->input->post('role_prestasi'),
 				'reward_poin'    		=> $reward_point,
+				'tgl_prestasi_start'	=> $this->input->post('date_start'),
+				'tgl_prestasi_end'	=> $this->input->post('date_end'),
 				'date_modified'	=> date('Y-m-d H:i:s')
 			);
 		}
