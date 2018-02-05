@@ -26,20 +26,22 @@
 
                   <?php echo form_open("addPrestasi");?>
 
-                  <?php echo form_error('nama_prestasi'); ?>
+
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="text-input">Nama Kegiatan</label>
                     <div class="col-md-9">
                       <input type="text" id="nama_prestasi" name="nama_prestasi" class="form-control" value="<?php echo set_value('nama_prestasi'); ?>" placeholder="Masukkan nama kegiatan">
                     </div>
                   </div>
-                  <?php echo form_error('peringkat_prestasi'); ?>
+                  <?php echo form_error('nama_prestasi'); ?>
+
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="text-input">Peringkat yang diraih</label>
                     <div class="col-md-9">
                       <input type="text" id="peringkat_prestasi" name="peringkat_prestasi" class="form-control" value="<?php echo set_value('peringkat_prestasi'); ?>" placeholder="Misal Juara 1, Best Paper..">
                     </div>
                   </div>
+                  <?php echo form_error('peringkat_prestasi'); ?>
                   <!-- <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="select1">Tipe Prestasi</label>
                     <div class="col-md-3">
@@ -50,7 +52,7 @@
                       </select>
                     </div>
                   </div> -->
-                  <?php echo form_error('tipe_prestasi'); ?>
+
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label">Tipe Prestasi</label>
                     <div class="col-md-9 col-form-label">
@@ -64,13 +66,15 @@
                       </div>
                     </div>
                   </div>
-                  <?php echo form_error('role_prestasi'); ?>
+                  <?php echo form_error('tipe_prestasi'); ?>
+
                   <div class="form-group row" >
                     <label class="col-md-2 col-form-label" id="role_label" style="display:none" for="text-input">Posisi/Role</label>
                     <div class="col-md-9" id="role_input" style="display:none">
                       <input type="text" id="role_prestasi" name="role_prestasi" class="form-control" value="<?php echo set_value('role_prestasi'); ?>" placeholder="Role yang diambil misal Ketua/Anggota..">
                     </div>
                   </div>
+                  <?php echo form_error('role_prestasi'); ?>
                   <!-- <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="select1">Jenis Prestasi</label>
                     <div class="col-md-4">
@@ -81,7 +85,7 @@
                       </select>
                     </div>
                   </div> -->
-                  <?php echo form_error('jenis_prestasi'); ?>
+
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label">Jenis Prestasi</label>
                     <div class="col-md-9 col-form-label">
@@ -95,7 +99,8 @@
                       </div>
                     </div>
                   </div>
-                  <?php echo form_error('level_prestasi'); ?>
+                  <?php echo form_error('jenis_prestasi'); ?>
+
                   <div class="form-group row">
                   <label class="col-md-2 col-form-label" for="select1">Skala Kegiatan</label>
                   <div class="col-md-3">
@@ -105,17 +110,30 @@
                         <option value="2">Nasional</option>
                         <option value="3">Regional</option>
                         <option value="4">Internasional</option>
-                        <option value="5">Lainnya</option>
                       </select>
                     </div>
                   </div>
-                  <?php echo form_error('deskripsi_prestasi'); ?>
+                  <?php echo form_error('level_prestasi'); ?>
+
+                  <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="textarea-input">Deskripsi Pencapaian</label>
+                    <div class="col-md-9">
+                      <div class='input-group date' id='datetimepicker1'>
+                          <input type='text' class="form-control" />
+                          <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="textarea-input">Deskripsi Pencapaian</label>
                     <div class="col-md-9">
                       <textarea id="deskripsi_prestasi" name="deskripsi_prestasi" rows="9" class="form-control" value="<?php echo set_value('deskripsi_prestasi'); ?>" placeholder="Ceritakan lebih lanjut mengenai pencapaian anda.."></textarea>
                     </div>
                   </div>
+                  <?php echo form_error('deskripsi_prestasi'); ?>
 
 
               </div>
@@ -165,5 +183,6 @@ function TipeCheck() {
         document.getElementById('role_input').style.display = 'none';
     }
   }
+
 
 </script>

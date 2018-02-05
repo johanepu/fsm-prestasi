@@ -26,6 +26,7 @@
                       <th>No.</th>
                       <th>Nama Prestasi</th>
                       <th>Peringkat</th>
+                      <th>Tipe Prestasi</th>
                       <th>Jenis</th>
                       <th>Level</th>
                       <th>Tanggal Ubahan</th>
@@ -40,8 +41,34 @@
                       <td><?php echo $no++?></td>
                       <td title="Data ini tidak dapat di ubah" ><?php echo $p->nama_prestasi; ?></td>
                       <td title="Data ini tidak dapat di edit" ><?php echo $p->peringkat_prestasi; ?></td>
-                      <td title="Data ini tidak dapat di edit" ><?php echo $p->jenis_prestasi; ?></td>
-                      <td title="Data ini tidak dapat di edit" ><?php echo $p->level_prestasi; ?></td>
+                      <td title="Tipe Prestasi" name="jenis_prestasi" id="jenis_prestasi">
+                      <?php
+                      if ($p->tipe_prestasi == "1") {
+                          echo '<span class="label label-success label-mini">Akademik</span>';
+                      }elseif ($p->tipe_prestasi == "2") {
+                          echo '<span class="label label-warning label-mini">Non-Akademik</span>';
+                      }
+                      ?></td>
+                      <td title="Jenis Prestasi" name="jenis_prestasi" id="jenis_prestasi">
+                      <?php
+                      if ($p->jenis_prestasi == "1") {
+                          echo '<span class="label label-success label-mini">Individu</span>';
+                      }elseif ($p->jenis_prestasi == "2") {
+                          echo '<span class="label label-warning label-mini">Beregu</span>';
+                      }
+                      ?></td>
+                      <td title="Level Prestasi" name="level_prestasi" id="level_prestasi">
+                      <?php
+                      if ($p->level_prestasi == "1") {
+                          echo '<span class="label label-success label-mini">Lokal</span>';
+                      }elseif ($p->level_prestasi == "2") {
+                          echo '<span class="label label-warning label-mini">Nasional</span>';
+                      }elseif ($p->level_prestasi == "3") {
+                          echo '<span class="label label-warning label-mini">Regional</span>';
+                      }elseif ($p->level_prestasi == "4") {
+                          echo '<span class="label label-warning label-mini">Internasional</span>';
+                      }
+                      ?></td>
                       <td title="Data ini tidak dapat di edit" ><?php echo $p->date_modified; ?></td>
                     </tr>
                     <?php }?>

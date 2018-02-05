@@ -47,7 +47,16 @@ class Prestasi extends CI_Controller {
         'peringkat_prestasi', 'Peringkat yang diraih',
         'required|trim',
         array(
-                'required'      => 'Anda belum mengisi %s.'
+                'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+								'
         )
     );
 
@@ -56,7 +65,16 @@ class Prestasi extends CI_Controller {
 				'tipe_prestasi', 'Tipe Prestasi',
 				'required',
 				array(
-								'required'      => 'Anda belum memilih %s.'
+								'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum memilih %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+								'
 				)
 		);
 
@@ -71,30 +89,77 @@ class Prestasi extends CI_Controller {
 				'jenis_prestasi', 'Jenis Prestasi',
 				'required',
 				array(
-								'required'      => 'Anda belum memilih %s.'
+								'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum memilih %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+								'
 				)
 		);
 
 		$this->form_validation->set_rules(
-				'level_prestasi', 'Level Prestasi',
+				'level_prestasi', 'Skala Kegiatan',
 				'required|callback_check_default',
 				array(
-								'required'      => 'Anda belum memilih %s.',
-								'check_default'      => 'Anda belum memilih %s.'
+								'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum memilih %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+								',
+								'check_default'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum memilih %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+								'
 				)
 		);
 
 		$this->form_validation->set_rules(
-				'deskripsi_prestasi', 'Posisi yang diambil',
+				'deskripsi_prestasi', 'Deskripsi pencapaian',
 				'required',
 				array(
-								'required'      => 'Anda belum mengisi %s.'
+								'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+								'
 				)
 		);
 
 		if ($this->form_validation->run() == true)
 		{
       date_default_timezone_set('Asia/Jakarta');
+			$level_prestasi = $this->input->post('level_prestasi');
+				if ($level_prestasi == 1) {
+					$reward_point = 2;
+				} elseif ($level_prestasi == 2) {
+					$reward_point = 3;
+				} elseif ($level_prestasi == 3) {
+					$reward_point = 4;
+				} elseif ($level_prestasi == 4) {
+					$reward_point = 5;
+				}
+
 			$data = array(
 				'nim' => $this->session->userdata('nim'),
 				'nama_prestasi' 	=> $this->input->post('nama_prestasi'),
@@ -102,8 +167,9 @@ class Prestasi extends CI_Controller {
         'tipe_prestasi'    	=> $this->input->post('tipe_prestasi'),
         'role_prestasi'    		=> $this->input->post('role_prestasi'),
 				'jenis_prestasi'    		=> $this->input->post('jenis_prestasi'),
-				'level_prestasi'    		=> $this->input->post('level_prestasi'),
+				'level_prestasi'    		=> $level_prestasi,
 				'deskripsi_prestasi'    		=> $this->input->post('role_prestasi'),
+				'reward_poin'    		=> $reward_point,
 				'date_modified'	=> date('Y-m-d H:i:s')
 			);
 		}
