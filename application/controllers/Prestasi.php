@@ -15,6 +15,9 @@ class Prestasi extends CI_Controller {
 				// Load session library
 				$this->load->library('session');
 
+				// Load pagination library
+				$this->load->library('pagination');
+
 				// Load database
 				$this->load->model('Prestasi_model');
 				}
@@ -22,11 +25,95 @@ class Prestasi extends CI_Controller {
 	public function index()
 	{
 		// $this->load->view('user_home');
-		$data['content'] = 'data_prestasi.php';
+		// $data['content'] = 'data_prestasi.php';
 		$nim = $this->session->userdata('nim');
 		$data['prestasi'] = $this->Prestasi_model->tampil_user_prestasi($nim);
-		$this->load->view("user_template.php",$data);
+		// $this->load->view("user_template.php",$data);
 
+	}
+
+	function view(){
+		$nim = $this->session->userdata('nim');
+		$where = array('nim' => $nim);
+		$jmlprestasi = $this->Prestasi_model->tampil_user_prestasi($nim);
+		$config['base_url'] = base_url('').'prestasi/';
+		$config['total_rows'] = count($jmlprestasi);
+		$config['per_page'] = 6;
+		$hal = $this->uri->segment(2);
+		$input  = $this->input->post('query');
+		if(!isset($input)){
+			$query = '';
+			$data['prestasi'] = $this->Prestasi_model->prestasi_per_page($config['per_page'], $hal, $where['nim'], $query)->result();
+			$this->pagination->initialize($config);
+			$data['content'] = 'data_prestasi.php';
+			$this->load->view("user_template.php",$data);
+		}else{
+			$output = '';
+			$query = $this->input->post('query');
+			$prestasi = $this->Prestasi_model->prestasi_per_page($config['per_page'], 0, $where['nim'], $query);
+			$prestasihasil = $prestasi->result();
+			if ($prestasi->num_rows() > 0){
+				$no = 1;
+				foreach ($prestasihasil as $detail) {
+					$output .= '<tr>';
+					$output .= '<td>';
+					$output .= '<p>'.$no++.'</p>';
+					$output .= '</td>';
+					$output .= '<td>';
+					$output .= '<p>'.$detail->nama_prestasi.'</p>';
+					$output .= '</td>';
+					$output .= '<td>';
+					$output .= '<p>'.$detail->peringkat_prestasi.'</p>';
+					$output .= '</td>';
+					$output .= '<td>';
+						if ($detail->tipe_prestasi == "1") {
+					$output .= '<span class="label label-success label-mini">Akademik</span>';
+						}elseif ($detail->tipe_prestasi == "2") {
+					$output .= '<span class="label label-warning label-mini">Non-Akademik</span>';
+					$output .= '</td>';
+					$output .= '<td>';
+						}
+						if ($detail->jenis_prestasi == "1") {
+					$output .= '<span class="label label-success label-mini">Individu</span>';
+						}elseif ($detail->jenis_prestasi == "2") {
+					$output .= '<span class="label label-warning label-mini">Beregu</span>';
+					$output .= '</td>';
+					$output .= '<td>';
+						}
+						if ($detail->jenis_prestasi == "1") {
+					$output .= '<span class="label label-success label-mini">Lokal</span>';
+						}elseif ($detail->jenis_prestasi == "2") {
+					$output .= '<span class="label label-warning label-mini">Nasional</span>';
+						}elseif ($detail->jenis_prestasi == "3") {
+					$output .= '<span class="label label-warning label-mini">Regional</span>';
+						}elseif ($detail->jenis_prestasi == "4") {
+					$output .= '<span class="label label-warning label-mini">Internasional</span>';
+						}
+					$output .= '</td>';
+					$output .= '<td>';
+					$output .= '<p>'.$detail->tgl_prestasi_start.'</p>';
+					$output .= '</td>';
+					$output .= '<td align="right">';
+					$output .= '<div class="btn-group" >';
+					$output .= '<button class="btn btn-default btn-edit2" name="btn-edit"  value="'.$detail->id_client.'" type="button">';
+					$output .= '<i class="fa fa-fw s fa-pencil"></i>Edit</button>';
+					$output .= '<button class="btn btn-default btn-delete2" value="'.$detail->id_client.'" type="button">';
+					$output .= '<i class="fa fa-fw fa-remove"></i>Delete</button>';
+					$output .= '</div>';
+					$output .= '</td>';
+					$output .= '</tr>';
+				}
+			} else {
+				$output .= '<tr>';
+				$output .= '<td>';
+				$output .= '<p>';
+				$output .= '<b>Belum ada data prestasi</b>';
+				$output .= '</p>';
+				$output .= '</td>';
+				$output .= '</tr>';
+			}
+			echo $output;
+		}
 	}
 
 	public function addPrestasi()
@@ -203,7 +290,7 @@ class Prestasi extends CI_Controller {
           <span aria-hidden="true">×</span>
         </button>
       </div> ');
-			redirect('Prestasi');
+			redirect('prestasi');
 		}
 		else
 		{

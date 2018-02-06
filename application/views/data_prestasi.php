@@ -20,6 +20,11 @@
                 <a  type="button" class="btn btn-primary" href="<?php echo site_url('Prestasi/addPrestasi'); ?>" style="float: right;"><i class="fa fa-plus"></i>&nbsp; Tambah Prestasi</a>
               </div>
               <div class="card-body">
+                <div class="row mt">
+                  <div class="form-group col-lg-12">
+                    <input type="text" class="form-control" id="cariPrestasi" placeholder="Cari Nama Kegiatan atau Prestasi Anda" >
+                  </div>
+                </div>
                 <table class="table table-responsive-sm table-striped">
                   <thead>
                     <tr>
@@ -30,6 +35,7 @@
                       <th>Jenis</th>
                       <th>Level</th>
                       <th>Tanggal Kegiatan</th>
+                      <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody id="tabel-prestasi">
@@ -70,20 +76,22 @@
                       }
                       ?></td>
                       <td title="Data ini tidak dapat di edit" ><?php echo $p->tgl_prestasi_start; ?></td>
+                      <td>
+                          <div class="btn-group" >
+                              <button class="btn btn-default btn-edit" name="btn-edit"  value="<?=$p->id_prestasi?>" type="button">
+                                  <i class="fa fa-fw s fa-pencil"></i>Edit</button>
+                              <button class="btn btn-default btn-delete" name="btn-delete" value="<?=$p->id_prestasi?>" type="button">
+                                  <i class="fa fa-fw fa-remove"></i>Delete</button>
+                          </div>
+                      </td>
                     </tr>
                     <?php }?>
                   </tbody>
+                  <tbody id="hasilCari"></tbody>
                 </table>
-                <ul class="pagination">
-                  <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                  <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">4</a></li>
-                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
+
+
+                <?php echo $this->pagination->create_links(); ?>
               </div>
             </div>
           </div>

@@ -23,4 +23,15 @@ class Prestasi_model extends CI_Model {
 		$hasil = $this->db->get();
 		return $hasil->result();
 	}
+
+	function prestasi_per_page($number,$offset, $nim, $query){
+			 $this->db->select('*');
+			 $this->db->from('user_prestasi');
+			 $this->db->where('nim', $nim);
+			 $this->db->where('(nama_prestasi LIKE "%'.$query.'%")', NULL, FALSE);
+			 $this->db->limit($number, $offset);
+			 $isi = $this->db->get();
+			 return $isi;
+			 // $query = $this->db->get('client',$number,$offset)->result();
+	}
 }

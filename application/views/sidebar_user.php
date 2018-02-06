@@ -7,7 +7,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="<?php echo site_url('Prestasi'); ?>" class="nav-link"><i class="icon-trophy"></i> Data Prestasi</a>
+          <a href="<?php echo site_url('prestasi'); ?>" class="nav-link"><i class="icon-trophy"></i> Data Prestasi</a>
         </li>
 
 

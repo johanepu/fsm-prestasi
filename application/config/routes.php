@@ -7,3 +7,5 @@ $route['translate_uri_dashes'] = FALSE;
 $route['register'] = 'Register';
 $route['success'] = "User_login";
 $route['addPrestasi'] = "Prestasi/addPrestasi";
+$route['prestasi']='/Prestasi/view';
+$route['prestasi/(:any)']='/Prestasi/view/$1';
