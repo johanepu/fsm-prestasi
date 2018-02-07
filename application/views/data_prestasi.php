@@ -119,15 +119,39 @@
                 </div>
                 <div class="form-group text-left">
                   <label for="" class="">Tipe Prestasi</label>
-                  <input type="email" class="form-control" id="tipe_prestasi" name="tipe_prestasi" placeholder="Email Resmi">
+                  <div class="form-group row" style="margin-left:0px">
+                  <input type="text" class="col-md-3 form-control" id="tipe_prestasi" name="tipe_prestasi" placeholder="Nama Perusahaan" disabled>
+                  <div class="col-md-9 col-form-label">
+                    <div class="form-check form-check-inline mr-1">
+                      <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="individu" value="1" name="tipe_prestasi">
+                      <label class="form-check-label" for="inline-radio1">Individu</label>
+                    </div>
+                    <div class="form-check form-check-inline mr-1">
+                      <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="beregu" value="2" name="tipe_prestasi">
+                      <label class="form-check-label" for="inline-radio2">Beregu/Kelompok</label>
+                    </div>
+                  </div>
                 </div>
+              </div>
                 <div class="form-group text-left">
                   <label for="" class="">Role Regu</label>
                   <input type="text" class="form-control" id="role_prestasi" name="role_prestasi" placeholder="Nomor Telephone">
                 </div>
                 <div class="form-group text-left">
                   <label for="" class="">Jenis Prestasi</label>
-                  <input type="text" class="form-control" id="jenis_prestasi" name="jenis_prestasi" placeholder="Nomor Telephone">
+                  <div class="form-group row" style="margin-left:0px">
+                    <input type="text" class="col-md-3 form-control" id="jenis_prestasi_edit" name="jenis_prestasi_edit" placeholder="Nama Perusahaan" disabled>
+                  <div class="col-md-9 col-form-label">
+                    <div class="form-check form-check-inline mr-1">
+                      <input class="form-check-input" type="radio" id="" value="1" name="">
+                      <label class="form-check-label" for="inline-radio1">Akademik</label>
+                    </div>
+                    <div class="form-check form-check-inline mr-1">
+                      <input class="form-check-input" type="radio" id="" value="2" name="">
+                      <label class="form-check-label" for="inline-radio2">Non-Akademik</label>
+                    </div>
+                  </div>
+                </div>
                 </div>
                 <div class="form-group text-left">
                   <label for="" class="">Deskripsi</label>
@@ -135,7 +159,16 @@
                 </div>
                 <div class="form-group text-left">
                   <label for="" class="">Tanggal Kegiatan</label>
-                  <input type="text" class="form-control" id="tgl_prestasi_start" name="tgl_prestasi_start" placeholder="Kota">
+                  <div class="form-group row" style="margin-left:0px">
+                    <input type="text" class="form-control col-md-3" id="tgl_prestasi_start" name="tgl_prestasi_start" placeholder="Kota" disabled>
+                    <div class="col-md-3">
+                      <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-calendar-check-o"></i></span>
+                      </div>
+                      <input id="date_start" name="date_start" class="form-control"  type="date">
+                    </div>
+                    </div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -158,6 +191,7 @@
 
     $(document).on('click', 'button.btn-edit,button.btn-edit2', function() {
       var id_prestasi = $(this).val();
+      var jenisPrestasi = '';
       $('#editPrestasiModal').modal('show');
       $.ajax({
         type: "POST",
@@ -169,11 +203,21 @@
           if(data)
           {
             var prestasi = data[0];
+              if (prestasi.jenis_prestasi == 1) {
+                jenisPrestasi = 'Akademik';
+              } else {
+                jenisPrestasi = 'Non-Akademik';
+              }
+              if (prestasi.tipe_prestasi == 1) {
+                tipePrestasi = 'Individu';
+              } else {
+                tipePrestasi = 'Kelompok';
+              }
               $('#nama_prestasi').val(prestasi.nama_prestasi);
               $('#peringkat_prestasi').val(prestasi.peringkat_prestasi);
-              $('#tipe_prestasi').val(prestasi.tipe_prestasi);
+              $('#tipe_prestasi').val(tipePrestasi);
               $('#role_prestasi').val(prestasi.role_prestasi);
-              $('#jenis_prestasi').val(prestasi.jenis_prestasi);
+              $('#jenis_prestasi_edit').val(jenisPrestasi);
               $('#deskripsi_prestasi').val(prestasi.deskripsi_prestasi);
               $('#tgl_prestasi_start').val(prestasi.tgl_prestasi_start);
               $('#hiddenId').val(prestasi.id_prestasi);
