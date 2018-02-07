@@ -38,7 +38,7 @@ class Prestasi extends CI_Controller {
 		$jmlprestasi = $this->Prestasi_model->tampil_user_prestasi($nim);
 		$config['base_url'] = base_url('').'prestasi/';
 		$config['total_rows'] = count($jmlprestasi);
-		$config['per_page'] = 6;
+		$config['per_page'] = 5;
 		$hal = $this->uri->segment(2);
 		$input  = $this->input->post('query');
 		if(!isset($input)){
@@ -53,11 +53,10 @@ class Prestasi extends CI_Controller {
 			$prestasi = $this->Prestasi_model->prestasi_per_page($config['per_page'], 0, $where['nim'], $query);
 			$prestasihasil = $prestasi->result();
 			if ($prestasi->num_rows() > 0){
-				$no = 1;
 				foreach ($prestasihasil as $detail) {
 					$output .= '<tr>';
 					$output .= '<td>';
-					$output .= '<p>'.$no++.'</p>';
+					$output .= '<p>'.$detail->id_prestasi.'</p>';
 					$output .= '</td>';
 					$output .= '<td>';
 					$output .= '<p>'.$detail->nama_prestasi.'</p>';

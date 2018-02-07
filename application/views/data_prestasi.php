@@ -44,7 +44,7 @@
                     foreach($prestasi as $p){
                     ?>
                     <tr id="<?php echo $p->id_prestasi?>">
-                      <td><?php echo $no++?></td>
+                      <td><?php echo $p->id_prestasi?></td>
                       <td title="Data ini tidak dapat di ubah" ><?php echo $p->nama_prestasi; ?></td>
                       <td title="Data ini tidak dapat di edit" ><?php echo $p->peringkat_prestasi; ?></td>
                       <td title="Tipe Prestasi" name="jenis_prestasi" id="jenis_prestasi">
@@ -99,17 +99,40 @@
         <!--/.row-->
 
         <!-- Modal -->
-        <div class="modal fade" id="addPrestasiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="editPrestasiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="editPrestasiLabel">Edit Data Prestasi</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                ...
+                <div class="form-group text-left">
+                  <label for="" class="">CONTACT PERSON CLIENT</label>
+                  <input type="text" class="form-control" id="pic" name="pic" placeholder="Nama PIC">
+                </div>
+                <div class="form-group text-left">
+                  <label for="" class="">NAMA PERUSAHAAN</label>
+                  <input type="text" class="form-control" id="perusahaan" name="perusahaan" placeholder="Nama Perusahaan">
+                </div>
+                <div class="form-group text-left">
+                  <label for="" class="">EMAIL</label>
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Email Resmi">
+                </div>
+                <div class="form-group text-left">
+                  <label for="" class="">TELEPHONE</label>
+                  <input type="text" class="form-control" id="telephone" onkeypress="var key = event.keyCode || event.charCode; return ((key >= 48 && key <= 57) || key == 8);" name="telephone" placeholder="Nomor Telephone">
+                </div>
+                <div class="form-group text-left">
+                  <label for="" class="">ALAMAT PERUSAHAAN</label>
+                  <textarea class="form-control" id="alamat" name="alamat"></textarea>
+                </div>
+                <div class="form-group text-left">
+                  <label for="" class="">KOTA</label>
+                  <input type="text" class="form-control" id="kota" name="kota" placeholder="Kota">
+                </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -123,3 +146,59 @@
     <!-- /.conainer-fluid -->
   </main>
 </body>
+
+<script src="<?php echo base_url(); ?>assets/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $(document).on('click', 'button.btn-edit,button.btn-edit2', function() {
+      var id_client = $(this).val();
+      $('#editPrestasiModal').modal('show');
+      $.ajax({
+        type: "POST",
+        url: '<?=base_url()?>client/fetchData',
+        data: {id_client:id_client},
+        dataType:'json',
+        success: function(data){
+          console.log(data);
+          if(data)
+          {
+            var client = data[0];
+              $('#picEditClient').val(client.nama_pic);
+              $('#perusahaanEditClient').val(client.perusahaan);
+              $('#emailEditClient').val(client.email);
+              $('#telephoneEditClient').val(client.telephone);
+              $('#alamatEditClient').val(client.alamat_usaha);
+              $('#kotaEditClient').val(client.kota);
+              $('#hiddenId').val(client.id_client);
+          }
+        }
+      });
+    });
+
+    $('#btnSimpanclient').click(function(){
+      var pic =   $('#picEditClient').val();
+      var perusahaan = $('#perusahaanEditClient').val();
+      var email = $('#emailEditClient').val();
+      var telephone =  $('#telephoneEditClient').val();
+      var alamat = $('#alamatEditClient').val();
+      var kota =  $('#kotaEditClient').val();
+      var id_client =$('#hiddenId').val();
+
+      if(pic==''||perusahaan==''||email==''||telephone==''||alamat==''||kota==''){
+        return false;
+      }else{
+        $.ajax({
+          type: "POST",
+          url: '<?=base_url()?>client/updateclient',
+          data: {pic:pic,perusahaan:perusahaan,email:email,telephone:telephone,alamat:alamat,kota:kota,id_client:id_client },
+          success: function(data){}
+        });
+        location.reload();
+      }
+    });
+  })
+
+
+  </script>
