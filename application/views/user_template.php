@@ -62,7 +62,7 @@
   </ul>
   <ul class="nav navbar-nav ml-auto" style="margin-right:20px">
     <li class="nav-item d-md-down-none">
-      <a ><span class=""><?php echo $this->session->userdata('namalengkap')?></span></a>
+      <a ><i class="icon-user"></i><span class="" style="margin-left : 5px"><?php echo $this->session->userdata('namalengkap')?></span></a>
     </li>
     <li class="nav-item dropdown" >
       <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
