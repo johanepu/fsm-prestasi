@@ -31,8 +31,8 @@
                       <th>No.</th>
                       <th>Nama Prestasi</th>
                       <th>Peringkat</th>
-                      <th>Tipe Prestasi</th>
                       <th>Jenis</th>
+                      <th>Tipe Prestasi</th>
                       <th>Level</th>
                       <th>Tanggal Kegiatan</th>
                       <th>Aksi</th>
@@ -47,19 +47,19 @@
                       <td><?php echo $p->id_prestasi?></td>
                       <td title="Data ini tidak dapat di ubah" ><?php echo $p->nama_prestasi; ?></td>
                       <td title="Data ini tidak dapat di edit" ><?php echo $p->peringkat_prestasi; ?></td>
-                      <td title="Tipe Prestasi" name="jenis_prestasi" id="jenis_prestasi">
-                      <?php
-                      if ($p->tipe_prestasi == "1") {
-                          echo '<span class="label label-success label-mini">Akademik</span>';
-                      }elseif ($p->tipe_prestasi == "2") {
-                          echo '<span class="label label-warning label-mini">Non-Akademik</span>';
-                      }
-                      ?></td>
                       <td title="Jenis Prestasi" name="jenis_prestasi" id="jenis_prestasi">
                       <?php
                       if ($p->jenis_prestasi == "1") {
-                          echo '<span class="label label-success label-mini">Individu</span>';
+                          echo '<span class="label label-success label-mini">Akademik</span>';
                       }elseif ($p->jenis_prestasi == "2") {
+                          echo '<span class="label label-warning label-mini">Non-Akademik</span>';
+                      }
+                      ?></td>
+                      <td title="Tipe Prestasi" name="tipe_prestasi" id="tipe_prestasi">
+                      <?php
+                      if ($p->tipe_prestasi == "1") {
+                          echo '<span class="label label-success label-mini">Individu</span>';
+                      }elseif ($p->tipe_prestasi == "2") {
                           echo '<span class="label label-warning label-mini">Beregu</span>';
                       }
                       ?></td>
@@ -120,7 +120,8 @@
                 <div class="form-group text-left">
                   <label for="" class="">Tipe Prestasi</label>
                   <div class="form-group row" style="margin-left:0px">
-                  <input type="text" class="col-md-3 form-control" id="tipe_prestasi_edit" name="tipe_prestasi_edit" placeholder="Nama Perusahaan" disabled>
+                    <input type="text" class="col-md-3 form-control" id="tipe_prestasi_edit" name="tipe_prestasi_edit" placeholder="Nama Perusahaan" disabled>
+                    <input hidden id="tipe_prestasi_raw" >
                   <div class="col-md-9 col-form-label">
                     <div class="form-check form-check-inline mr-1">
                       <input class="form-check-input" type="radio" onclick="javascript:TipeCheck();" id="tipe_prestasi_update_individu" value="1" name="tipe_prestasi_update">
@@ -141,6 +142,7 @@
                   <label for="" class="">Jenis Prestasi</label>
                   <div class="form-group row" style="margin-left:0px">
                     <input type="text" class="col-md-3 form-control" id="jenis_prestasi_edit" name="jenis_prestasi_edit" placeholder="Nama Perusahaan" disabled>
+                    <input hidden id="jenis_prestasi_raw" >
                   <div class="col-md-9 col-form-label">
                     <div class="form-check form-check-inline mr-1">
                       <input class="form-check-input" type="radio" id="jenis_prestasi_update" value="1" name="jenis_prestasi_update">
@@ -193,6 +195,7 @@
     $(document).on('click', 'button.btn-edit,button.btn-edit2', function() {
       var id_prestasi = $(this).val();
       var jenisPrestasi = '';
+      var tipePrestasi = '';
       $('#editPrestasiModal').modal('show');
       $.ajax({
         type: "POST",
@@ -219,8 +222,10 @@
               $('#nama_prestasi_edit').val(prestasi.nama_prestasi);
               $('#peringkat_prestasi_edit').val(prestasi.peringkat_prestasi);
               $('#tipe_prestasi_edit').val(tipePrestasi);
+              $('#tipe_prestasi_raw').val(prestasi.tipe_prestasi);
               $('#role_prestasi_edit').val(prestasi.role_prestasi);
               $('#jenis_prestasi_edit').val(jenisPrestasi);
+              $('#jenis_prestasi_raw').val(prestasi.jenis_prestasi);
               $('#deskripsi_prestasi_edit').val(prestasi.deskripsi_prestasi);
               $('#tgl_prestasi_start_edit').val(prestasi.tgl_prestasi_start);
               $('#hiddenId').val(prestasi.id_prestasi);
@@ -235,24 +240,38 @@
       var peringkat_prestasi = $('#peringkat_prestasi_edit').val();
       var role_prestasi = $('#role_prestasi_edit').val();
       var deskripsi_prestasi =  $('#deskripsi_prestasi_edit').val();
-      var tipe_prestasi = $("[name='tipe_prestasi_update']").val();
-      var jenis_prestasi = $('#jenis_prestasi_update').val();
+      var radiotipe = document.getElementsByName('tipe_prestasi_update');
+      for (var i = 0, length = radiotipe.length; i < length; i++)
+      {
+       if (radiotipe[i].checked)
+       {
+        var tipe_prestasi = radiotipe[i].value;
+        break;
+        } else {
+          tipe_prestasi = $('#tipe_prestasi_raw').val();
+        }
+      }
+      var radiojenis = document.getElementsByName('jenis_prestasi_update');
+      for (var i = 0, length = radiojenis.length; i < length; i++)
+      {
+       if (radiojenis[i].checked)
+       {
+        var jenis_prestasi = radiojenis[i].value;
+        break;
+        } else {
+          jenis_prestasi = $('#jenis_prestasi_raw').val();
+        }
+      }
       var tgl_prestasi_start =  $('#date_start_edit').val();
       var id_prestasi = $('#hiddenId').val();
-      console.log(tipe_prestasi);
 
-    if(tipe_prestasi==''){
-       tipe_prestasi = $('#tipe_prestasi_edit').val();
-    }
-    if(jenis_prestasi==''){
-       jenis_prestasi = $('#jenis_prestasi_edit').val();
-    }
+
     if(tgl_prestasi_start==''){
        tgl_prestasi_start =  $('#tgl_prestasi_start_edit').val();
     }
 
     if(nama_prestasi==''||peringkat_prestasi==''|deskripsi_prestasi==''){
-        console.log('gagal cuk');
+        console.log('gagal edit');
         return false;
       }else {
          nama_prestasi =   $('#nama_prestasi_edit').val();
@@ -261,10 +280,6 @@
          deskripsi_prestasi =  $('#deskripsi_prestasi_edit').val();
          id_prestasi =$('#hiddenId').val();
     }
-        console.log(tipe_prestasi);
-        console.log(jenis_prestasi);
-        console.log(tgl_prestasi_start);
-        console.log(id_prestasi);
         $.ajax({
           type: "POST",
           url: '<?=base_url()?>Prestasi/updatePrestasi',
@@ -278,7 +293,7 @@
                 id_prestasi:id_prestasi },
           success: function(data){}
         });
-        // location.reload();
+        location.reload();
     });
 
   })
