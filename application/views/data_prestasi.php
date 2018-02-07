@@ -123,11 +123,11 @@
                   <input type="text" class="col-md-3 form-control" id="tipe_prestasi_edit" name="tipe_prestasi_edit" placeholder="Nama Perusahaan" disabled>
                   <div class="col-md-9 col-form-label">
                     <div class="form-check form-check-inline mr-1">
-                      <input class="form-check-input" type="radio" id="tipe_prestasi_update" value="1" name="tipe_prestasi_update">
+                      <input class="form-check-input" type="radio" onclick="javascript:TipeCheck();" id="tipe_prestasi_update_individu" value="1" name="tipe_prestasi_update">
                       <label class="form-check-label" for="inline-radio1">Individu</label>
                     </div>
                     <div class="form-check form-check-inline mr-1">
-                      <input class="form-check-input" type="radio" id="tipe_prestasi_update" value="2" name="tipe_prestasi_update">
+                      <input class="form-check-input" type="radio" onclick="javascript:TipeCheck();" id="tipe_prestasi_update_regu" value="2" name="tipe_prestasi_update">
                       <label class="form-check-label" for="inline-radio2">Beregu/Kelompok</label>
                     </div>
                   </div>
@@ -230,16 +230,16 @@
     });
 
     $('#btnSimpanPrestasi').click(function(){
-      console.log('tombol mati cuk');
+
       var nama_prestasi = $('#nama_prestasi_edit').val();
       var peringkat_prestasi = $('#peringkat_prestasi_edit').val();
       var role_prestasi = $('#role_prestasi_edit').val();
       var deskripsi_prestasi =  $('#deskripsi_prestasi_edit').val();
-      var tipe_prestasi = $('#tipe_prestasi_update').val();
+      var tipe_prestasi = $("[name='tipe_prestasi_update']").val();
       var jenis_prestasi = $('#jenis_prestasi_update').val();
       var tgl_prestasi_start =  $('#date_start_edit').val();
       var id_prestasi = $('#hiddenId').val();
-
+      console.log(tipe_prestasi);
 
     if(tipe_prestasi==''){
        tipe_prestasi = $('#tipe_prestasi_edit').val();
@@ -250,8 +250,6 @@
     if(tgl_prestasi_start==''){
        tgl_prestasi_start =  $('#tgl_prestasi_start_edit').val();
     }
-
-    console.log('if e salah boss');
 
     if(nama_prestasi==''||peringkat_prestasi==''|deskripsi_prestasi==''){
         console.log('gagal cuk');
@@ -280,10 +278,21 @@
                 id_prestasi:id_prestasi },
           success: function(data){}
         });
-        location.reload();
+        // location.reload();
     });
 
   })
+
+  function TipeCheck() {
+      if (document.getElementById('tipe_prestasi_update_regu').checked) {
+          document.getElementById('role_prestasi_edit').style.display = 'block';
+          document.getElementById('role_prestasi_editlabel').style.display = 'block';
+      } else {
+          document.getElementById('role_prestasi_edit').style.display = 'none';
+          document.getElementById('role_prestasi_editlabel').style.display = 'none';
+      }
+    }
+
 
 
   </script>
