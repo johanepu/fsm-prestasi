@@ -71,4 +71,8 @@ class Prestasi_model extends CI_Model {
 			$this->db->where($where);
 			$this->db->update('user_prestasi',$data);
 	}
+
+	function delete($id){
+		return $this->db->query("DELETE FROM user_prestasi WHERE id_prestasi='$id'");
+	}
 }

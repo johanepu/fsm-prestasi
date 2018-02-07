@@ -343,6 +343,11 @@ class Prestasi extends CI_Controller {
 					);
 	}
 
+	function delete(){
+		$id = $this->input->post('id_prestasi');
+		$result=$this->Prestasi_model->delete($id);
+	}
+
 
 
 }

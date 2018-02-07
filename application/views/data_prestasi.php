@@ -78,10 +78,10 @@
                       <td title="Data ini tidak dapat di edit" ><?php echo $p->tgl_prestasi_start; ?></td>
                       <td>
                           <div class="btn-group" >
-                              <button class="btn btn-default btn-edit" name="btn-edit"  value="<?=$p->id_prestasi?>" type="button">
-                                  <i class="fa fa-fw s fa-pencil"></i>Edit</button>
-                              <button class="btn btn-default btn-delete" name="btn-delete" value="<?=$p->id_prestasi?>" type="button">
-                                  <i class="fa fa-fw fa-remove"></i>Delete</button>
+                              <button class="btn btn-primary btn-edit" name="btn-edit" title="Edit Prestasi" value="<?=$p->id_prestasi?>" type="button">
+                                  <i class="fa fa-fw s fa-pencil"></i></button>
+                              <button class="btn btn-danger btn-delete" name="btn-delete" title="Hapus Prestasi" value="<?=$p->id_prestasi?>" type="button">
+                                  <i class="fa fa-fw fa-remove"></i></button>
                           </div>
                       </td>
                     </tr>
@@ -100,7 +100,7 @@
 
         <!-- Modal -->
         <div class="modal fade" id="editPrestasiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
+          <div class="modal-dialog modal-primary" role="document">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="editPrestasiLabel">Edit Data Prestasi</h5>
@@ -181,7 +181,28 @@
             </div>
           </div>
         </div>
+    </div>
 
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+      <div class="modal-dialog modal-danger" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Hapus Data</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" >
+            <input hidden id="hiddenIdDelete">
+            <p><b>Apakah anda yakin ingin menghapus ?</b></p>
+            <p style="text-align:center" id="namadelete"><strong>"Nama Orangnya"</strong></p>
+          </div>
+          <div class="modal-footer">
+                <button style="width:100px" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                <button style="width:100px" class="btn btn-danger" id="btnhapus">Ya</button>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- /.conainer-fluid -->
   </main>
@@ -266,35 +287,69 @@
       var id_prestasi = $('#hiddenId').val();
 
 
-    if(tgl_prestasi_start==''){
-       tgl_prestasi_start =  $('#tgl_prestasi_start_edit').val();
-    }
+      if(tgl_prestasi_start==''){
+         tgl_prestasi_start =  $('#tgl_prestasi_start_edit').val();
+      }
 
-    if(nama_prestasi==''||peringkat_prestasi==''|deskripsi_prestasi==''){
-        console.log('gagal edit');
-        return false;
-      }else {
-         nama_prestasi =   $('#nama_prestasi_edit').val();
-         peringkat_prestasi = $('#peringkat_prestasi_edit').val();
-         role_prestasi =  $('#role_prestasi_edit').val();
-         deskripsi_prestasi =  $('#deskripsi_prestasi_edit').val();
-         id_prestasi =$('#hiddenId').val();
-    }
+      if(nama_prestasi==''||peringkat_prestasi==''|deskripsi_prestasi==''){
+          console.log('gagal edit');
+          return false;
+        }else {
+           nama_prestasi =   $('#nama_prestasi_edit').val();
+           peringkat_prestasi = $('#peringkat_prestasi_edit').val();
+           role_prestasi =  $('#role_prestasi_edit').val();
+           deskripsi_prestasi =  $('#deskripsi_prestasi_edit').val();
+           id_prestasi =$('#hiddenId').val();
+      }
+          $.ajax({
+            type: "POST",
+            url: '<?=base_url()?>Prestasi/updatePrestasi',
+            data: {nama_prestasi:nama_prestasi,
+                  peringkat_prestasi:peringkat_prestasi,
+                  tipe_prestasi:tipe_prestasi,
+                  role_prestasi:role_prestasi,
+                  jenis_prestasi:jenis_prestasi,
+                  deskripsi_prestasi:deskripsi_prestasi,
+                  tgl_prestasi_start:tgl_prestasi_start,
+                  id_prestasi:id_prestasi },
+            success: function(data){}
+          });
+          location.reload();
+      });
+
+      $(document).on('click', 'button.btn-delete,button.btn-delete2', function(){
+        $('#modalDelete').modal('show');
+        var id_prestasi=$(this).val();
+        $('#hiddenIdDelete').val(id_prestasi);
         $.ajax({
           type: "POST",
-          url: '<?=base_url()?>Prestasi/updatePrestasi',
-          data: {nama_prestasi:nama_prestasi,
-                peringkat_prestasi:peringkat_prestasi,
-                tipe_prestasi:tipe_prestasi,
-                role_prestasi:role_prestasi,
-                jenis_prestasi:jenis_prestasi,
-                deskripsi_prestasi:deskripsi_prestasi,
-                tgl_prestasi_start:tgl_prestasi_start,
-                id_prestasi:id_prestasi },
-          success: function(data){}
+          url: '<?=base_url()?>Prestasi/fetchData',
+          data: {id_prestasi:id_prestasi},
+          dataType:'json',
+          success: function(data){
+            if(data){
+                var prestasi = data[0];
+                $('#namadelete').html('"'+prestasi.nama_prestasi+'"');
+                $('#btnhapus').prop("disabled",false);
+              }
+            }
         });
-        location.reload();
-    });
+      });
+
+      $('#btnhapus').click(function(){
+        var id = $('#hiddenIdDelete').val();
+        $.ajax({
+          type: "POST",
+          url: '<?=base_url()?>Prestasi/delete',
+          data: {id_prestasi:id},
+          dataType:'json',
+          success: function(data){
+          }
+        });
+          location.reload();
+      });
+
+
 
   })
 
