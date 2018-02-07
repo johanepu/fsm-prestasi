@@ -318,8 +318,29 @@ class Prestasi extends CI_Controller {
 		$nim = $this->session->userdata('nim');
 		$id_prestasi= $this->input->post('id_prestasi');
 		$result=$this->Prestasi_model->getPrestasi($id_prestasi);
-		
+
 		echo json_encode($result);
+	}
+
+	function updatePrestasi(){
+		$nama_prestasi = $this->input->post('nama_prestasi');
+		$peringkat_prestasi = $this->input->post('peringkat_prestasi');
+		$tipe_prestasi = $this->input->post('tipe_prestasi');
+		$role_prestasi = $this->input->post('role_prestasi');
+		$jenis_prestasi = $this->input->post('jenis_prestasi');
+		$deskripsi_prestasi = $this->input->post('deskripsi_prestasi');
+		$tgl_prestasi_start = $this->input->post('tgl_prestasi_start');
+		$id_prestasi = $this->input->post('id_prestasi');
+		$result=$this->Prestasi_model->updatePrestasi(
+						$nama_prestasi,
+						$peringkat_prestasi,
+						$tipe_prestasi,
+						$role_prestasi,
+						$jenis_prestasi,
+						$deskripsi_prestasi,
+						$tgl_prestasi_start,
+						$id_prestasi
+					);
 	}
 
 

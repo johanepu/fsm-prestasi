@@ -43,4 +43,32 @@ class Prestasi_model extends CI_Model {
 			return false;
 		}
 	}
+
+	function updatePrestasi(
+		$nama_prestasi,
+		$peringkat_prestasi,
+		$tipe_prestasi,
+		$role_prestasi,
+		$jenis_prestasi,
+		$deskripsi_prestasi,
+		$tgl_prestasi_start,
+		$id_prestasi
+		){
+
+			$data=array(
+				'nama_prestasi'=>$nama_prestasi,
+				'peringkat_prestasi'=>$peringkat_prestasi,
+				'tipe_prestasi'=>$tipe_prestasi,
+				'role_prestasi'=>$role_prestasi,
+				'jenis_prestasi'=>$jenis_prestasi,
+				'deskripsi_prestasi'=>$deskripsi_prestasi,
+				'tgl_prestasi_start'=>$tgl_prestasi_start
+			);
+
+			$where = array(
+				'id_prestasi'=> $id_prestasi
+			);
+			$this->db->where($where);
+			$this->db->update('user_prestasi',$data);
+	}
 }

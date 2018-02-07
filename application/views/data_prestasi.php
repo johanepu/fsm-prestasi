@@ -111,31 +111,31 @@
               <div class="modal-body">
                 <div class="form-group text-left">
                   <label for="" class="">Nama Prestasi</label>
-                  <input type="text" class="form-control" id="nama_prestasi" name="nama_prestasi" placeholder="Nama PIC">
+                  <input type="text" class="form-control" id="nama_prestasi_edit" name="nama_prestasi_edit" placeholder="Nama PIC">
                 </div>
                 <div class="form-group text-left">
                   <label for="" class="">Peringkat Prestasi</label>
-                  <input type="text" class="form-control" id="peringkat_prestasi" name="peringkat_prestasi" placeholder="Nama Perusahaan">
+                  <input type="text" class="form-control" id="peringkat_prestasi_edit" name="peringkat_prestasi_edit" placeholder="Nama Perusahaan">
                 </div>
                 <div class="form-group text-left">
                   <label for="" class="">Tipe Prestasi</label>
                   <div class="form-group row" style="margin-left:0px">
-                  <input type="text" class="col-md-3 form-control" id="tipe_prestasi" name="tipe_prestasi" placeholder="Nama Perusahaan" disabled>
+                  <input type="text" class="col-md-3 form-control" id="tipe_prestasi_edit" name="tipe_prestasi_edit" placeholder="Nama Perusahaan" disabled>
                   <div class="col-md-9 col-form-label">
                     <div class="form-check form-check-inline mr-1">
-                      <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="individu" value="1" name="tipe_prestasi">
+                      <input class="form-check-input" type="radio" id="tipe_prestasi_update" value="1" name="tipe_prestasi_update">
                       <label class="form-check-label" for="inline-radio1">Individu</label>
                     </div>
                     <div class="form-check form-check-inline mr-1">
-                      <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="beregu" value="2" name="tipe_prestasi">
+                      <input class="form-check-input" type="radio" id="tipe_prestasi_update" value="2" name="tipe_prestasi_update">
                       <label class="form-check-label" for="inline-radio2">Beregu/Kelompok</label>
                     </div>
                   </div>
                 </div>
               </div>
                 <div class="form-group text-left">
-                  <label for="" class="">Role Regu</label>
-                  <input type="text" class="form-control" id="role_prestasi" name="role_prestasi" placeholder="Nomor Telephone">
+                  <label for="" id="role_prestasi_editlabel" class="">Role Regu</label>
+                  <input type="text" class="form-control" style="display:block" id="role_prestasi_edit" name="role_prestasi_edit" placeholder="Nomor Telephone">
                 </div>
                 <div class="form-group text-left">
                   <label for="" class="">Jenis Prestasi</label>
@@ -143,11 +143,11 @@
                     <input type="text" class="col-md-3 form-control" id="jenis_prestasi_edit" name="jenis_prestasi_edit" placeholder="Nama Perusahaan" disabled>
                   <div class="col-md-9 col-form-label">
                     <div class="form-check form-check-inline mr-1">
-                      <input class="form-check-input" type="radio" id="" value="1" name="">
+                      <input class="form-check-input" type="radio" id="jenis_prestasi_update" value="1" name="jenis_prestasi_update">
                       <label class="form-check-label" for="inline-radio1">Akademik</label>
                     </div>
                     <div class="form-check form-check-inline mr-1">
-                      <input class="form-check-input" type="radio" id="" value="2" name="">
+                      <input class="form-check-input" type="radio" id="jenis_prestasi_update" value="2" name="jenis_prestasi_update">
                       <label class="form-check-label" for="inline-radio2">Non-Akademik</label>
                     </div>
                   </div>
@@ -155,25 +155,26 @@
                 </div>
                 <div class="form-group text-left">
                   <label for="" class="">Deskripsi</label>
-                  <textarea class="form-control" id="deskripsi_prestasi" name="deskripsi_prestasi"></textarea>
+                  <textarea class="form-control" id="deskripsi_prestasi_edit" name="deskripsi_prestasi_edit"></textarea>
                 </div>
                 <div class="form-group text-left">
                   <label for="" class="">Tanggal Kegiatan</label>
                   <div class="form-group row" style="margin-left:0px">
-                    <input type="text" class="form-control col-md-3" id="tgl_prestasi_start" name="tgl_prestasi_start" placeholder="Kota" disabled>
-                    <div class="col-md-3">
+                    <input type="text" class="form-control col-md-3" id="tgl_prestasi_start_edit" name="tgl_prestasi_start_edit" placeholder="Kota" disabled>
+                    <div class="col-md-6">
                       <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fa fa-calendar-check-o"></i></span>
                       </div>
-                      <input id="date_start" name="date_start" class="form-control"  type="date">
+                      <input id="date_start_edit" name="date_start_edit" class="form-control"  type="date">
                     </div>
                     </div>
                 </div>
               </div>
+              <input hidden id="hiddenId" >
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" id="btnSimpanPrestasi" name="btnSimpanPrestasi" class="btn btn-primary">Save changes</button>
               </div>
             </div>
           </div>
@@ -210,44 +211,78 @@
               }
               if (prestasi.tipe_prestasi == 1) {
                 tipePrestasi = 'Individu';
+                document.getElementById('role_prestasi_edit').style.display = 'none';
+                document.getElementById('role_prestasi_editlabel').style.display = 'none';
               } else {
                 tipePrestasi = 'Kelompok';
               }
-              $('#nama_prestasi').val(prestasi.nama_prestasi);
-              $('#peringkat_prestasi').val(prestasi.peringkat_prestasi);
-              $('#tipe_prestasi').val(tipePrestasi);
-              $('#role_prestasi').val(prestasi.role_prestasi);
+              $('#nama_prestasi_edit').val(prestasi.nama_prestasi);
+              $('#peringkat_prestasi_edit').val(prestasi.peringkat_prestasi);
+              $('#tipe_prestasi_edit').val(tipePrestasi);
+              $('#role_prestasi_edit').val(prestasi.role_prestasi);
               $('#jenis_prestasi_edit').val(jenisPrestasi);
-              $('#deskripsi_prestasi').val(prestasi.deskripsi_prestasi);
-              $('#tgl_prestasi_start').val(prestasi.tgl_prestasi_start);
+              $('#deskripsi_prestasi_edit').val(prestasi.deskripsi_prestasi);
+              $('#tgl_prestasi_start_edit').val(prestasi.tgl_prestasi_start);
               $('#hiddenId').val(prestasi.id_prestasi);
           }
         }
       });
     });
 
-    $('#btnSimpanclient').click(function(){
-      var nama_prestasi =   $('#nama_prestasi').val();
-      var peringkat_prestasi = $('#peringkat_prestasi').val();
-      var tipe_prestasi = $('#tipe_prestasi').val();
-      var role_prestasi =  $('#role_prestasi').val();
-      var jenis_prestasi = $('#jenis_prestasi').val();
-      var deskripsi_prestasi =  $('#deskripsi_prestasi').val();
-      var tgl_prestasi_start =  $('#tgl_prestasi_start').val();
-      var id_prestasi =$('#hiddenId').val();
+    $('#btnSimpanPrestasi').click(function(){
+      console.log('tombol mati cuk');
+      var nama_prestasi = $('#nama_prestasi_edit').val();
+      var peringkat_prestasi = $('#peringkat_prestasi_edit').val();
+      var role_prestasi = $('#role_prestasi_edit').val();
+      var deskripsi_prestasi =  $('#deskripsi_prestasi_edit').val();
+      var tipe_prestasi = $('#tipe_prestasi_update').val();
+      var jenis_prestasi = $('#jenis_prestasi_update').val();
+      var tgl_prestasi_start =  $('#date_start_edit').val();
+      var id_prestasi = $('#hiddenId').val();
 
-      if(pic==''||perusahaan==''||email==''||telephone==''||alamat==''||kota==''){
+
+    if(tipe_prestasi==''){
+       tipe_prestasi = $('#tipe_prestasi_edit').val();
+    }
+    if(jenis_prestasi==''){
+       jenis_prestasi = $('#jenis_prestasi_edit').val();
+    }
+    if(tgl_prestasi_start==''){
+       tgl_prestasi_start =  $('#tgl_prestasi_start_edit').val();
+    }
+
+    console.log('if e salah boss');
+
+    if(nama_prestasi==''||peringkat_prestasi==''|deskripsi_prestasi==''){
+        console.log('gagal cuk');
         return false;
-      }else{
+      }else {
+         nama_prestasi =   $('#nama_prestasi_edit').val();
+         peringkat_prestasi = $('#peringkat_prestasi_edit').val();
+         role_prestasi =  $('#role_prestasi_edit').val();
+         deskripsi_prestasi =  $('#deskripsi_prestasi_edit').val();
+         id_prestasi =$('#hiddenId').val();
+    }
+        console.log(tipe_prestasi);
+        console.log(jenis_prestasi);
+        console.log(tgl_prestasi_start);
+        console.log(id_prestasi);
         $.ajax({
           type: "POST",
           url: '<?=base_url()?>Prestasi/updatePrestasi',
-          data: {pic:pic,perusahaan:perusahaan,email:email,telephone:telephone,alamat:alamat,kota:kota,id_client:id_client },
+          data: {nama_prestasi:nama_prestasi,
+                peringkat_prestasi:peringkat_prestasi,
+                tipe_prestasi:tipe_prestasi,
+                role_prestasi:role_prestasi,
+                jenis_prestasi:jenis_prestasi,
+                deskripsi_prestasi:deskripsi_prestasi,
+                tgl_prestasi_start:tgl_prestasi_start,
+                id_prestasi:id_prestasi },
           success: function(data){}
         });
-        location.reload();
-      }
+
     });
+
   })
 
 
