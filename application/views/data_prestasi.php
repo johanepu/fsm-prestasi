@@ -280,7 +280,7 @@
                 id_prestasi:id_prestasi },
           success: function(data){}
         });
-
+        location.reload();
     });
 
   })
