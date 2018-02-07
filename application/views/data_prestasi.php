@@ -111,16 +111,16 @@
               <div class="modal-body">
                 <div class="form-group text-left">
                   <label for="" class="">Nama Prestasi</label>
-                  <input type="text" class="form-control" id="nama_prestasi_edit" name="nama_prestasi_edit" placeholder="Nama PIC">
+                  <input type="text" class="form-control" id="nama_prestasi_edit" name="nama_prestasi_edit" placeholder="Nama Prestasi" required>
                 </div>
                 <div class="form-group text-left">
                   <label for="" class="">Peringkat Prestasi</label>
-                  <input type="text" class="form-control" id="peringkat_prestasi_edit" name="peringkat_prestasi_edit" placeholder="Nama Perusahaan">
+                  <input type="text" class="form-control" id="peringkat_prestasi_edit" name="peringkat_prestasi_edit" placeholder="Peringkat yang diraih" required>
                 </div>
                 <div class="form-group text-left">
                   <label for="" class="">Tipe Prestasi</label>
                   <div class="form-group row" style="margin-left:0px">
-                    <input type="text" class="col-md-3 form-control" id="tipe_prestasi_edit" name="tipe_prestasi_edit" placeholder="Nama Perusahaan" disabled>
+                    <input type="text" class="col-md-3 form-control" id="tipe_prestasi_edit" name="tipe_prestasi_edit" placeholder="Tipe Prestasi" disabled>
                     <input hidden id="tipe_prestasi_raw" >
                   <div class="col-md-9 col-form-label">
                     <div class="form-check form-check-inline mr-1">
@@ -136,7 +136,7 @@
               </div>
                 <div class="form-group text-left">
                   <label for="" id="role_prestasi_editlabel" class="">Role Regu</label>
-                  <input type="text" class="form-control" style="display:block" id="role_prestasi_edit" name="role_prestasi_edit" placeholder="Nomor Telephone">
+                  <input type="text" class="form-control" style="display:block" id="role_prestasi_edit" name="role_prestasi_edit" placeholder="Role Prestasi">
                 </div>
                 <div class="form-group text-left">
                   <label for="" class="">Jenis Prestasi</label>
@@ -157,7 +157,7 @@
                 </div>
                 <div class="form-group text-left">
                   <label for="" class="">Deskripsi</label>
-                  <textarea class="form-control" id="deskripsi_prestasi_edit" name="deskripsi_prestasi_edit"></textarea>
+                  <textarea class="form-control" id="deskripsi_prestasi_edit" name="deskripsi_prestasi_edit" required></textarea>
                 </div>
                 <div class="form-group text-left">
                   <label for="" class="">Tanggal Kegiatan</label>
@@ -293,6 +293,7 @@
 
       if(nama_prestasi==''||peringkat_prestasi==''|deskripsi_prestasi==''){
           console.log('gagal edit');
+          alert('Edit Data Gagal, Cek kembali isian Anda');
           return false;
         }else {
            nama_prestasi =   $('#nama_prestasi_edit').val();
