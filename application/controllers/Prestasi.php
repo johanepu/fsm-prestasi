@@ -314,5 +314,14 @@ class Prestasi extends CI_Controller {
 		return $post_string == '0' ? FALSE : TRUE;
 	}
 
+	function fetchData(){
+		$nim = $this->session->userdata('nim');
+		$id_prestasi= $this->input->post('id_prestasi');
+		$result=$this->Prestasi_model->getPrestasi($id_prestasi);
+		
+		echo json_encode($result);
+	}
+
+
 
 }

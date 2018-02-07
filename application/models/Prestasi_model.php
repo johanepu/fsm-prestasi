@@ -34,4 +34,13 @@ class Prestasi_model extends CI_Model {
 			 return $isi;
 			 // $query = $this->db->get('client',$number,$offset)->result();
 	}
+
+	function getPrestasi($id_prestasi){
+		$result=$this->db->query("SELECT * FROM user_prestasi WHERE id_prestasi='$id_prestasi'");
+		if($result->num_rows()>0){
+			return $result->result();
+		}else{
+			return false;
+		}
+	}
 }

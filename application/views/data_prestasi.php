@@ -110,28 +110,32 @@
               </div>
               <div class="modal-body">
                 <div class="form-group text-left">
-                  <label for="" class="">CONTACT PERSON CLIENT</label>
-                  <input type="text" class="form-control" id="pic" name="pic" placeholder="Nama PIC">
+                  <label for="" class="">Nama Prestasi</label>
+                  <input type="text" class="form-control" id="nama_prestasi" name="nama_prestasi" placeholder="Nama PIC">
                 </div>
                 <div class="form-group text-left">
-                  <label for="" class="">NAMA PERUSAHAAN</label>
-                  <input type="text" class="form-control" id="perusahaan" name="perusahaan" placeholder="Nama Perusahaan">
+                  <label for="" class="">Peringkat Prestasi</label>
+                  <input type="text" class="form-control" id="peringkat_prestasi" name="peringkat_prestasi" placeholder="Nama Perusahaan">
                 </div>
                 <div class="form-group text-left">
-                  <label for="" class="">EMAIL</label>
-                  <input type="email" class="form-control" id="email" name="email" placeholder="Email Resmi">
+                  <label for="" class="">Tipe Prestasi</label>
+                  <input type="email" class="form-control" id="tipe_prestasi" name="tipe_prestasi" placeholder="Email Resmi">
                 </div>
                 <div class="form-group text-left">
-                  <label for="" class="">TELEPHONE</label>
-                  <input type="text" class="form-control" id="telephone" onkeypress="var key = event.keyCode || event.charCode; return ((key >= 48 && key <= 57) || key == 8);" name="telephone" placeholder="Nomor Telephone">
+                  <label for="" class="">Role Regu</label>
+                  <input type="text" class="form-control" id="role_prestasi" name="role_prestasi" placeholder="Nomor Telephone">
                 </div>
                 <div class="form-group text-left">
-                  <label for="" class="">ALAMAT PERUSAHAAN</label>
-                  <textarea class="form-control" id="alamat" name="alamat"></textarea>
+                  <label for="" class="">Jenis Prestasi</label>
+                  <input type="text" class="form-control" id="jenis_prestasi" name="jenis_prestasi" placeholder="Nomor Telephone">
                 </div>
                 <div class="form-group text-left">
-                  <label for="" class="">KOTA</label>
-                  <input type="text" class="form-control" id="kota" name="kota" placeholder="Kota">
+                  <label for="" class="">Deskripsi</label>
+                  <textarea class="form-control" id="deskripsi_prestasi" name="deskripsi_prestasi"></textarea>
+                </div>
+                <div class="form-group text-left">
+                  <label for="" class="">Tanggal Kegiatan</label>
+                  <input type="text" class="form-control" id="tgl_prestasi_start" name="tgl_prestasi_start" placeholder="Kota">
                 </div>
               </div>
               <div class="modal-footer">
@@ -153,45 +157,47 @@
   $(document).ready(function(){
 
     $(document).on('click', 'button.btn-edit,button.btn-edit2', function() {
-      var id_client = $(this).val();
+      var id_prestasi = $(this).val();
       $('#editPrestasiModal').modal('show');
       $.ajax({
         type: "POST",
-        url: '<?=base_url()?>client/fetchData',
-        data: {id_client:id_client},
+        url: '<?=base_url()?>Prestasi/fetchData',
+        data: {id_prestasi:id_prestasi},
         dataType:'json',
         success: function(data){
           console.log(data);
           if(data)
           {
-            var client = data[0];
-              $('#picEditClient').val(client.nama_pic);
-              $('#perusahaanEditClient').val(client.perusahaan);
-              $('#emailEditClient').val(client.email);
-              $('#telephoneEditClient').val(client.telephone);
-              $('#alamatEditClient').val(client.alamat_usaha);
-              $('#kotaEditClient').val(client.kota);
-              $('#hiddenId').val(client.id_client);
+            var prestasi = data[0];
+              $('#nama_prestasi').val(prestasi.nama_prestasi);
+              $('#peringkat_prestasi').val(prestasi.peringkat_prestasi);
+              $('#tipe_prestasi').val(prestasi.tipe_prestasi);
+              $('#role_prestasi').val(prestasi.role_prestasi);
+              $('#jenis_prestasi').val(prestasi.jenis_prestasi);
+              $('#deskripsi_prestasi').val(prestasi.deskripsi_prestasi);
+              $('#tgl_prestasi_start').val(prestasi.tgl_prestasi_start);
+              $('#hiddenId').val(prestasi.id_prestasi);
           }
         }
       });
     });
 
     $('#btnSimpanclient').click(function(){
-      var pic =   $('#picEditClient').val();
-      var perusahaan = $('#perusahaanEditClient').val();
-      var email = $('#emailEditClient').val();
-      var telephone =  $('#telephoneEditClient').val();
-      var alamat = $('#alamatEditClient').val();
-      var kota =  $('#kotaEditClient').val();
-      var id_client =$('#hiddenId').val();
+      var nama_prestasi =   $('#nama_prestasi').val();
+      var peringkat_prestasi = $('#peringkat_prestasi').val();
+      var tipe_prestasi = $('#tipe_prestasi').val();
+      var role_prestasi =  $('#role_prestasi').val();
+      var jenis_prestasi = $('#jenis_prestasi').val();
+      var deskripsi_prestasi =  $('#deskripsi_prestasi').val();
+      var tgl_prestasi_start =  $('#tgl_prestasi_start').val();
+      var id_prestasi =$('#hiddenId').val();
 
       if(pic==''||perusahaan==''||email==''||telephone==''||alamat==''||kota==''){
         return false;
       }else{
         $.ajax({
           type: "POST",
-          url: '<?=base_url()?>client/updateclient',
+          url: '<?=base_url()?>Prestasi/updatePrestasi',
           data: {pic:pic,perusahaan:perusahaan,email:email,telephone:telephone,alamat:alamat,kota:kota,id_client:id_client },
           success: function(data){}
         });
