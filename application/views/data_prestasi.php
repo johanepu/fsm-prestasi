@@ -120,7 +120,7 @@
                 <div class="form-group text-left">
                   <label for="" class="">Tipe Prestasi</label>
                   <div class="form-group row" style="margin-left:0px">
-                    <input type="text" class="col-md-3 form-control" id="tipe_prestasi_edit" name="tipe_prestasi_edit" placeholder="Tipe Prestasi" disabled>
+                    <!-- <input type="text" class="col-md-3 form-control" id="tipe_prestasi_edit" name="tipe_prestasi_edit" placeholder="Tipe Prestasi" disabled> -->
                     <input hidden id="tipe_prestasi_raw" >
                   <div class="col-md-9 col-form-label">
                     <div class="form-check form-check-inline mr-1">
@@ -141,15 +141,15 @@
                 <div class="form-group text-left">
                   <label for="" class="">Jenis Prestasi</label>
                   <div class="form-group row" style="margin-left:0px">
-                    <input type="text" class="col-md-3 form-control" id="jenis_prestasi_edit" name="jenis_prestasi_edit" placeholder="Nama Perusahaan" disabled>
+                    <!-- <input type="text" class="col-md-3 form-control" id="jenis_prestasi_edit" name="jenis_prestasi_edit" placeholder="Nama Perusahaan" disabled> -->
                     <input hidden id="jenis_prestasi_raw" >
                   <div class="col-md-9 col-form-label">
                     <div class="form-check form-check-inline mr-1">
-                      <input class="form-check-input" type="radio" id="jenis_prestasi_update" value="1" name="jenis_prestasi_update">
+                      <input class="form-check-input" type="radio" id="jenis_prestasi_update1" value="1" name="jenis_prestasi_update">
                       <label class="form-check-label" for="inline-radio1">Akademik</label>
                     </div>
                     <div class="form-check form-check-inline mr-1">
-                      <input class="form-check-input" type="radio" id="jenis_prestasi_update" value="2" name="jenis_prestasi_update">
+                      <input class="form-check-input" type="radio" id="jenis_prestasi_update2" value="2" name="jenis_prestasi_update">
                       <label class="form-check-label" for="inline-radio2">Non-Akademik</label>
                     </div>
                   </div>
@@ -161,8 +161,8 @@
                 </div>
                 <div class="form-group text-left">
                   <label for="" class="">Tanggal Kegiatan</label>
-                  <div class="form-group row" style="margin-left:0px">
-                    <input type="text" class="form-control col-md-3" id="tgl_prestasi_start_edit" name="tgl_prestasi_start_edit" placeholder="Kota" disabled>
+                  <div class="form-group row">
+                    <!-- <input type="text" class="form-control col-md-3" id="tgl_prestasi_start_edit" name="tgl_prestasi_start_edit" placeholder="Kota" disabled> -->
                     <div class="col-md-6">
                       <div class="input-group">
                       <div class="input-group-prepend">
@@ -230,16 +230,21 @@
             var prestasi = data[0];
               if (prestasi.jenis_prestasi == 1) {
                 jenisPrestasi = 'Akademik';
+                document.getElementById("jenis_prestasi_update1").checked = true;
               } else {
                 jenisPrestasi = 'Non-Akademik';
+                document.getElementById("jenis_prestasi_update2").checked = true;
               }
               if (prestasi.tipe_prestasi == 1) {
                 tipePrestasi = 'Individu';
                 document.getElementById('role_prestasi_edit').style.display = 'none';
                 document.getElementById('role_prestasi_editlabel').style.display = 'none';
+                document.getElementById("tipe_prestasi_update_individu").checked = true;
               } else {
                 tipePrestasi = 'Kelompok';
+                document.getElementById("tipe_prestasi_update_regu").checked = true;
               }
+
               $('#nama_prestasi_edit').val(prestasi.nama_prestasi);
               $('#peringkat_prestasi_edit').val(prestasi.peringkat_prestasi);
               $('#tipe_prestasi_edit').val(tipePrestasi);
@@ -248,7 +253,7 @@
               $('#jenis_prestasi_edit').val(jenisPrestasi);
               $('#jenis_prestasi_raw').val(prestasi.jenis_prestasi);
               $('#deskripsi_prestasi_edit').val(prestasi.deskripsi_prestasi);
-              $('#tgl_prestasi_start_edit').val(prestasi.tgl_prestasi_start);
+              $('#date_start_edit').val(prestasi.tgl_prestasi_start);
               $('#hiddenId').val(prestasi.id_prestasi);
           }
         }
@@ -313,7 +318,9 @@
                   deskripsi_prestasi:deskripsi_prestasi,
                   tgl_prestasi_start:tgl_prestasi_start,
                   id_prestasi:id_prestasi },
-            success: function(data){}
+            success: function(data){
+
+            }
           });
           location.reload();
       });
