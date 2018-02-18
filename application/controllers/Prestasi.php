@@ -126,9 +126,18 @@ class Prestasi extends CI_Controller {
         'nama_prestasi', 'Nama Kegiatan',
         'required|trim',
         array(
-                'required'      => 'Anda belum memilih %s.'
+                'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>'
 							)
     );
+
     $this->form_validation->set_rules(
         'peringkat_prestasi', 'Peringkat yang diraih',
         'required|trim',
@@ -216,6 +225,40 @@ class Prestasi extends CI_Controller {
 		);
 
 		$this->form_validation->set_rules(
+				'penyelenggara_prestasi', 'Informasi Penyelenggara',
+				'required|trim',
+				array(
+								'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+								'
+				)
+		);
+
+		$this->form_validation->set_rules(
+				'tempat_prestasi', 'Tempat Kegiatan',
+				'required|trim',
+				array(
+								'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+								'
+				)
+		);
+
+		$this->form_validation->set_rules(
 				'date_start', 'Tanggal Kegiatan',
 				'required',
 				array(
@@ -273,6 +316,8 @@ class Prestasi extends CI_Controller {
 				'level_prestasi'    		=> $level_prestasi,
 				'deskripsi_prestasi'    		=> $this->input->post('role_prestasi'),
 				'reward_poin'    		=> $reward_point,
+				'penyelenggara_prestasi'    		=> $this->input->post('penyelenggara_prestasi'),
+				'tempat_prestasi'    		=> $this->input->post('tempat_prestasi'),
 				'tgl_prestasi_start'	=> $this->input->post('date_start'),
 				'tgl_prestasi_end'	=> $this->input->post('date_end'),
 				'date_modified'	=> date('Y-m-d H:i:s')
@@ -323,24 +368,41 @@ class Prestasi extends CI_Controller {
 	}
 
 	function updatePrestasi(){
-		$nama_prestasi = $this->input->post('nama_prestasi');
-		$peringkat_prestasi = $this->input->post('peringkat_prestasi');
-		$tipe_prestasi = $this->input->post('tipe_prestasi');
-		$role_prestasi = $this->input->post('role_prestasi');
-		$jenis_prestasi = $this->input->post('jenis_prestasi');
-		$deskripsi_prestasi = $this->input->post('deskripsi_prestasi');
-		$tgl_prestasi_start = $this->input->post('tgl_prestasi_start');
-		$id_prestasi = $this->input->post('id_prestasi');
-		$result=$this->Prestasi_model->updatePrestasi(
-						$nama_prestasi,
-						$peringkat_prestasi,
-						$tipe_prestasi,
-						$role_prestasi,
-						$jenis_prestasi,
-						$deskripsi_prestasi,
-						$tgl_prestasi_start,
-						$id_prestasi
-					);
+
+		date_default_timezone_set('Asia/Jakarta');
+		$level_prestasi = $this->input->post('level_prestasi');
+			if ($level_prestasi == 1) {
+				$reward_point = 2;
+			} elseif ($level_prestasi == 2) {
+				$reward_point = 3;
+			} elseif ($level_prestasi == 3) {
+				$reward_point = 4;
+			} elseif ($level_prestasi == 4) {
+				$reward_point = 5;
+			}
+
+		$data=array(
+			'nama_prestasi'=> $this->input->post('nama_prestasi'),
+			'peringkat_prestasi'=>$this->input->post('peringkat_prestasi'),
+			'tipe_prestasi'=>$this->input->post('tipe_prestasi'),
+			'role_prestasi'=>$this->input->post('role_prestasi'),
+			'jenis_prestasi'=>$this->input->post('jenis_prestasi'),
+			'deskripsi_prestasi'=>$this->input->post('deskripsi_prestasi'),
+			'reward_poin'    		=> $reward_point,
+			'penyelenggara_prestasi' => $this->input->post('penyelenggara_prestasi'),
+			'tempat_prestasi' => $this->input->post('tempat_prestasi'),
+			'level_prestasi' => $level_prestasi,
+			'tgl_prestasi_start'=>$this->input->post('tgl_prestasi_start'),
+			'tgl_prestasi_end'=>$this->input->post('tgl_prestasi_end'),
+			'date_modified'	=> date('Y-m-d H:i:s')
+		);
+
+		$where = array(
+			'id_prestasi'=> $this->input->post('id_prestasi')
+		);
+
+		$result=$this->Prestasi_model->updatePrestasi($data,$where);
+
 	}
 
 	function delete(){

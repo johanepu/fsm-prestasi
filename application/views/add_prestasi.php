@@ -116,6 +116,22 @@
                   <?php echo form_error('level_prestasi'); ?>
 
                   <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="text-input">Nama Penyelenggara</label>
+                    <div class="col-md-9">
+                      <input type="text" id="penyelenggara_prestasi" name="penyelenggara_prestasi" class="form-control" value="<?php echo set_value('penyelenggara_prestasi'); ?>" placeholder="Nama instansi penyelenggara kegiatan">
+                    </div>
+                  </div>
+                  <?php echo form_error('penyelenggara_prestasi'); ?>
+
+                  <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="text-input">Tempat Kegiatan</label>
+                    <div class="col-md-9">
+                      <input type="text" id="tempat_prestasi" name="tempat_prestasi" class="form-control" value="<?php echo set_value('temppat_prestasi'); ?>" placeholder="Kota/Alamat kegiatan diselenggarakan">
+                    </div>
+                  </div>
+                  <?php echo form_error('tempat_prestasi'); ?>
+
+                  <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="textarea-input">Tanggal Kegiatan</label>
                       <div class="col-md-3">
                         <div class="input-group">
@@ -154,26 +170,6 @@
 
         <!--/.row-->
 
-        <!-- Modal -->
-        <div class="modal fade" id="addPrestasiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                ...
-              </div>
-              <div class="modal-footer" style="float-right">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div>
-            </div>
-          </div>
-        </div>
 
     </div>
     <!-- /.conainer-fluid -->
