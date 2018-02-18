@@ -114,18 +114,18 @@
                 <div class="col-md-12 mb-4">
                   <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
-                      <a class="nav-link active" data-toggle="tab" href="#home" role="tab" aria-controls="home">Home</a>
+                      <a class="nav-link active" data-toggle="tab" href="#edit1" role="tab" aria-controls="home">Data Umum</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile">Profile</a>
+                      <a class="nav-link" data-toggle="tab" href="#edit2" role="tab" aria-controls="profile">Data Lanjutan</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" data-toggle="tab" href="#messages" role="tab" aria-controls="messages">Messages</a>
+                      <a class="nav-link" data-toggle="tab" href="#edit3" role="tab" aria-controls="messages">Waktu/Tempat</a>
                     </li>
                   </ul>
 
                   <div class="tab-content">
-                    <div class="tab-pane active" id="home" role="tabpanel">
+                    <div class="tab-pane active" id="edit1" role="tabpanel">
 
                       <div class="form-group text-left">
                         <label for="" class="">Nama Prestasi</label>
@@ -154,7 +154,7 @@
                       </div>
 
                     </div>
-                    <div class="tab-pane" id="profile" role="tabpanel">
+                    <div class="tab-pane" id="edit2" role="tabpanel">
 
                       <div class="form-group text-left">
                         <label for="" class="">Tipe Prestasi</label>
@@ -195,7 +195,7 @@
                       </div>
 
                     </div>
-                    <div class="tab-pane" id="messages" role="tabpanel">
+                    <div class="tab-pane" id="edit3" role="tabpanel">
                       <div class="form-group text-left">
                         <label for="" class="">Tempat Kegiatan</label>
                         <input type="text" class="form-control" id="tempat_prestasi_edit" name="tempat_prestasi_edit" placeholder="Tempat kegiatan" required>
