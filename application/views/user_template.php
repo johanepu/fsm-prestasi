@@ -27,9 +27,10 @@
   <!-- Main styles for this application -->
   <link type="text/css" href="<?php echo base_url(); ?>assets/src/css/style.css" rel="stylesheet">
   <!-- Styles required by this views -->
-
+  <!-- <link type="text/css" href="<?php echo base_url(); ?>assets/node_modules/datatables-bootstrap/css/dataTables.bootstrap.min.css" rel="stylesheet"> -->
+  <link type="text/css" href="<?php echo base_url(); ?>assets/node_modules/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
   <!-- Include Date Range Picker -->
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/bootstrap-daterangepicker-master/daterangepicker.css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/bootstrap-daterangepicker-master/daterangepicker.css" rel="stylesheet">
 
 
 </head>
@@ -112,9 +113,15 @@
 <script src="<?php echo base_url(); ?>assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/node_modules/pace-progress/pace.min.js"></script>
 
+<!-- Plugins and scripts required by DataTable -->
+<!-- <script src="<?php echo base_url(); ?>assets/node_modules/datatables-bootstrap/js/dataTables.bootstrap.min.js"></script> -->
+<script src="<?php echo base_url(); ?>assets/node_modules/datatables/media/js/jquery.dataTables.min.js"></script>
+
+
 <!-- Plugins and scripts required by all views -->
 <script src="<?php echo base_url(); ?>assets/bootstrap-daterangepicker-master/daterangepicker.js"></script>
 <script src="<?php echo base_url(); ?>assets/bootstrap-daterangepicker-master/moment.min.js"></script>
+
 <!-- CoreUI main scripts -->
 
 <script src="<?php echo base_url(); ?>assets/src/js/app.js"></script>
@@ -126,6 +133,11 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
+
+        $('#tabel_prestasi').DataTable( {
+          "bPaginate": false,
+          "info":     false
+        } );
 
     $(document).on('click', 'button.btn-edit,button.btn-edit2', function() {
       var id_prestasi = $(this).val();

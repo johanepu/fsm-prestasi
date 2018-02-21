@@ -102,6 +102,7 @@ class Prestasi extends CI_Controller {
 					$output .= '</td>';
 					$output .= '</tr>';
 				}
+
 			} else {
 				$output .= '<tr>';
 				$output .= '<td>';

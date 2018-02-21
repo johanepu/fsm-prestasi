@@ -25,7 +25,7 @@
                     <input type="text" class="form-control" id="cariPrestasi" placeholder="Cari Nama Kegiatan atau Prestasi Anda" >
                   </div>
                 </div>
-                <table class="table table-responsive-sm table-striped">
+                <table id="tabel_prestasi" class="table table-responsive-sm table-striped">
                   <thead>
                     <tr>
                       <th>No.</th>
@@ -273,6 +273,7 @@
 </body>
 
 <script type="text/javascript">
+
   function TipeCheck() {
       if (document.getElementById('tipe_prestasi_update_regu').checked) {
           document.getElementById('role_prestasi_edit').style.display = 'block';
