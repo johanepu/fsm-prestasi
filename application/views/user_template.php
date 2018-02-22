@@ -136,7 +136,8 @@
 
         $('#tabel_prestasi').DataTable( {
           "bPaginate": false,
-          "info":     false
+          "info":     false,
+          "bFilter" : false
         } );
 
     $(document).on('click', 'button.btn-edit,button.btn-edit2', function() {
@@ -295,6 +296,20 @@
           }
         });
           location.reload();
+      });
+
+      $('#cariPrestasi').keyup(function(){
+        var query = $(this).val();
+          $.ajax({
+            url:"<?php echo base_url();?>Prestasi/view",
+            method:"post",
+            data:{query:query},
+            success:function(data){
+              // alert('dasdf');
+              $('#tabel-prestasi').remove();
+              $('#hasilCari').html(data);
+            }
+          });
       });
 
 

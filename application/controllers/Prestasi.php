@@ -70,22 +70,22 @@ class Prestasi extends CI_Controller {
 						}elseif ($detail->tipe_prestasi == "2") {
 					$output .= '<span class="label label-warning label-mini">Non-Akademik</span>';
 					$output .= '</td>';
-					$output .= '<td>';
 						}
+					$output .= '<td>';
 						if ($detail->jenis_prestasi == "1") {
 					$output .= '<span class="label label-success label-mini">Individu</span>';
 						}elseif ($detail->jenis_prestasi == "2") {
 					$output .= '<span class="label label-warning label-mini">Beregu</span>';
 					$output .= '</td>';
-					$output .= '<td>';
 						}
-						if ($detail->jenis_prestasi == "1") {
+					$output .= '<td>';
+						if ($detail->level_prestasi == "1") {
 					$output .= '<span class="label label-success label-mini">Lokal</span>';
-						}elseif ($detail->jenis_prestasi == "2") {
+				}elseif ($detail->level_prestasi == "2") {
 					$output .= '<span class="label label-warning label-mini">Nasional</span>';
-						}elseif ($detail->jenis_prestasi == "3") {
+				}elseif ($detail->level_prestasi == "3") {
 					$output .= '<span class="label label-warning label-mini">Regional</span>';
-						}elseif ($detail->jenis_prestasi == "4") {
+				}elseif ($detail->level_prestasi == "4") {
 					$output .= '<span class="label label-warning label-mini">Internasional</span>';
 						}
 					$output .= '</td>';
@@ -94,10 +94,10 @@ class Prestasi extends CI_Controller {
 					$output .= '</td>';
 					$output .= '<td align="right">';
 					$output .= '<div class="btn-group" >';
-					$output .= '<button class="btn btn-default btn-edit2" name="btn-edit"  value="'.$detail->id_client.'" type="button">';
-					$output .= '<i class="fa fa-fw s fa-pencil"></i>Edit</button>';
-					$output .= '<button class="btn btn-default btn-delete2" value="'.$detail->id_client.'" type="button">';
-					$output .= '<i class="fa fa-fw fa-remove"></i>Delete</button>';
+					$output .= '<button class="btn btn-primary btn-edit" name="btn-edit" title="Edit Prestasi"  value="'.$detail->id_prestasi.'" type="button">';
+					$output .= '<i class="fa fa-fw s fa-pencil"></i></button>';
+					$output .= '<button class="btn btn-danger btn-delete" name="btn-delete" title="Hapus Prestasi" value="'.$detail->id_prestasi.'" type="button">';
+					$output .= '<i class="fa fa-fw fa-remove"></i></button>';
 					$output .= '</div>';
 					$output .= '</td>';
 					$output .= '</tr>';
@@ -105,9 +105,9 @@ class Prestasi extends CI_Controller {
 
 			} else {
 				$output .= '<tr>';
-				$output .= '<td>';
-				$output .= '<p>';
-				$output .= '<b>Belum ada data prestasi</b>';
+				$output .= '<td colspan="8">';
+				$output .= '<p style="text-align:center">';
+				$output .= '<b >Belum ada data prestasi</b>';
 				$output .= '</p>';
 				$output .= '</td>';
 				$output .= '</tr>';
