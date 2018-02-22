@@ -5,7 +5,7 @@
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
       <li class="breadcrumb-item">User</li>
-      <li class="breadcrumb-item"><a href="<?php echo site_url('Prestasi'); ?>">Data Prestasi</a></li>
+      <li class="breadcrumb-item"><a href="<?php echo site_url('prestasi'); ?>">Data Prestasi</a></li>
 
     </ol>
 
@@ -28,7 +28,6 @@
                 <table id="tabel_prestasi" class="table table-responsive-sm table-striped">
                   <thead>
                     <tr>
-                      <th>No.</th>
                       <th>Nama Prestasi</th>
                       <th>Peringkat</th>
                       <th>Jenis</th>
@@ -40,11 +39,9 @@
                   </thead>
                   <tbody id="tabel-prestasi">
                     <?php
-                    $no = 1;
                     foreach($prestasi as $p){
                     ?>
                     <tr id="<?php echo $p->id_prestasi?>">
-                      <td><?php echo $p->id_prestasi?></td>
                       <td title="Data ini tidak dapat di ubah" ><?php echo $p->nama_prestasi; ?></td>
                       <td title="Data ini tidak dapat di edit" ><?php echo $p->peringkat_prestasi; ?></td>
                       <td title="Jenis Prestasi" name="jenis_prestasi" id="jenis_prestasi">
@@ -273,7 +270,190 @@
 </body>
 
 <script type="text/javascript">
+$(document).ready(function(){
 
+  // tabel data prestasi datatable
+      $('#tabel_prestasi').DataTable( {
+        "bPaginate": false,
+        "info":     false,
+        "bFilter" : false
+      } );
+
+  $(document).on('click', 'button.btn-edit,button.btn-edit2', function() {
+    var id_prestasi = $(this).val();
+    var jenisPrestasi = '';
+    var tipePrestasi = '';
+    $('#editPrestasiModal').modal('show');
+    $.ajax({
+      type: "POST",
+      url: '<?=base_url()?>Prestasi/fetchData',
+      data: {id_prestasi:id_prestasi},
+      dataType:'json',
+      success: function(data){
+        console.log(data);
+        if(data)
+        {
+          var prestasi = data[0];
+            if (prestasi.jenis_prestasi == 1) {
+              jenisPrestasi = 'Akademik';
+              document.getElementById("jenis_prestasi_update1").checked = true;
+            } else {
+              jenisPrestasi = 'Non-Akademik';
+              document.getElementById("jenis_prestasi_update2").checked = true;
+            }
+            if (prestasi.tipe_prestasi == 1) {
+              tipePrestasi = 'Individu';
+              document.getElementById('role_prestasi_edit').style.display = 'none';
+              document.getElementById('role_prestasi_editlabel').style.display = 'none';
+              document.getElementById("tipe_prestasi_update_individu").checked = true;
+            } else {
+              tipePrestasi = 'Kelompok';
+              document.getElementById("tipe_prestasi_update_regu").checked = true;
+            }
+
+            $('#nama_prestasi_edit').val(prestasi.nama_prestasi);
+            $('#peringkat_prestasi_edit').val(prestasi.peringkat_prestasi);
+            $('#tipe_prestasi_edit').val(tipePrestasi);
+            $('#tipe_prestasi_raw').val(prestasi.tipe_prestasi);
+            $('#role_prestasi_edit').val(prestasi.role_prestasi);
+            $('#jenis_prestasi_edit').val(jenisPrestasi);
+            $('#jenis_prestasi_raw').val(prestasi.jenis_prestasi);
+            $('#level_prestasi_edit option[value="'+prestasi.level_prestasi+'"]').prop('selected', true);
+            $('#penyelenggara_prestasi_edit').val(prestasi.penyelenggara_prestasi);
+            $('#tempat_prestasi_edit').val(prestasi.tempat_prestasi);
+            $('#deskripsi_prestasi_edit').val(prestasi.deskripsi_prestasi);
+            $('#date_start_edit').val(prestasi.tgl_prestasi_start);
+            $('#date_end_edit').val(prestasi.tgl_prestasi_end);
+            $('#hiddenId').val(prestasi.id_prestasi);
+        }
+      }
+    });
+  });
+
+  $('#btnSimpanPrestasi').click(function(){
+
+    var nama_prestasi = $('#nama_prestasi_edit').val();
+    var peringkat_prestasi = $('#peringkat_prestasi_edit').val();
+    var role_prestasi = $('#role_prestasi_edit').val();
+    var deskripsi_prestasi =  $('#deskripsi_prestasi_edit').val();
+    var radiotipe = document.getElementsByName('tipe_prestasi_update');
+    for (var i = 0, length = radiotipe.length; i < length; i++)
+    {
+     if (radiotipe[i].checked)
+     {
+      var tipe_prestasi = radiotipe[i].value;
+      break;
+      } else {
+        tipe_prestasi = $('#tipe_prestasi_raw').val();
+      }
+    }
+    var radiojenis = document.getElementsByName('jenis_prestasi_update');
+    for (var i = 0, length = radiojenis.length; i < length; i++)
+    {
+     if (radiojenis[i].checked)
+     {
+      var jenis_prestasi = radiojenis[i].value;
+      break;
+      } else {
+        jenis_prestasi = $('#jenis_prestasi_raw').val();
+      }
+    }
+    var tgl_prestasi_start =  $('#date_start_edit').val();
+    var tgl_prestasi_end =  $('#date_end_edit').val();
+    var id_prestasi = $('#hiddenId').val();
+
+    // if(tgl_prestasi_start==''){
+    //    tgl_prestasi_start =  $('#tgl_prestasi_start_edit').val();
+    // }
+
+    var penyelenggara_prestasi =  $('#penyelenggara_prestasi_edit').val();
+    var tempat_prestasi =  $('#tempat_prestasi_edit').val();
+    var level_prestasi =  $('#level_prestasi_edit').val();
+
+    if(nama_prestasi==''||peringkat_prestasi==''||deskripsi_prestasi==''||penyelenggara_prestasi==''||tempat_prestasi==''||level_prestasi==0){
+        console.log('gagal edit');
+        alert('Edit Data Gagal, Cek kembali isian Anda');
+        return false;
+      }else {
+         nama_prestasi =   $('#nama_prestasi_edit').val();
+         peringkat_prestasi = $('#peringkat_prestasi_edit').val();
+         role_prestasi =  $('#role_prestasi_edit').val();
+         deskripsi_prestasi =  $('#deskripsi_prestasi_edit').val();
+         penyelenggara_prestasi =  $('#penyelenggara_prestasi_edit').val();
+         tempat_prestasi =  $('#tempat_prestasi_edit').val();
+         level_prestasi =  $('#level_prestasi_edit').val();
+         id_prestasi =$('#hiddenId').val();
+    }
+        $.ajax({
+          type: "POST",
+          url: '<?=base_url()?>Prestasi/updatePrestasi',
+          data: {nama_prestasi:nama_prestasi,
+                peringkat_prestasi:peringkat_prestasi,
+                tipe_prestasi:tipe_prestasi,
+                role_prestasi:role_prestasi,
+                jenis_prestasi:jenis_prestasi,
+                deskripsi_prestasi:deskripsi_prestasi,
+                penyelenggara_prestasi:penyelenggara_prestasi,
+                tempat_prestasi:tempat_prestasi,
+                level_prestasi:level_prestasi,
+                tgl_prestasi_start:tgl_prestasi_start,
+                tgl_prestasi_end:tgl_prestasi_end,
+                id_prestasi:id_prestasi },
+          success: function(data){
+          }
+        });
+        // location.reload();
+    });
+
+    $(document).on('click', 'button.btn-delete,button.btn-delete2', function(){
+      $('#modalDelete').modal('show');
+      var id_prestasi=$(this).val();
+      $('#hiddenIdDelete').val(id_prestasi);
+      $.ajax({
+        type: "POST",
+        url: '<?=base_url()?>Prestasi/fetchData',
+        data: {id_prestasi:id_prestasi},
+        dataType:'json',
+        success: function(data){
+          if(data){
+              var prestasi = data[0];
+              $('#namadelete').html('"'+prestasi.nama_prestasi+'"');
+              $('#btnhapus').prop("disabled",false);
+            }
+          }
+      });
+    });
+
+    $('#btnhapus').click(function(){
+      var id = $('#hiddenIdDelete').val();
+      $.ajax({
+        type: "POST",
+        url: '<?=base_url()?>Prestasi/delete',
+        data: {id_prestasi:id},
+        dataType:'json',
+        success: function(data){
+        }
+      });
+        location.reload();
+    });
+
+    $('#cariPrestasi').keyup(function(){
+      var query = $(this).val();
+        $.ajax({
+          url:"<?php echo base_url();?>Prestasi/view",
+          method:"post",
+          data:{query:query},
+          success:function(data){
+            // alert('dasdf');
+            $('#tabel-prestasi').remove();
+            $('#hasilCari').html(data);
+          }
+        });
+    });
+
+
+
+  })
   function TipeCheck() {
       if (document.getElementById('tipe_prestasi_update_regu').checked) {
           document.getElementById('role_prestasi_edit').style.display = 'block';

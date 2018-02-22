@@ -7,7 +7,7 @@
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
       <li class="breadcrumb-item">User</li>
-      <li class="breadcrumb-item"><a href="<?php echo site_url('Prestasi'); ?>">Data Prestasi</a></li>
+      <li class="breadcrumb-item"><a href="<?php echo site_url('prestasi'); ?>">Data Prestasi</a></li>
       <li class="breadcrumb-item">Tambah Prestasi</li>
     </ol>
 

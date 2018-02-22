@@ -97,7 +97,6 @@ class Prestasi_model extends CI_Model {
 		return $result;
 	}
 
-
 	public function hitung_user_prestasi_lokal($nim){
 		$this->db->select('*');
 		$this->db->from('user_prestasi');
@@ -133,6 +132,44 @@ class Prestasi_model extends CI_Model {
 		$this->db->from('user_prestasi');
 		$this->db->where('user_prestasi.nim', $nim);
 		$this->db->where('user_prestasi.level_prestasi', 4);
+		$hasil = $this->db->get();
+		$hitung = $hasil->num_rows();
+		return $hitung;
+	}
+
+	public function hitung_user_prestasi_akademik($nim){
+		$this->db->select('*');
+		$this->db->from('user_prestasi');
+		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->where('user_prestasi.jenis_prestasi', 1);
+		$hasil = $this->db->get();
+		$hitung = $hasil->num_rows();
+		return $hitung;
+	}
+	public function hitung_user_prestasi_non_akademik($nim){
+		$this->db->select('*');
+		$this->db->from('user_prestasi');
+		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->where('user_prestasi.jenis_prestasi', 2);
+		$hasil = $this->db->get();
+		$hitung = $hasil->num_rows();
+		return $hitung;
+	}
+
+	public function hitung_user_prestasi_individu($nim){
+		$this->db->select('*');
+		$this->db->from('user_prestasi');
+		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->where('user_prestasi.tipe_prestasi', 1);
+		$hasil = $this->db->get();
+		$hitung = $hasil->num_rows();
+		return $hitung;
+	}
+	public function hitung_user_prestasi_beregu($nim){
+		$this->db->select('*');
+		$this->db->from('user_prestasi');
+		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->where('user_prestasi.tipe_prestasi', 2);
 		$hasil = $this->db->get();
 		$hitung = $hasil->num_rows();
 		return $hitung;

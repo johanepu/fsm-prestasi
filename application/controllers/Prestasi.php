@@ -56,9 +56,6 @@ class Prestasi extends CI_Controller {
 				foreach ($prestasihasil as $detail) {
 					$output .= '<tr>';
 					$output .= '<td>';
-					$output .= '<p>'.$detail->id_prestasi.'</p>';
-					$output .= '</td>';
-					$output .= '<td>';
 					$output .= '<p>'.$detail->nama_prestasi.'</p>';
 					$output .= '</td>';
 					$output .= '<td>';

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User_home extends CI_Controller {
+class User_profile extends CI_Controller {
 
 	public function __construct() {
 	parent::__construct();
@@ -16,8 +16,8 @@ class User_home extends CI_Controller {
 				$this->load->library('session');
 
 				// Load database
-				$this->load->model('Login_model');
 				$this->load->model('Prestasi_model');
+				$this->load->model('User_model');
 				}
 
 	public function index()
@@ -36,8 +36,15 @@ class User_home extends CI_Controller {
 		$data['jml_prestasi_individu'] = $this->Prestasi_model->hitung_user_prestasi_individu($nim);
 		$data['jml_prestasi_beregu'] = $this->Prestasi_model->hitung_user_prestasi_beregu($nim);
 		// $this->load->view('user_home');
-		$data['content'] = 'user_home.php';
+		$data['content'] = 'user_profile.php';
 		$this->load->view("user_template.php",$data);
 
+	}
+
+	function fetchData(){
+		$nim = $this->session->userdata('nim');
+		$result=$this->User_model->getProfil($nim);
+
+		echo json_encode($result);
 	}
 }

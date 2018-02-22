@@ -69,6 +69,7 @@ public function user_login_process() {
 					$this->session->set_userdata('namalengkap',$result['namalengkap']);
 					$this->session->set_userdata('jurusan',$result['jurusan']);
 					$this->session->set_userdata('email',$result['email']);
+					$this->session->set_userdata('date_created',$result['date_created']);
 					// $sessionuser = $this->session->set_userdata('status');
 					redirect('User_home', 'refresh');
 				}
