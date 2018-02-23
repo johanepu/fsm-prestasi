@@ -44,10 +44,10 @@ class User_model extends CI_Model {
 		}
 	}
 
-	function updatePrestasi($data,$where){
+	function updateProfil($data,$where){
 
 			$this->db->where($where);
-			$this->db->update('user_prestasi',$data);
+			$this->db->update('users',$data);
 	}
 
 	function delete($id){

@@ -47,4 +47,38 @@ class User_profile extends CI_Controller {
 
 		echo json_encode($result);
 	}
+
+	function updateProfil(){
+
+		date_default_timezone_set('Asia/Jakarta');
+		//set user data
+		$namalengkap= $this->input->post('namalengkap');
+		$email=$this->input->post('email');
+		$alamat=$this->input->post('alamat');
+		$tingkatan=$this->input->post('tingkatan');
+		$nomor_hp=$this->input->post('nomor_hp');
+
+		$nim = $this->session->userdata('nim');
+		$data=array(
+			'namalengkap'=> $this->input->post('namalengkap'),
+			'email'=>$this->input->post('email'),
+			'alamat'=>$this->input->post('alamat'),
+			'tingkatan'=>$this->input->post('tingkatan'),
+			'nomor_hp'=>$this->input->post('nomor_hp'),
+
+		);
+
+		$where = array(
+			'nim'=> $nim
+		);
+
+		$result=$this->User_model->updateProfil($data,$where);
+		//set user data
+		$this->session->set_userdata('namalengkap',$namalengkap);
+		$this->session->set_userdata('email',$email);
+		$this->session->set_userdata('alamat',$alamat);
+		$this->session->set_userdata('tingkatan',$tingkatan);
+		$this->session->set_userdata('nomor_hp',$nomor_hp);
+
+	}
 }

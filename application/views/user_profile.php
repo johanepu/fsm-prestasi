@@ -122,7 +122,7 @@
                                     <label class="col-lg-3 col-form-label form-control-label"></label>
                                     <div class="col-lg-9">
                                         <input type="reset" class="btn btn-secondary" value="Cancel">
-                                        <input type="button" class="btn btn-primary" value="Simpan Ubahan">
+                                        <input type="button" id="btnSimpanProfil" class="btn btn-primary" value="Simpan Ubahan">
                                     </div>
                                 </div>
                             </form>
@@ -157,87 +157,39 @@
 
                 $('#profil_nama').val(mhs.namalengkap);
                 $('#profil_email').val(mhs.email);
-                $('#profil_alamat').val(msh.alamat);
-                $('#profil_tingkatan').val(msh.tingkatan);
+                $('#profil_alamat').val(mhs.alamat);
+                $('#profil_tingkatan').val(mhs.tingkatan);
                 $('#profil_nomor_hp').val(mhs.nomor_hp);
             }
           }
         });
       });
 
-      $('#btnSimpanPrestasi').click(function(){
+      $('#btnSimpanProfil').click(function(){
+        var nama_lengkap = $('#profil_nama').val();
+        var email = $('#profil_email').val();
+        var alamat = $('#profil_alamat').val();
+        var tingkatan =  $('#profil_tingkatan').val();
+        var nomor_hp =  $('#profil_nomor_hp').val();
 
-        var nama_prestasi = $('#nama_prestasi_edit').val();
-        var peringkat_prestasi = $('#peringkat_prestasi_edit').val();
-        var role_prestasi = $('#role_prestasi_edit').val();
-        var deskripsi_prestasi =  $('#deskripsi_prestasi_edit').val();
-        var radiotipe = document.getElementsByName('tipe_prestasi_update');
-        for (var i = 0, length = radiotipe.length; i < length; i++)
-        {
-         if (radiotipe[i].checked)
-         {
-          var tipe_prestasi = radiotipe[i].value;
-          break;
-          } else {
-            tipe_prestasi = $('#tipe_prestasi_raw').val();
-          }
-        }
-        var radiojenis = document.getElementsByName('jenis_prestasi_update');
-        for (var i = 0, length = radiojenis.length; i < length; i++)
-        {
-         if (radiojenis[i].checked)
-         {
-          var jenis_prestasi = radiojenis[i].value;
-          break;
-          } else {
-            jenis_prestasi = $('#jenis_prestasi_raw').val();
-          }
-        }
-        var tgl_prestasi_start =  $('#date_start_edit').val();
-        var tgl_prestasi_end =  $('#date_end_edit').val();
-        var id_prestasi = $('#hiddenId').val();
 
-        // if(tgl_prestasi_start==''){
-        //    tgl_prestasi_start =  $('#tgl_prestasi_start_edit').val();
-        // }
-
-        var penyelenggara_prestasi =  $('#penyelenggara_prestasi_edit').val();
-        var tempat_prestasi =  $('#tempat_prestasi_edit').val();
-        var level_prestasi =  $('#level_prestasi_edit').val();
-
-        if(nama_prestasi==''||peringkat_prestasi==''||deskripsi_prestasi==''||penyelenggara_prestasi==''||tempat_prestasi==''||level_prestasi==0){
-            console.log('gagal edit');
-            alert('Edit Data Gagal, Cek kembali isian Anda');
+        if(nama_lengkap==''||email==''||alamat==''||tingkatan==''||nomor_hp==''){
+            alert('Data harus diisi lengkap, Cek kembali isian Anda');
             return false;
           }else {
-             nama_prestasi =   $('#nama_prestasi_edit').val();
-             peringkat_prestasi = $('#peringkat_prestasi_edit').val();
-             role_prestasi =  $('#role_prestasi_edit').val();
-             deskripsi_prestasi =  $('#deskripsi_prestasi_edit').val();
-             penyelenggara_prestasi =  $('#penyelenggara_prestasi_edit').val();
-             tempat_prestasi =  $('#tempat_prestasi_edit').val();
-             level_prestasi =  $('#level_prestasi_edit').val();
-             id_prestasi =$('#hiddenId').val();
-        }
             $.ajax({
               type: "POST",
-              url: '<?=base_url()?>Prestasi/updatePrestasi',
-              data: {nama_prestasi:nama_prestasi,
-                    peringkat_prestasi:peringkat_prestasi,
-                    tipe_prestasi:tipe_prestasi,
-                    role_prestasi:role_prestasi,
-                    jenis_prestasi:jenis_prestasi,
-                    deskripsi_prestasi:deskripsi_prestasi,
-                    penyelenggara_prestasi:penyelenggara_prestasi,
-                    tempat_prestasi:tempat_prestasi,
-                    level_prestasi:level_prestasi,
-                    tgl_prestasi_start:tgl_prestasi_start,
-                    tgl_prestasi_end:tgl_prestasi_end,
-                    id_prestasi:id_prestasi },
+              url: '<?=base_url()?>User_profile/updateProfil',
+              data: {namalengkap:nama_lengkap,
+                    email:email,
+                    alamat:alamat,
+                    tingkatan:tingkatan,
+                    nomor_hp:nomor_hp},
               success: function(data){
               }
             });
-            // location.reload();
+            location.reload();
+          }
         });
 
         $(document).on('click', 'button.btn-delete,button.btn-delete2', function(){

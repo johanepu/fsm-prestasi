@@ -402,7 +402,7 @@ $(document).ready(function(){
           success: function(data){
           }
         });
-        // location.reload();
+        location.reload();
     });
 
     $(document).on('click', 'button.btn-delete,button.btn-delete2', function(){
