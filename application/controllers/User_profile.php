@@ -22,6 +22,7 @@ class User_profile extends CI_Controller {
 
 	public function index()
 	{
+
 		$nim = $this->session->userdata('nim');
 		$data['jml_prestasi'] = $this->Prestasi_model->hitung_user_prestasi($nim);
 		$data['jml_prestasi_validasi'] = $this->Prestasi_model->hitung_user_prestasi_validasi($nim);
@@ -38,6 +39,140 @@ class User_profile extends CI_Controller {
 		// $this->load->view('user_home');
 		$data['content'] = 'user_profile.php';
 		$this->load->view("user_template.php",$data);
+	}
+
+	function updateProfilValidation(){
+		//validate form input
+		$this->form_validation->set_rules(
+        'nama_lengkap', 'Nama Lengkap',
+        'required|trim',
+        array(
+                'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>'
+							)
+    );
+
+    $this->form_validation->set_rules(
+        'email', 'Email',
+        'required|trim',
+        array(
+                'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+								'
+        )
+    );
+
+
+		$this->form_validation->set_rules(
+				'alamat', 'Alamat',
+				'required',
+				array(
+								'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum memilih %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+								'
+				)
+		);
+
+		$this->form_validation->set_rules(
+				'tingkatan', 'Tingkatan',
+				'required',
+				array(
+					'required'      => '
+				<div class="form-group row">
+				<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+					<strong>Data belum lengkap!</strong> Anda belum memilih %s.
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				</div>
+				'
+				)
+		);
+
+		$this->form_validation->set_rules(
+				'nomor_hp', 'Nomor Handphone',
+				'required',
+				array(
+								'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum memilih %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+								'
+				)
+		);
+
+
+		if ($this->form_validation->run() == true)
+		{
+      date_default_timezone_set('Asia/Jakarta');
+
+			$nim = $this->session->userdata('nim');
+			$data=array(
+				'namalengkap'=> $this->input->post('namalengkap'),
+				'email'=>$this->input->post('email'),
+				'alamat'=>$this->input->post('alamat'),
+				'tingkatan'=>$this->input->post('tingkatan'),
+				'nomor_hp'=>$this->input->post('nomor_hp'),
+			);
+			$where = array(
+				'nim'=> $nim
+			);
+		}
+		if ($this->form_validation->run() == true && $this->User_model->updateProfil($data,$where))
+		{
+			//set user data
+			$this->session->set_userdata('namalengkap',$namalengkap);
+			$this->session->set_userdata('email',$email);
+			$this->session->set_userdata('alamat',$alamat);
+			$this->session->set_userdata('tingkatan',$tingkatan);
+			$this->session->set_userdata('nomor_hp',$nomor_hp);
+      $this->session->set_flashdata('status',
+      '  <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Ubah Biodata Berhasil!</strong> Pastikan data profil anda valid untuk mendapat reward point
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div> ');
+			redirect('User_profile');
+		}
+		else
+		{
+			$this->session->set_flashdata('status',
+			'  <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Ubah Biodata Gagal!</strong> Silakan cek kembali isian anda, atau hubungi admin
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div> ');
+			redirect('User_profile');
+		}
 
 	}
 

@@ -87,42 +87,64 @@
 
                         <div class="tab-pane" id="edit">
                             <form role="form">
+                                <?php echo form_open("index");?>
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label form-control-label">Nama Lengkap</label>
                                     <div class="col-lg-9">
                                         <input type="text" class="form-control" id="profil_nama" name="namalengkap" value="<?php echo set_value('namalengkap'); ?>" placeholder="Nama Lengkap" size="50" />
                                     </div>
                                 </div>
+                                <?php echo form_error('nama_lengkap'); ?>
+
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label form-control-label">Email</label>
                                     <div class="col-lg-9">
                                         <input type="text" class="form-control" id="profil_email" name="email" value="<?php echo set_value('email'); ?>" placeholder="Email" size="50"/>
                                     </div>
                                 </div>
+                                <?php echo form_error('email'); ?>
+
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label form-control-label">Alamat</label>
                                     <div class="col-lg-9">
                                         <textarea class="form-control" type="text" id="profil_alamat" value="" placeholder="Tulis Alamat Anda"></textarea>
                                     </div>
                                 </div>
+                                <?php echo form_error('alamat'); ?>
+
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label form-control-label">Tingkatan/Tahun Masuk</label>
                                     <div class="col-lg-9">
-                                        <input class="form-control" type="number" id="profil_tingkatan" value="" placeholder="Tingkatan misal : '2014'">
+                                      <select id="profil_tingkatan" value="" placeholder="Tingkatan misal : '2014'" class="form-control">
+                                        <option value="">Tahun Tingkatan</option>
+                                        <option value="2011">2011</option>
+                                        <option value="2012">2012</option>
+                                        <option value="2013">2013</option>
+                                        <option value="2014">2014</option>
+                                        <option value="2015">2015</option>
+                                        <option value="2016">2017</option>
+                                        <option value="2015">2018</option>
+                                        <option value="2016">2019</option>
+                                        <option value="2015">2020</option>
+                                        <option value="2016">2021</option>
+                                      </select>
                                     </div>
                                 </div>
+                                <?php echo form_error('tingkatan'); ?>
+
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label form-control-label">Nomor Handphone</label>
                                     <div class="col-lg-9">
                                         <input class="form-control" type="text" id="profil_nomor_hp" value=""  placeholder="Format : '08XXXXX..'">
                                     </div>
                                 </div>
+                                <?php echo form_error('nomor_hp'); ?>
 
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label form-control-label"></label>
                                     <div class="col-lg-9">
                                         <input type="reset" class="btn btn-secondary" value="Cancel">
-                                        <input type="button" id="btnSimpanProfil" class="btn btn-primary" value="Simpan Ubahan">
+                                        <input type="submit" id="btnSimpanProfil" class="btn btn-primary" value="Submit">
                                     </div>
                                 </div>
                             </form>
