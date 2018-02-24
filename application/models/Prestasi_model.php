@@ -104,6 +104,21 @@ class Prestasi_model extends CI_Model {
 		return $result;
 	}
 
+
+	public function user_reward_point(){
+	  $this->db->select('*');
+	  $this->db->from('users');
+	  $query = $this->db->get();
+	  foreach($query->result() as $row) {
+	    $nim = (string)$row->nim;
+	    $poin = $this->hitung_reward_point($row->nim);
+	    $result[] = $poin;
+	    // $result += $row->reward_poin;
+	  }
+
+	  return $result;
+	 }
+
 	public function hitung_user_prestasi_lokal($nim){
 		$this->db->select('*');
 		$this->db->from('user_prestasi');

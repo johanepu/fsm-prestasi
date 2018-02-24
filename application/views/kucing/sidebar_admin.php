@@ -11,7 +11,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="<?php echo site_url('Admin_mahasiswa'); ?>" class="nav-link"><i class="icon-people"></i> Data Mahasiswa</a>
+          <a href="<?php echo site_url('Admin_user'); ?>" class="nav-link"><i class="icon-people"></i> Data Mahasiswa</a>
         </li>
 
         <li class="nav-item">

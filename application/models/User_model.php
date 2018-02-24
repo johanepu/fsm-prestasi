@@ -16,6 +16,13 @@ class User_model extends CI_Model {
 		return (isset($id)) ? $id : FALSE;
 	}
 
+	public function tampil_all_user(){
+		$this->db->select('*');
+		$this->db->from('users');
+		$hasil = $this->db->get();
+		return $hasil->result();
+	}
+
 	public function tampil_user_prestasi($nim){
 		$this->db->select('*');
 		$this->db->from('user_prestasi');
