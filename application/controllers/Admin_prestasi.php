@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Prestasi extends CI_Controller {
+class Admin_prestasi extends CI_Controller {
 
 	public function __construct() {
 	parent::__construct();
@@ -24,12 +24,9 @@ class Prestasi extends CI_Controller {
 
 	public function index()
 	{
-		// $this->load->view('user_home');
-		// $data['content'] = 'data_prestasi.php';
-		$nim = $this->session->userdata('nim');
-		$data['prestasi'] = $this->Prestasi_model->tampil_user_prestasi($nim);
-		// $this->load->view("user_template.php",$data);
-
+		$data['prestasi'] = $this->Prestasi_model->tampil_all_prestasi();
+		$data['content'] = 'kucing/data_master_prestasi.php';
+		$this->load->view("kucing/admin_template.php",$data);
 	}
 
 	function view(){
@@ -406,26 +403,6 @@ class Prestasi extends CI_Controller {
 	function delete(){
 		$id = $this->input->post('id_prestasi');
 		$result=$this->Prestasi_model->delete($id);
-	}
-
-	function validate(){
-		$data=array(
-			'validasi'=> 1
-		);
-		$where = array(
-			'id_prestasi'=> $this->input->post('id_prestasi')
-		);
-		$result=$this->Prestasi_model->updatePrestasi($data,$where);
-	}
-
-	function unvalidate(){
-		$data=array(
-			'validasi'=> 0
-		);
-		$where = array(
-			'id_prestasi'=> $this->input->post('id_prestasi')
-		);
-		$result=$this->Prestasi_model->updatePrestasi($data,$where);
 	}
 
 

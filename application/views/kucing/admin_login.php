@@ -56,7 +56,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 echo "</div>";
                 }
               ?>
-              <?php echo form_open('User_login/user_login_process'); ?>
+              <?php echo form_open('Admin_login/admin_login_process'); ?>
               <?php
                 echo "<div class='error_msg'>";
                 if (isset($error_message)) {
@@ -69,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="icon-user"></i></span>
                 </div>
-                <input type="text" class="form-control" name="nim" id="nim" placeholder="NIM">
+                <input type="text" class="form-control" name="username" id="username" placeholder="Username">
               </div>
               <div class="input-group mb-4">
                 <div class="input-group-prepend">

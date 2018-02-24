@@ -15,6 +15,30 @@
       <div class="animated fadeIn">
         <div class="row">
 
+
+          <?php if ($jml_prestasi <= 0): ?>
+            <div class="col-sm-12 col-xl-12">
+              <div class="card">
+                <div class="card-header">
+                  <i class="fa fa-align-justify"></i> Notifikasi
+                </div>
+                <div class="card-body">
+                  <div class="jumbotron">
+                    <h1 class="display-3">Selamat Datang !</h1>
+                    <p class="lead">RewardMe merupakan sistem pendataan mahasiswa berprestasi FSM, sistem ini juga menghitung <u>Reward Point</u>
+                      yang nantinya menjadi bahan pertimbangan keperluan akademis dan penilaian mahasiswa.</p>
+                    <hr class="my-4">
+                    <p>Anda belum memiliki prestasi di sistem. Silakan klik tombol "Tambah Prestasi" untuk mulai menambah prestasi atau "Edit Profil" untuk melengkapi profil anda.</p>
+                    <p>Kelengkapan profil/biodata anda akan menjadi pertimbangan validasi prestasi anda.</p>
+                    <p class="lead">
+                      <a class="btn btn-primary btn-lg" href="<?php echo site_url('Prestasi/addPrestasi'); ?>" role="button">Tambah Prestasi</a>
+                      <a class="btn btn-danger btn-lg" href="<?php echo site_url('User_profile'); ?>" role="button">Lengkapi Profil</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <?php else: ?>
             <!-- dashboard prestasi yg ada -->
             <div class="col-sm-6 col-lg-3">
               <div class="card text-white bg-primary">
@@ -204,9 +228,9 @@
                   </div>
                 </div>
               </div>
-
-
         <!--/.row-->
+          <?php endif; ?>
+
 
 
 

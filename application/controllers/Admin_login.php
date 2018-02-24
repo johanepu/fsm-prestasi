@@ -45,7 +45,7 @@ public function admin_login_process() {
 
 	if ($this->form_validation->run() == FALSE) {
 		if(isset($this->session->userdata['logged_in'])){
-			redirect('kucing/admin_home', 'refresh');
+			redirect('Admin_home', 'refresh');
 		}else{
 			$this->load->view('kucing/admin_login');
 		}
@@ -63,7 +63,7 @@ public function admin_login_process() {
 					$this->session->set_userdata('nama_admin',$result['nama_admin']);
 
 					// $sessionuser = $this->session->set_userdata('status');
-					redirect('kucing/admin_home', 'refresh');
+					redirect('Admin_home', 'refresh');
 				}
 				else
 				{
