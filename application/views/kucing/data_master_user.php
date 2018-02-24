@@ -17,7 +17,7 @@
             <div class="card">
               <div class="card-header">
                 <i class="fa fa-align-justify"></i> Data Mahasiswa
-                <a  type="button" class="btn btn-primary" href="<?php echo site_url('Prestasi/addPrestasi'); ?>" style="float: right;"><i class="fa fa-plus"></i>&nbsp; Tambah Prestasi</a>
+                <!-- <a  type="button" class="btn btn-primary" href="<?php echo site_url('Prestasi/addPrestasi'); ?>" style="float: right;"><i class="fa fa-plus"></i>&nbsp; Tambah Prestasi</a> -->
               </div>
               <div class="card-body">
                 <div class="row mt">
@@ -64,7 +64,15 @@
                       <td ><?php echo $mhs->email; ?></td>
                       <td ><?php echo $mhs->nomor_hp; ?></td>
                       <td ><?php echo $mhs->tingkatan; ?></td>
-                      <td ><?php echo $reward_poin[$p]; ?></td>
+                      <!-- <td ><?php echo $reward_poin[$p]; ?></td> -->
+                      <td >
+                      <?php
+                      if ($reward_poin[$p] <= "10") {
+                        echo '<h5><span class="badge badge-danger">'.$reward_poin[$p].'</span></h5>';
+                      }else {
+                        echo '<h5><span class="badge badge-success">'.$reward_poin[$p].'</span></h5>';
+                      }
+                      ?>
 
                       <td>
                           <div class="btn-group" >

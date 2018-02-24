@@ -61,6 +61,12 @@ class User_model extends CI_Model {
 		return $this->db->query("DELETE FROM user_prestasi WHERE id_prestasi='$id'");
 	}
 
+	public function GetNimRow($keyword) {
+        $this->db->order_by('nim', 'DESC');
+        $this->db->like("nim", $keyword);
+        return $this->db->get('users')->result_array();
+    }
+
 
 
 

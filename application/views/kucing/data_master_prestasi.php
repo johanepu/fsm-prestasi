@@ -17,7 +17,7 @@
             <div class="card">
               <div class="card-header">
                 <i class="fa fa-align-justify"></i> Data Prestasi
-                <a  type="button" class="btn btn-primary" href="<?php echo site_url('Prestasi/addPrestasi'); ?>" style="float: right;"><i class="fa fa-plus"></i>&nbsp; Tambah Prestasi</a>
+                <a  type="button" class="btn btn-primary" href="<?php echo site_url('Admin_prestasi/addPrestasi_admin'); ?>" style="float: right;"><i class="fa fa-plus"></i>&nbsp; Tambah Prestasi</a>
               </div>
               <div class="card-body">
                 <div class="row mt">

@@ -346,6 +346,8 @@ class Prestasi extends CI_Controller {
 		}
 	}
 
+	
+
 	function success()
 	{
 		$this->session->set_flashdata('status','<div class="alert alert-success"><p>Silahkan cek email untuk verifikasi</p></div>');

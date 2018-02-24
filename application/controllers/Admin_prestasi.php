@@ -20,6 +20,7 @@ class Admin_prestasi extends CI_Controller {
 
 				// Load database
 				$this->load->model('Prestasi_model');
+				$this->load->model('User_model');
 				}
 
 	public function index()
@@ -110,13 +111,30 @@ class Admin_prestasi extends CI_Controller {
 		}
 	}
 
-	public function addPrestasi()
+	public function addPrestasi_admin()
 	{
 
 
 		$this->data['title'] = "Tambah Prestasi";
 
 		//validate form input
+
+		$this->form_validation->set_rules(
+				'nim', 'NIM',
+				'required|trim',
+				array(
+								'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>'
+							)
+		);
+
 		$this->form_validation->set_rules(
         'nama_prestasi', 'Nama Kegiatan',
         'required|trim',
@@ -302,7 +320,7 @@ class Admin_prestasi extends CI_Controller {
 				}
 
 			$data = array(
-				'nim' => $this->session->userdata('nim'),
+				'nim' => $this->input->post('nim'),
 				'nama_prestasi' 	=> $this->input->post('nama_prestasi'),
 				'peringkat_prestasi'  	=> $this->input->post('peringkat_prestasi'),
         'tipe_prestasi'    	=> $this->input->post('tipe_prestasi'),
@@ -329,7 +347,7 @@ class Admin_prestasi extends CI_Controller {
           <span aria-hidden="true">×</span>
         </button>
       </div> ');
-			redirect('prestasi');
+			redirect('Admin_prestasi');
 		}
 		else
 		{
@@ -337,8 +355,8 @@ class Admin_prestasi extends CI_Controller {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->session->flashdata('message')));
 			// $this->load->view('user_home');
-			$data['content'] = 'add_prestasi.php';
-			$this->load->view("user_template.php",$data,$this->data);
+			$data['content'] = 'kucing/add_prestasi_admin.php';
+			$this->load->view("kucing/admin_template.php",$data,$this->data);
 			// $this->load->view('add_prestasi', $this->data);
 		}
 	}
@@ -404,6 +422,12 @@ class Admin_prestasi extends CI_Controller {
 		$id = $this->input->post('id_prestasi');
 		$result=$this->Prestasi_model->delete($id);
 	}
+
+	public function getNim(){
+		$keyword=$this->input->post('keyword');
+		$data=$this->User_model->GetNimRow($keyword);
+		echo json_encode($data);
+}
 
 
 
