@@ -60,16 +60,16 @@
       </a>
       <div class="dropdown-menu dropdown-menu-right">
         <div class="dropdown-header text-center">
-          <strong>Prestasi</strong>
+          <strong>Data Statistik</strong>
         </div>
-        <a class="dropdown-item" href="#"><i class="fa fa-trophy"></i> Prestasi<span class="badge badge-info"><?php echo $jml_prestasi; ?></span></a>
+        <!-- <a class="dropdown-item" href="#"><i class="fa fa-trophy"></i> Prestasi<span class="badge badge-info"><?php echo $jml_prestasi; ?></span></a>
         <a class="dropdown-item" href="#"><i class="fa fa-check-circle"></i> Tervalidasi<span class="badge badge-success"><?php echo $jml_prestasi_validasi; ?></span></a>
         <a class="dropdown-item" href="#"><i class="fa fa-times-circle"></i> Belum Tervalidasi<span class="badge badge-danger"><?php echo $jml_prestasi_blmvalidasi; ?></span></a>
-        <a class="dropdown-item" href="#"><i class="fa fa-star"></i> Reward Point<span class="badge badge-warning"><?php echo $jml_reward_point; ?></span></a>
+        <a class="dropdown-item" href="#"><i class="fa fa-star"></i> Reward Point<span class="badge badge-warning"><?php echo $jml_reward_point; ?></span></a> -->
         <div class="dropdown-header text-center">
           <strong>Akun</strong>
         </div>
-        <a class="dropdown-item" href="<?php echo site_url('User_profile'); ?>"><i class="fa fa-user"></i> Profile</a>
+        <!-- <a class="dropdown-item" href="<?php echo site_url('User_profile'); ?>"><i class="fa fa-user"></i> Profile</a> -->
         <a class="dropdown-item" href="<?php echo site_url('Admin_login/logout'); ?>"><i class="fa fa-sign-out"></i> Logout</a>
       </div>
     </li>

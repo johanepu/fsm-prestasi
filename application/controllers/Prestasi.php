@@ -24,9 +24,24 @@ class Prestasi extends CI_Controller {
 
 	public function index()
 	{
+		$nim = $this->session->userdata('nim');
+		// statistik
+		$data['jml_prestasi'] = $this->Prestasi_model->hitung_user_prestasi($nim);
+		$data['jml_prestasi_validasi'] = $this->Prestasi_model->hitung_user_prestasi_validasi($nim);
+		$data['jml_prestasi_blmvalidasi'] = $this->Prestasi_model->hitung_user_prestasi_blmvalidasi($nim);
+		$data['jml_reward_point'] = $this->Prestasi_model->hitung_reward_point($nim);
+		$data['jml_prestasi_lokal'] = $this->Prestasi_model->hitung_user_prestasi_lokal($nim);
+		$data['jml_prestasi_nasional'] = $this->Prestasi_model->hitung_user_prestasi_nasional($nim);
+		$data['jml_prestasi_regional'] = $this->Prestasi_model->hitung_user_prestasi_regional($nim);
+		$data['jml_prestasi_internasional'] = $this->Prestasi_model->hitung_user_prestasi_internasional($nim);
+		$data['jml_prestasi_akademik'] = $this->Prestasi_model->hitung_user_prestasi_akademik($nim);
+		$data['jml_prestasi_non_akademik'] = $this->Prestasi_model->hitung_user_prestasi_non_akademik($nim);
+		$data['jml_prestasi_individu'] = $this->Prestasi_model->hitung_user_prestasi_individu($nim);
+		$data['jml_prestasi_beregu'] = $this->Prestasi_model->hitung_user_prestasi_beregu($nim);
+		//statistik end
 		// $this->load->view('user_home');
 		// $data['content'] = 'data_prestasi.php';
-		$nim = $this->session->userdata('nim');
+
 		$data['prestasi'] = $this->Prestasi_model->tampil_user_prestasi($nim);
 		// $this->load->view("user_template.php",$data);
 
@@ -346,7 +361,7 @@ class Prestasi extends CI_Controller {
 		}
 	}
 
-	
+
 
 	function success()
 	{

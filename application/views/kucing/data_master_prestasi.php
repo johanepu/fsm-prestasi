@@ -291,11 +291,14 @@
 $(document).ready(function(){
 
   // tabel data prestasi datatable
-      $('#tabel_prestasi').DataTable( {
+    tabel_prestasi =  $('#tabel_prestasi').DataTable( {
+        "dom": 'lrtip',
         "bPaginate": false,
-        "info":     false,
-        "bFilter" : false
-      } );
+        "info":     false
+      } )
+      $('#cariPrestasi').keyup(function(){
+            tabel_prestasi.search($(this).val()).draw() ;
+      })
 
   $(document).on('click', 'button.btn-edit,button.btn-edit2', function() {
     var id_prestasi = $(this).val();
@@ -481,19 +484,19 @@ $(document).ready(function(){
         location.reload();
     });
 
-    $('#cariPrestasi').keyup(function(){
-      var query = $(this).val();
-        $.ajax({
-          url:"<?php echo base_url();?>Prestasi/view",
-          method:"post",
-          data:{query:query},
-          success:function(data){
-            // alert('dasdf');
-            $('#tabel-prestasi').remove();
-            $('#hasilCari').html(data);
-          }
-        });
-    });
+    // $('#cariPrestasi').keyup(function(){
+    //   var query = $(this).val();
+    //     $.ajax({
+    //       url:"<?php echo base_url();?>Prestasi/view",
+    //       method:"post",
+    //       data:{query:query},
+    //       success:function(data){
+    //         // alert('dasdf');
+    //         $('#tabel-prestasi').remove();
+    //         $('#hasilCari').html(data);
+    //       }
+    //     });
+    // });
 
 
 
