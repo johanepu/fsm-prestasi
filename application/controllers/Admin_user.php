@@ -21,7 +21,14 @@ class Admin_user extends CI_Controller {
 				// Load database
 				$this->load->model('User_model');
 				$this->load->model('Prestasi_model');
+				// Gabole login bro
+				if(isset($this->session->userdata['logged_in'])){
+					redirect('Admin_home', 'refresh');
 				}
+				if($this->session->userdata('status') != "login"){
+					redirect("Admin_login");
+				}
+			}
 
 	public function index()
 	{

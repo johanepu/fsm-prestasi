@@ -18,7 +18,10 @@ class User_home extends CI_Controller {
 				// Load database
 				$this->load->model('Login_model');
 				$this->load->model('Prestasi_model');
+				if($this->session->userdata('status') != "login"){
+					redirect("Admin_login");
 				}
+			}
 
 	public function index()
 	{

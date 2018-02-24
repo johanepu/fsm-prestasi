@@ -65,6 +65,7 @@ public function user_login_process() {
 			// $result = $this->Login_model->login($data);
 			if($result)
 			{
+					$this->session->set_userdata('status', 'login');
 					$this->session->set_userdata('nim',$result['nim']);
 					$this->session->set_userdata('namalengkap',$result['namalengkap']);
 					$this->session->set_userdata('jurusan',$result['jurusan']);

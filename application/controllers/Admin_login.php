@@ -17,7 +17,7 @@ parent::__construct();
 
 			// Load database
 			$this->load->model('Login_model');
-			}
+		}
 
 	// Show login page
 	public function index() {
@@ -58,6 +58,7 @@ public function admin_login_process() {
 			// $result = $this->Login_model->login($data);
 			if($result)
 			{
+					$this->session->set_userdata('status', 'login');
 					$this->session->set_userdata('admin_id',$result['admin_id']);
 					$this->session->set_userdata('username',$result['username']);
 					$this->session->set_userdata('nama_admin',$result['nama_admin']);
@@ -112,7 +113,7 @@ public function logout() {
 		$this->session->unset_userdata('logged_in', $sess_array);
 		$this->session->sess_destroy();
 		$data['message_display'] = 'Berhasil Logout';
-		redirect('kucing/admin_login', $data);
+		redirect('Admin_login', $data);
 	}
 
 }

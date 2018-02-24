@@ -18,7 +18,10 @@ class User_profile extends CI_Controller {
 				// Load database
 				$this->load->model('Prestasi_model');
 				$this->load->model('User_model');
+				if($this->session->userdata('status') != "login"){
+					redirect("Admin_login");
 				}
+			}
 
 	public function index()
 	{
