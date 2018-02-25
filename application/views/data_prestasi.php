@@ -42,8 +42,8 @@
                     foreach($prestasi as $p){
                     ?>
                     <tr id="<?php echo $p->id_prestasi?>">
-                      <td title="Data ini tidak dapat di ubah" ><?php echo $p->nama_prestasi; ?></td>
-                      <td title="Data ini tidak dapat di edit" ><?php echo $p->peringkat_prestasi; ?></td>
+                      <td ><?php echo $p->nama_prestasi; ?></td>
+                      <td ><?php echo $p->peringkat_prestasi; ?></td>
                       <td title="Jenis Prestasi" name="jenis_prestasi" id="jenis_prestasi">
                       <?php
                       if ($p->jenis_prestasi == "1") {
@@ -72,7 +72,7 @@
                           echo '<span class="label label-warning label-mini">Internasional</span>';
                       }
                       ?></td>
-                      <td title="Data ini tidak dapat di edit" ><?php echo $p->tgl_prestasi_start; ?></td>
+                      <td ><?php echo $p->tgl_prestasi_start; ?></td>
                       <td>
                           <div class="btn-group" >
                               <button class="btn btn-primary btn-edit" name="btn-edit" title="Edit Prestasi" value="<?=$p->id_prestasi?>" type="button">

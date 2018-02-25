@@ -119,15 +119,13 @@ class Prestasi_model extends CI_Model {
 	  return $result;
 	 }
 
-	 public function top_user_jml_prestasi(){
+	 public function user_jml_prestasi(){
 		 $this->db->select('*');
-		 $this->db->order_by('date_created', 'ASC');
 		 $this->db->from('users');
-		 $this->db->limit('6');
 		 $query = $this->db->get();
 		 foreach($query->result() as $row) {
 			 $nim = (string)$row->nim;
-			 $poin = $this->hitung_reward_point($row->nim);
+			 $poin = $this->hitung_user_prestasi($row->nim);
 			 $result[] = $poin;
 			 // $result += $row->reward_poin;
 		 }
@@ -143,7 +141,7 @@ class Prestasi_model extends CI_Model {
 		 $query = $this->db->get();
 		 foreach($query->result() as $row) {
 			 $nim = (string)$row->nim;
-			 $poin = $this->hitung_user_prestasi($row->nim);
+			 $poin = $this->hitung_reward_point($row->nim);
 			 $result[] = $poin;
 			 // $result += $row->reward_poin;
 		 }

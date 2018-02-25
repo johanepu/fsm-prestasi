@@ -5,9 +5,9 @@
 
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
-      <li class="breadcrumb-item">User</li>
-      <li class="breadcrumb-item"><a href="<?php echo site_url('prestasi'); ?>">Data Diri</a></li>
-      <li class="breadcrumb-item">Profil</li>
+      <li class="breadcrumb-item">Admin</li>
+      <li class="breadcrumb-item"><a href="<?php echo site_url('Admin_user'); ?>">Data Mahasiswa</a></li>
+      <li class="breadcrumb-item"><?php echo $data_user[0]->namalengkap?></li>
     </ol>
 
     <div class="container-fluid">
@@ -45,20 +45,20 @@
                                 <div class="col-md-6">
                                     <h6>Nama</h6>
                                     <p>
-                                      <?php echo $this->session->userdata('namalengkap')?>
+                                      <?php echo $data_user[0]->namalengkap?>
                                     </p>
                                     <h6>Nomor Induk Mahasiswa</h6>
                                     <p>
-                                      <?php echo $this->session->userdata('nim')?>
+                                      <?php echo $data_user[0]->nim?>
                                     </p>
                                     <h6>Email</h6>
                                     <p>
-                                      <?php echo $this->session->userdata('email')?>
+                                      <?php echo $data_user[0]->email?>
                                     </p>
                                     <h6>Departemen/Jurusan</h6>
                                     <p>
                                       <?php
-                                        $jurusan = $this->session->userdata('jurusan');
+                                        $jurusan = $data_user[0]->jurusan;
                                       if ($jurusan == 1) {
                                         echo 'Matematika';
                                       }if ($jurusan == 2) {
@@ -76,16 +76,82 @@
                                     <h6>Tanggal Akun Dibuat</h6>
                                     <p>
                                       <?php
-                                        $tanggal = $this->session->userdata('date_created');
+                                        $tanggal = $data_user[0]->date_created;
                                         echo $tanggal;
                                        ?>
                                     </p>
+                                </div>
+                                <div class="col-md-12">
+                                  <br>
+                                  <h5 class="mb-0 text-center">Data Prestasi <?php echo $data_user[0]->namalengkap?></h5>
+                                  <br>
+                                  <table id="tabel_prestasi" class="table table-responsive-sm table-striped">
+                                    <thead>
+                                      <tr>
+                                        <th>Nama Prestasi</th>
+                                        <th>Peringkat</th>
+                                        <th>Jenis</th>
+                                        <th>Tipe Prestasi</th>
+                                        <th>Level</th>
+                                        <th>Tanggal Kegiatan</th>
+                                        <th>Aksi</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="tabel-prestasi">
+                                      <?php
+                                      foreach($prestasi_user as $p){
+                                      ?>
+                                      <tr id="<?php echo $p->id_prestasi?>">
+                                        <td title="Data ini tidak dapat di ubah" ><?php echo $p->nama_prestasi; ?></td>
+                                        <td title="Data ini tidak dapat di edit" ><?php echo $p->peringkat_prestasi; ?></td>
+                                        <td title="Jenis Prestasi" name="jenis_prestasi" id="jenis_prestasi">
+                                        <?php
+                                        if ($p->jenis_prestasi == "1") {
+                                            echo '<span class="label label-success label-mini">Akademik</span>';
+                                        }elseif ($p->jenis_prestasi == "2") {
+                                            echo '<span class="label label-warning label-mini">Non-Akademik</span>';
+                                        }
+                                        ?></td>
+                                        <td title="Tipe Prestasi" name="tipe_prestasi" id="tipe_prestasi">
+                                        <?php
+                                        if ($p->tipe_prestasi == "1") {
+                                            echo '<span class="label label-success label-mini">Individu</span>';
+                                        }elseif ($p->tipe_prestasi == "2") {
+                                            echo '<span class="label label-warning label-mini">Beregu</span>';
+                                        }
+                                        ?></td>
+                                        <td title="Level Prestasi" name="level_prestasi" id="level_prestasi">
+                                        <?php
+                                        if ($p->level_prestasi == "1") {
+                                            echo '<span class="label label-success label-mini">Lokal</span>';
+                                        }elseif ($p->level_prestasi == "2") {
+                                            echo '<span class="label label-warning label-mini">Nasional</span>';
+                                        }elseif ($p->level_prestasi == "3") {
+                                            echo '<span class="label label-warning label-mini">Regional</span>';
+                                        }elseif ($p->level_prestasi == "4") {
+                                            echo '<span class="label label-warning label-mini">Internasional</span>';
+                                        }
+                                        ?></td>
+                                        <td title="Data ini tidak dapat di edit" ><?php echo $p->tgl_prestasi_start; ?></td>
+                                        <td>
+                                            <div class="btn-group" >
+                                                <button class="btn btn-primary btn-edit" name="btn-edit" title="Edit Prestasi" value="<?=$p->id_prestasi?>" type="button">
+                                                    <i class="fa fa-fw s fa-pencil"></i></button>
+                                                <button class="btn btn-danger btn-delete" name="btn-delete" title="Hapus Prestasi" value="<?=$p->id_prestasi?>" type="button">
+                                                    <i class="fa fa-fw fa-remove"></i></button>
+                                            </div>
+                                        </td>
+                                      </tr>
+                                      <?php }?>
+                                    </tbody>
+                                    <tbody id="hasilCari"></tbody>
+                                  </table>
                                 </div>
                             </div>
                             <!--/row-->
                         </div>
 
-                        <div class="tab-pane" id="edit">
+                        <div class="tab-pane" id="edit" nim="<?php echo $data_user[0]->nim?>">
                             <form role="form">
                                 <?php echo form_open("index");?>
                                 <div class="form-group row">
@@ -147,6 +213,7 @@
                                         <input type="submit" id="btnSimpanProfil" class="btn btn-primary" value="Submit">
                                     </div>
                                 </div>
+                                <input class="form-control" type="hidden" id="hidden_nim" value="">
                             </form>
                           </div>
                       </div>
@@ -165,11 +232,19 @@
     <script type="text/javascript">
     $(document).ready(function(){
 
+      // tabel data prestasi datatable
+        tabel_prestasi =  $('#tabel_prestasi').DataTable( {
+            "dom": 'lrtip',
+            "bPaginate": false,
+            "info":     false
+          } )
 
       $(document).on('click', 'a.edit', function() {
+        var nim = document.getElementById("edit").getAttribute("nim");
         $.ajax({
           type: "POST",
-          url: '<?=base_url()?>User_profile/fetchData',
+          url: '<?=base_url()?>Admin_user/userData',
+          data:{nim:nim},
           dataType:'json',
           success: function(data){
             console.log(data);
@@ -182,6 +257,7 @@
                 $('#profil_alamat').val(mhs.alamat);
                 $('#profil_tingkatan').val(mhs.tingkatan);
                 $('#profil_nomor_hp').val(mhs.nomor_hp);
+                $('#hidden_nim').val(mhs.nim);
             }
           }
         });
@@ -193,20 +269,23 @@
         var alamat = $('#profil_alamat').val();
         var tingkatan =  $('#profil_tingkatan').val();
         var nomor_hp =  $('#profil_nomor_hp').val();
+        var nim = $('#hidden_nim').val();
 
 
-        if(nama_lengkap==''||email==''||alamat==''||tingkatan==''||nomor_hp==''){
+        if(nama_lengkap==''||email==''||alamat==''||tingkatan==''||nomor_hp==''||nim==''){
             alert('Data harus diisi lengkap, Cek kembali isian Anda');
             return false;
           }else {
             $.ajax({
               type: "POST",
-              url: '<?=base_url()?>User_profile/updateProfil',
+              url: '<?=base_url()?>Admin_user/updateUser',
               data: {namalengkap:nama_lengkap,
                     email:email,
                     alamat:alamat,
                     tingkatan:tingkatan,
-                    nomor_hp:nomor_hp},
+                    nomor_hp:nomor_hp,
+                    nim:nim
+                  },
               success: function(data){
               }
             });

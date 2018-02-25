@@ -60,6 +60,14 @@ class User_model extends CI_Model {
 		}
 	}
 
+	function lihat_user($nim){
+		$this->db->select('*');
+		$this->db->from('users');
+		$this->db->where('users.nim', $nim);
+		$hasil = $this->db->get();
+		return $hasil->result();
+	}
+
 	function updateProfil($data,$where){
 
 			$this->db->where($where);

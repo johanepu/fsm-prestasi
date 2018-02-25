@@ -5,7 +5,7 @@
 
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
-      <li class="breadcrumb-item">User</li>
+      <li class="breadcrumb-item">Admin</li>
       <li class="breadcrumb-item"><a href="<?php echo site_url('User_home'); ?>">Dashboard</a></li>
 
     </ol>
@@ -204,8 +204,9 @@
                     </ul>
 
                     <br>
-                    <h5 class="mb-0">Mahasiswa terbaru</h5>
-                    <table class="table table-responsive-sm table-hover table-outline mb-0">
+                    <h5 class="mb-0">Ranking Prestasi</h5>
+                    <br>
+                    <table id="mhs_dashboard"class="table table-responsive-sm table-hover table-outline mb-0">
                       <thead class="thead-light">
                         <tr>
                           <th class="text-center"><i class="icon-people"></i></th>
@@ -217,9 +218,9 @@
                       </thead>
                       <tbody>
                         <?php
-                        foreach($top_user as $p => $mhs){
+                        foreach($user as $p => $mhs){
                         ?>
-                        <tr id="<?php echo $mhs->nim?>">
+                        <tr>
                           <td class="text-center">
                             <div class="avatar">
                               <img src="<?php echo base_url(); ?>assets/src/img/avatars/1.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
@@ -251,13 +252,13 @@
                           <td>
                             <div class="clearfix">
                               <div class="float-left">
-                                <strong><?php echo $top_jml_prestasi[$p]; ?></strong>
+                                <strong><?php echo $jml_prestasi_user[$p]; ?></strong>
                               </div>
                               <div class="float-right">
                               </div>
                             </div>
                             <div class="progress progress-xs">
-                              <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                              <div class="progress-bar bg-success" id="<?php echo $mhs->nim?>" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="<?php echo $jml_prestasi; ?>"></div>
                             </div>
                           </td>
                           <td>
@@ -290,6 +291,17 @@
 </body>
 <script type="text/javascript">
   $(document).ready(function(){
+
+    $('#mhs_dashboard').dataTable( {
+    "scrollY": "350px",
+    "scrollCollapse": true,
+    "bFilter" :false,
+    "order": [[ 3, "desc" ]],
+    "paging": false
+  } );
+
+    var cek = <?php echo $jml_user; ?> ;
+    // console.log($cek);
     // progress bar tingkat prestasi
     var lokal_bar=(<?php echo $jml_prestasi_lokal; ?>/<?php echo $jml_prestasi; ?>*100);
     $('#lokal_bar').css('width', lokal_bar + "%");
@@ -309,5 +321,16 @@
     $('#individu_bar').css('width', individu_bar + "%");
     var beregu_bar=(<?php echo $jml_prestasi_beregu; ?>/<?php echo $jml_prestasi; ?>*100);
     $('#beregu_bar').css('width', beregu_bar + "%");
+
+
+
+      <?php
+      foreach($user as $p => $mhs){
+        echo "
+        var prestasi_bar=($jml_prestasi_user[$p]/$jml_prestasi*100);
+        $('#$mhs->nim').css('width', prestasi_bar + '%');
+        ";
+      }
+      ?>
     })
 </script>

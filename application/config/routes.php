@@ -10,3 +10,4 @@ $route['addPrestasi'] = "Prestasi/addPrestasi";
 $route['prestasi']='/Prestasi/view';
 $route['prestasi/(:any)']='/Prestasi/view/$1';
 $route['kucing'] = "Admin_login";
+$route['Admin_user/user/(:any)'] = "/Admin_user/lihat_user/$1";

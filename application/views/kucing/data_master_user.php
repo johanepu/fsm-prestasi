@@ -1,3 +1,13 @@
+<style>
+    .table tr {
+        cursor: pointer;
+    }
+
+    .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+      background-color: #4eb2fc;
+      color:#ffffff;
+    }
+</style>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
   <!-- Main content -->
   <main class="main">
@@ -25,7 +35,7 @@
                     <input type="text" class="form-control" id="cariPrestasi" placeholder="Cari Nama Kegiatan atau Prestasi Anda" >
                   </div>
                 </div>
-                <table id="tabel_prestasi" class="table table-responsive-sm table-striped">
+                <table id="tabel_prestasi" class="table table-responsive-sm table-striped table-hover">
                   <thead>
                     <tr>
                       <th>NIM</th>
@@ -42,7 +52,7 @@
                     <?php
                     foreach($user as $p => $mhs){
                     ?>
-                    <tr id="<?php echo $mhs->nim?>">
+                    <tr  class='clickable-row' data-href="<?php echo site_url('Admin_user/user/'.$mhs->nim);?>" id="<?php echo $mhs->nim?>">
                       <td ><?php echo $mhs->nim; ?></td>
                       <td ><?php echo $mhs->namalengkap; ?></td>
                       <td title="Departemen" name="departemen" id="departemen">
@@ -466,6 +476,10 @@ $(document).ready(function(){
       });
         location.reload();
     });
+
+    $(".clickable-row").click(function() {
+       window.location = $(this).data("href");
+   });
 
     // $('#cariPrestasi').keyup(function(){
     //   var query = $(this).val();
