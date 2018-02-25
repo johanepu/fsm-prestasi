@@ -119,6 +119,38 @@ class Prestasi_model extends CI_Model {
 	  return $result;
 	 }
 
+	 public function top_user_jml_prestasi(){
+		 $this->db->select('*');
+		 $this->db->order_by('date_created', 'ASC');
+		 $this->db->from('users');
+		 $this->db->limit('6');
+		 $query = $this->db->get();
+		 foreach($query->result() as $row) {
+			 $nim = (string)$row->nim;
+			 $poin = $this->hitung_reward_point($row->nim);
+			 $result[] = $poin;
+			 // $result += $row->reward_poin;
+		 }
+
+		 return $result;
+		}
+
+	 public function top_user_reward_point(){
+		 $this->db->select('*');
+		 $this->db->order_by('date_created', 'ASC');
+		 $this->db->from('users');
+		 $this->db->limit('6');
+		 $query = $this->db->get();
+		 foreach($query->result() as $row) {
+			 $nim = (string)$row->nim;
+			 $poin = $this->hitung_user_prestasi($row->nim);
+			 $result[] = $poin;
+			 // $result += $row->reward_poin;
+		 }
+
+		 return $result;
+		}
+
 	public function hitung_user_prestasi_lokal($nim){
 		$this->db->select('*');
 		$this->db->from('user_prestasi');
@@ -196,6 +228,104 @@ class Prestasi_model extends CI_Model {
 		$hitung = $hasil->num_rows();
 		return $hitung;
 	}
+
+	public function hitung_all_prestasi(){
+		$this->db->select('*');
+		$this->db->from('user_prestasi');
+		$hasil = $this->db->get();
+		$hitung = $hasil->num_rows();
+		return $hitung;
+	}
+
+	public function hitung_all_prestasi_validasi(){
+		$this->db->select('*');
+		$this->db->from('user_prestasi');
+		$this->db->where('user_prestasi.validasi', 1);
+		$hasil = $this->db->get();
+		$hitung = $hasil->num_rows();
+		return $hitung;
+	}
+
+	public function hitung_all_prestasi_blmvalidasi(){
+		$this->db->select('*');
+		$this->db->from('user_prestasi');
+		$this->db->where('user_prestasi.validasi', 0);
+		$hasil = $this->db->get();
+		$hitung = $hasil->num_rows();
+		return $hitung;
+	}
+
+	public function hitung_all_prestasi_lokal(){
+		$this->db->select('*');
+		$this->db->from('user_prestasi');
+		$this->db->where('user_prestasi.level_prestasi', 1);
+		$hasil = $this->db->get();
+		$hitung = $hasil->num_rows();
+		return $hitung;
+	}
+
+	public function hitung_all_prestasi_nasional(){
+		$this->db->select('*');
+		$this->db->from('user_prestasi');
+		$this->db->where('user_prestasi.level_prestasi', 2);
+		$hasil = $this->db->get();
+		$hitung = $hasil->num_rows();
+		return $hitung;
+	}
+
+	public function hitung_all_prestasi_regional(){
+		$this->db->select('*');
+		$this->db->from('user_prestasi');
+		$this->db->where('user_prestasi.level_prestasi', 3);
+		$hasil = $this->db->get();
+		$hitung = $hasil->num_rows();
+		return $hitung;
+	}
+
+	public function hitung_all_prestasi_internasional(){
+		$this->db->select('*');
+		$this->db->from('user_prestasi');
+		$this->db->where('user_prestasi.level_prestasi', 4);
+		$hasil = $this->db->get();
+		$hitung = $hasil->num_rows();
+		return $hitung;
+	}
+
+	public function hitung_all_prestasi_akademik(){
+		$this->db->select('*');
+		$this->db->from('user_prestasi');
+		$this->db->where('user_prestasi.jenis_prestasi', 1);
+		$hasil = $this->db->get();
+		$hitung = $hasil->num_rows();
+		return $hitung;
+	}
+	public function hitung_all_prestasi_non_akademik(){
+		$this->db->select('*');
+		$this->db->from('user_prestasi');
+		$this->db->where('user_prestasi.jenis_prestasi', 2);
+		$hasil = $this->db->get();
+		$hitung = $hasil->num_rows();
+		return $hitung;
+	}
+
+	public function hitung_all_prestasi_individu(){
+		$this->db->select('*');
+		$this->db->from('user_prestasi');
+		$this->db->where('user_prestasi.tipe_prestasi', 1);
+		$hasil = $this->db->get();
+		$hitung = $hasil->num_rows();
+		return $hitung;
+	}
+	public function hitung_all_prestasi_beregu(){
+		$this->db->select('*');
+		$this->db->from('user_prestasi');
+		$this->db->where('user_prestasi.tipe_prestasi', 2);
+		$hasil = $this->db->get();
+		$hitung = $hasil->num_rows();
+		return $hitung;
+	}
+
+
 
 
 }

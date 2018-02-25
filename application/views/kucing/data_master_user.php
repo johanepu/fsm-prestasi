@@ -66,13 +66,13 @@
                       <td ><?php echo $mhs->tingkatan; ?></td>
                       <!-- <td ><?php echo $reward_poin[$p]; ?></td> -->
                       <td >
-                      <?php
-                      if ($reward_poin[$p] <= "10") {
-                        echo '<h5><span class="badge badge-danger">'.$reward_poin[$p].'</span></h5>';
-                      }else {
-                        echo '<h5><span class="badge badge-success">'.$reward_poin[$p].'</span></h5>';
-                      }
-                      ?>
+                        <?php
+                        if ($reward_poin[$p] <= "10") {
+                          echo '<h5><span class="badge badge-danger">'.$reward_poin[$p].'</span></h5>';
+                        }else {
+                          echo '<h5><span class="badge badge-success">'.$reward_poin[$p].'</span></h5>';
+                        }
+                        ?>
 
                       <td>
                           <div class="btn-group" >

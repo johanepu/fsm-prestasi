@@ -18,6 +18,7 @@ class Admin_home extends CI_Controller {
 				// Load database
 				$this->load->model('Login_model');
 				$this->load->model('Prestasi_model');
+				$this->load->model('User_model');
         // Gabole login bro
         if(isset($this->session->userdata['logged_in'])){
           redirect('Admin_home', 'refresh');
@@ -30,18 +31,21 @@ class Admin_home extends CI_Controller {
 	public function index()
 	{
 		$nim = $this->session->userdata('nim');
-		$data['jml_prestasi'] = $this->Prestasi_model->hitung_user_prestasi($nim);
-		$data['jml_prestasi_validasi'] = $this->Prestasi_model->hitung_user_prestasi_validasi($nim);
-		$data['jml_prestasi_blmvalidasi'] = $this->Prestasi_model->hitung_user_prestasi_blmvalidasi($nim);
-		$data['jml_reward_point'] = $this->Prestasi_model->hitung_reward_point($nim);
-		$data['jml_prestasi_lokal'] = $this->Prestasi_model->hitung_user_prestasi_lokal($nim);
-		$data['jml_prestasi_nasional'] = $this->Prestasi_model->hitung_user_prestasi_nasional($nim);
-		$data['jml_prestasi_regional'] = $this->Prestasi_model->hitung_user_prestasi_regional($nim);
-		$data['jml_prestasi_internasional'] = $this->Prestasi_model->hitung_user_prestasi_internasional($nim);
-		$data['jml_prestasi_akademik'] = $this->Prestasi_model->hitung_user_prestasi_akademik($nim);
-		$data['jml_prestasi_non_akademik'] = $this->Prestasi_model->hitung_user_prestasi_non_akademik($nim);
-		$data['jml_prestasi_individu'] = $this->Prestasi_model->hitung_user_prestasi_individu($nim);
-		$data['jml_prestasi_beregu'] = $this->Prestasi_model->hitung_user_prestasi_beregu($nim);
+		$data['jml_prestasi'] = $this->Prestasi_model->hitung_all_prestasi();
+		$data['jml_prestasi_validasi'] = $this->Prestasi_model->hitung_all_prestasi_validasi();
+		$data['jml_prestasi_blmvalidasi'] = $this->Prestasi_model->hitung_all_prestasi_blmvalidasi();
+		$data['jml_user'] = $this->User_model->hitung_all_user();
+		$data['top_user'] = $this->User_model->tampil_top_user();
+		$data['top_jml_prestasi'] = $this->Prestasi_model->top_user_jml_prestasi();
+		$data['reward_poin'] = $this->Prestasi_model->top_user_reward_point();
+		$data['jml_prestasi_lokal'] = $this->Prestasi_model->hitung_all_prestasi_lokal();
+		$data['jml_prestasi_nasional'] = $this->Prestasi_model->hitung_all_prestasi_nasional();
+		$data['jml_prestasi_regional'] = $this->Prestasi_model->hitung_all_prestasi_regional();
+		$data['jml_prestasi_internasional'] = $this->Prestasi_model->hitung_all_prestasi_internasional();
+		$data['jml_prestasi_akademik'] = $this->Prestasi_model->hitung_all_prestasi_akademik();
+		$data['jml_prestasi_non_akademik'] = $this->Prestasi_model->hitung_all_prestasi_non_akademik();
+		$data['jml_prestasi_individu'] = $this->Prestasi_model->hitung_all_prestasi_individu();
+		$data['jml_prestasi_beregu'] = $this->Prestasi_model->hitung_all_prestasi_beregu();
 		// $this->load->view('user_home');
 		$data['content'] = 'kucing/admin_home.php';
 		$this->load->view("kucing/admin_template.php",$data);

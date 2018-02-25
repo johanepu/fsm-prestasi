@@ -16,29 +16,6 @@
         <div class="row">
 
 
-          <?php if ($jml_prestasi <= 0): ?>
-            <div class="col-sm-12 col-xl-12">
-              <div class="card">
-                <div class="card-header">
-                  <i class="fa fa-align-justify"></i> Notifikasi
-                </div>
-                <div class="card-body">
-                  <div class="jumbotron">
-                    <h1 class="display-3">Selamat Datang !</h1>
-                    <p class="lead">RewardMe merupakan sistem pendataan mahasiswa berprestasi FSM, sistem ini juga menghitung <u>Reward Point</u>
-                      yang nantinya menjadi bahan pertimbangan keperluan akademis dan penilaian mahasiswa.</p>
-                    <hr class="my-4">
-                    <p>Anda belum memiliki prestasi di sistem. Silakan klik tombol "Tambah Prestasi" untuk mulai menambah prestasi atau "Edit Profil" untuk melengkapi profil anda.</p>
-                    <p>Kelengkapan profil/biodata anda akan menjadi pertimbangan validasi prestasi anda.</p>
-                    <p class="lead">
-                      <a class="btn btn-primary btn-lg" href="<?php echo site_url('Prestasi/addPrestasi'); ?>" role="button">Tambah Prestasi</a>
-                      <a class="btn btn-danger btn-lg" href="<?php echo site_url('User_profile'); ?>" role="button">Lengkapi Profil</a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <?php else: ?>
             <!-- dashboard prestasi yg ada -->
             <div class="col-sm-6 col-lg-3">
               <div class="card text-white bg-primary">
@@ -115,8 +92,8 @@
                       <a class="dropdown-item" href="<?php echo site_url('prestasi'); ?>">Lihat Data Prestasi</a>
                     </div>
                   </div>
-                  <h1 class="mb-0"><?php echo $jml_reward_point; ?></h1>
-                  <p>Reward Point</p>
+                  <h1 class="mb-0"><?php echo $jml_user; ?></h1>
+                  <p>Mahasiswa Terdata</p>
                 </div>
                 <div class="chart-wrapper px-3" style="height:70px;">
                   <canvas id="card-chart2" class="chart" height="70"></canvas>
@@ -129,7 +106,7 @@
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    Review Prestasi Anda
+                    Pemetaan Prestasi
                   </div>
                   <div class="card-body">
                     <h5 class="mb-0">Berdasarkan Tingkat Prestasi</h5>
@@ -225,11 +202,83 @@
                       <small>Beregu</small>
                       </li>
                     </ul>
+
+                    <br>
+                    <h5 class="mb-0">Mahasiswa terbaru</h5>
+                    <table class="table table-responsive-sm table-hover table-outline mb-0">
+                      <thead class="thead-light">
+                        <tr>
+                          <th class="text-center"><i class="icon-people"></i></th>
+                          <th>Mahasiswa</th>
+                          <th>Departemen</th>
+                          <th>Jumlah Prestasi</th>
+                          <th>Reward Point</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        foreach($top_user as $p => $mhs){
+                        ?>
+                        <tr id="<?php echo $mhs->nim?>">
+                          <td class="text-center">
+                            <div class="avatar">
+                              <img src="<?php echo base_url(); ?>assets/src/img/avatars/1.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                            </div>
+                          </td>
+                          <td>
+                            <div><?php echo $mhs->namalengkap; ?></div>
+                            <div class="small text-muted">
+                              Akun Dibuat :<?php echo $mhs->date_created; ?>
+                            </div>
+                          </td>
+                          <td  title="Departemen" name="departemen" id="departemen">
+                            <?php
+                            if ($mhs->jurusan == "1") {
+                                echo '<span class="label label-success label-mini">Matematika</span>';
+                            }elseif ($mhs->jurusan == "2") {
+                                echo '<span class="label label-warning label-mini">Kimia</span>';
+                            }elseif ($mhs->jurusan == "3") {
+                                echo '<span class="label label-warning label-mini">Biologi</span>';
+                            }elseif ($mhs->jurusan == "4") {
+                                echo '<span class="label label-warning label-mini">Fisika</span>';
+                            }elseif ($mhs->jurusan == "5") {
+                                echo '<span class="label label-warning label-mini">Statistika</span>';
+                            }elseif ($mhs->jurusan == "6") {
+                                echo '<span class="label label-warning label-mini">Informatika</span>';
+                            }
+                            ?>
+                          </td>
+                          <td>
+                            <div class="clearfix">
+                              <div class="float-left">
+                                <strong><?php echo $top_jml_prestasi[$p]; ?></strong>
+                              </div>
+                              <div class="float-right">
+                              </div>
+                            </div>
+                            <div class="progress progress-xs">
+                              <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </td>
+                          <td>
+                            <?php
+                            if ($reward_poin[$p] <= "10") {
+                              echo '<h5><span class="badge badge-danger">'.$reward_poin[$p].'</span></h5>';
+                            }else {
+                              echo '<h5><span class="badge badge-success">'.$reward_poin[$p].'</span></h5>';
+                            }
+                            ?>
+
+                          </td>
+                        </tr>
+                        <?php }?>
+
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
         <!--/.row-->
-          <?php endif; ?>
 
 
 

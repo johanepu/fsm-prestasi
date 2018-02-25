@@ -23,6 +23,15 @@ class User_model extends CI_Model {
 		return $hasil->result();
 	}
 
+	public function tampil_top_user(){
+		$this->db->select('*');
+		$this->db->order_by('date_created', 'ASC');
+		$this->db->from('users');
+		$this->db->limit('6');
+		$hasil = $this->db->get();
+		return $hasil->result();
+	}
+
 	public function tampil_user_prestasi($nim){
 		$this->db->select('*');
 		$this->db->from('user_prestasi');
@@ -66,6 +75,14 @@ class User_model extends CI_Model {
         $this->db->like("nim", $keyword);
         return $this->db->get('users')->result_array();
     }
+		//fungsi dashboard
+	public function hitung_all_user(){
+		$this->db->select('*');
+		$this->db->from('users');
+		$hasil = $this->db->get();
+		$hitung = $hasil->num_rows();
+		return $hitung;
+	}
 
 
 
