@@ -133,7 +133,7 @@ class Register extends CI_Controller
     $kodejurusan = $this->input->post('jurusan');
 
     if ($kodejurusan == 1) {
-      $pattern = "24010|i";
+      $pattern = "|24010|i";
       if (!preg_match($pattern, $nim_value))
         {
             $this->form_validation->set_message('nim_validation', "Bukan format NIM Departemen Matematika");
@@ -144,7 +144,7 @@ class Register extends CI_Controller
             return TRUE;
         }
     } elseif ($kodejurusan == 2) {
-      $pattern = "24020|i";
+      $pattern = "|24020|i";
       if (!preg_match($pattern, $nim_value))
         {
             $this->form_validation->set_message('nim_validation', "Bukan format NIM Departemen Biologi");
@@ -155,7 +155,7 @@ class Register extends CI_Controller
             return TRUE;
         }
     } elseif ($kodejurusan == 3) {
-      $pattern = "24030|i";
+      $pattern = "|24030|i";
       if (!preg_match($pattern, $nim_value))
         {
             $this->form_validation->set_message('nim_validation', "Bukan format NIM Departemen Kimia");
@@ -166,7 +166,7 @@ class Register extends CI_Controller
             return TRUE;
         }
     } elseif ($kodejurusan == 4) {
-      $pattern = "24040|i";
+      $pattern = "|24040|i";
       if (!preg_match($pattern, $nim_value))
         {
             $this->form_validation->set_message('nim_validation', "Bukan format NIM Departemen Fisika");
@@ -177,7 +177,7 @@ class Register extends CI_Controller
             return TRUE;
         }
     } elseif ($kodejurusan == 5) {
-      $pattern = "(24050|240102|i)";
+      $pattern = "(|24050|240102|i)";
       if (!preg_match($pattern, $nim_value))
         {
             $this->form_validation->set_message('nim_validation', "Bukan format NIM Departemen Statistika");
@@ -188,7 +188,7 @@ class Register extends CI_Controller
             return TRUE;
         }
     } elseif ($kodejurusan == 6) {
-      $pattern = "(24060|240103|i)";
+      $pattern = "(|24060|240103|i)";
       if (!preg_match($pattern, $nim_value))
         {
             $this->form_validation->set_message('nim_validation', "Bukan format NIM Departemen Informatika");

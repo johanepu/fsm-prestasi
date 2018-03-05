@@ -20,6 +20,7 @@ class Prestasi extends CI_Controller {
 
 				// Load database
 				$this->load->model('Prestasi_model');
+				$this->load->model('User_model');
 				if($this->session->userdata('status') != "login"){
 					redirect("Admin_login");
 				}
@@ -190,9 +191,19 @@ class Prestasi extends CI_Controller {
 		);
 
 		$this->form_validation->set_rules(
-				'role_prestasi', 'Posisi yang diambil',
-				'trim',
+				'referral_prestasi', 'NIM Anggota',
+				'required|trim',
 				array(
+									'required'      => '
+									<div class="form-group row">
+									<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+										<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">×</span>
+										</button>
+									</div>
+									</div>
+									'
 				)
 		);
 
@@ -447,6 +458,25 @@ class Prestasi extends CI_Controller {
 		);
 		$result=$this->Prestasi_model->updatePrestasi($data,$where);
 	}
+
+	public function getNim(){
+		$keyword=$this->input->post('keyword');
+		$data=$this->User_model->GetNimRow($keyword);
+		echo json_encode($data);
+	}
+
+
+	function searchNim(){
+		if (isset($_GET['term'])) {
+				$result = $this->User_model->searchNim($_GET['term']);
+				if (count($result) > 0) {
+				foreach ($result as $row)
+						$arr_result[] = $row->nim;
+						echo json_encode($arr_result);
+				}
+		}
+	}
+
 
 
 

@@ -81,6 +81,7 @@ class User_model extends CI_Model {
 	public function GetNimRow($keyword) {
         $this->db->order_by('nim', 'DESC');
         $this->db->like("nim", $keyword);
+				$this->db->limit(6);
         return $this->db->get('users')->result_array();
     }
 		//fungsi dashboard
@@ -91,6 +92,13 @@ class User_model extends CI_Model {
 		$hitung = $hasil->num_rows();
 		return $hitung;
 	}
+
+	function searchNim($nim){
+        $this->db->like('nim', $title , 'both');
+        $this->db->order_by('nim', 'ASC');
+        $this->db->limit(10);
+        return $this->db->get('users')->result();
+    }
 
 
 

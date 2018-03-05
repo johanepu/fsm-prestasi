@@ -26,6 +26,29 @@
 
                   <?php echo form_open("addPrestasi");?>
 
+                  <div class="form-group row">
+                    <label class="col-md-2 col-form-label">Tipe Prestasi</label>
+                    <div class="col-md-9 col-form-label">
+                      <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="individu" value="1" name="tipe_prestasi">
+                        <label class="form-check-label" for="inline-radio1">Individu</label>
+                      </div>
+                      <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="beregu" value="2" name="tipe_prestasi">
+                        <label class="form-check-label" for="inline-radio2">Beregu/Kelompok</label>
+                      </div>
+                    </div>
+                  </div>
+                  <?php echo form_error('tipe_prestasi'); ?>
+
+                  <div class="form-group row" >
+                    <label class="col-md-2 col-form-label" id="referral_label" style="display:none" for="text-input">NIM Anggota</label>
+                    <div class="col-md-9" id="referral_input" style="display:none">
+                      <input type="text" id="referral_prestasi" name="referral_prestasi" class="form-control" value="<?php echo set_value('referral_prestasi'); ?>" placeholder="Masukan NIM anggota lain sebagai bagian dari regu">
+                      <ul class="dropdown-menu list-group txtnim" style="margin-left:15px;margin-right:0px;" role="menu" aria-labelledby="dropdownMenu" id="DropdownNim"></ul>
+                    </div>
+                  </div>
+                  <?php echo form_error('referral_prestasi'); ?>
 
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="text-input">Nama Kegiatan</label>
@@ -53,28 +76,6 @@
                     </div>
                   </div> -->
 
-                  <div class="form-group row">
-                    <label class="col-md-2 col-form-label">Tipe Prestasi</label>
-                    <div class="col-md-9 col-form-label">
-                      <div class="form-check form-check-inline mr-1">
-                        <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="individu" value="1" name="tipe_prestasi">
-                        <label class="form-check-label" for="inline-radio1">Individu</label>
-                      </div>
-                      <div class="form-check form-check-inline mr-1">
-                        <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="beregu" value="2" name="tipe_prestasi">
-                        <label class="form-check-label" for="inline-radio2">Beregu/Kelompok</label>
-                      </div>
-                    </div>
-                  </div>
-                  <?php echo form_error('tipe_prestasi'); ?>
-
-                  <div class="form-group row" >
-                    <label class="col-md-2 col-form-label" id="role_label" style="display:none" for="text-input">Posisi/Role</label>
-                    <div class="col-md-9" id="role_input" style="display:none">
-                      <input type="text" id="role_prestasi" name="role_prestasi" class="form-control" value="<?php echo set_value('role_prestasi'); ?>" placeholder="Role yang diambil misal Ketua/Anggota..">
-                    </div>
-                  </div>
-                  <?php echo form_error('role_prestasi'); ?>
                   <!-- <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="select1">Jenis Prestasi</label>
                     <div class="col-md-4">
@@ -178,14 +179,42 @@
 </body>
 
 <script type="text/javascript">
-
+    $(document).ready(function () {
+        $("#referral_prestasi").keyup(function () {
+            $.ajax({
+                type: "POST",
+                url: '<?=base_url()?>Prestasi/getNim',
+                data: {
+                    keyword: $("#referral_prestasi").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.length > 0) {
+                        $('#DropdownNim').empty();
+                        $('#referral_prestasi').attr("data-toggle", "dropdown");
+                        $('#DropdownNim').dropdown('toggle');
+                    }
+                    else if (data.length == 0) {
+                        $('#referral_prestasi').attr("data-toggle", "");
+                    }
+                    $.each(data, function (key,value) {
+                        if (data.length >= 0)
+                            $('#DropdownNim').append('<li class="list-group-item" ><a role="menuitem dropdownNimli" class="dropdownlivalue">' + value['nim'] + '</a></li>');
+                    });
+                }
+            });
+        });
+        $('ul.txtnim').on('click', 'li a', function () {
+            $('#referral_prestasi').val($(this).text());
+        });
+    });
   function TipeCheck() {
       if (document.getElementById('beregu').checked) {
-          document.getElementById('role_label').style.display = 'block';
-          document.getElementById('role_input').style.display = 'block';
+          document.getElementById('referral_label').style.display = 'block';
+          document.getElementById('referral_input').style.display = 'block';
       } else {
-          document.getElementById('role_label').style.display = 'none';
-          document.getElementById('role_input').style.display = 'none';
+          document.getElementById('referral_label').style.display = 'none';
+          document.getElementById('referral_input').style.display = 'none';
       }
     }
 

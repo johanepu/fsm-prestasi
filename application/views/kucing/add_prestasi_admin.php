@@ -30,7 +30,7 @@
                     <label class="col-md-2 col-form-label" for="text-input">Nomor Induk Mahasiswa</label>
                     <div class="col-md-9">
                       <input type="text" id="nim" name="nim" class="form-control" value="<?php echo set_value('nim'); ?>" placeholder="Masukkan NIM">
-                      <ul class="dropdown-menu txtnim" role="menu" aria-labelledby="dropdownMenu"  id="DropdowNim"></ul>
+                      <ul class="dropdown-menu txtnim" role="menu" aria-labelledby="dropdownMenu"  id="DropdownNim"></ul>
                     </div>
                   </div>
                   <?php echo form_error('nim'); ?>
