@@ -13,6 +13,7 @@
 <script src="<?php echo base_url(); ?>assets/src/js/app.js"></script>
 
 <!-- Plugins and scripts required by this views -->
-
+<!-- <script src="<?php echo base_url(); ?>assets/autocomplete/src/jquery.autocomplete.js"></script> -->
+<script src="<?php echo base_url(); ?>assets/autocomplete/js/jquery.autocomplete.js"></script>
 <!-- Custom scripts required by this view -->
 <script src="<?php echo base_url(); ?>assets/src/js/views/main.js"></script>

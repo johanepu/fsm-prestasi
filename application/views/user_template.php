@@ -27,7 +27,7 @@
   <!-- Main styles for this application -->
   <link type="text/css" href="<?php echo base_url(); ?>assets/src/css/style.css" rel="stylesheet">
   <!-- Styles required by this views -->
-  <!-- <link type="text/css" href="<?php echo base_url(); ?>assets/node_modules/datatables-bootstrap/css/dataTables.bootstrap.min.css" rel="stylesheet"> -->
+  <!-- <link type="text/css" href="<?php echo base_url(); ?>assets/autocomplete/content/jquery.autocomplete.css" rel="stylesheet"> -->
   <link type="text/css" href="<?php echo base_url(); ?>assets/node_modules/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
   <!-- Include Date Range Picker -->
   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/bootstrap-daterangepicker-master/daterangepicker.css" rel="stylesheet">

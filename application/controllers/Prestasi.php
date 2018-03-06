@@ -477,6 +477,42 @@ class Prestasi extends CI_Controller {
 		}
 	}
 
+	function get_autocomplete(){
+    if (isset($_GET['term'])) {
+        $result = $this->User_model->searchNim($_GET['term']);
+        if (count($result) > 0) {
+            foreach ($result as $row)
+                $arr_result[] = array(
+                    'nim'         => $row->nim,
+             );
+                echo json_encode($arr_result);
+        }
+    }
+}
+
+
+		public function get_data() {
+        $keyword = $this->uri->segment(3);
+        $data = $this->db->from('users')->like('nim',$keyword)->get();
+
+				if (count($data) > 0) {
+	        foreach($data->result() as $row)
+	        {
+	            $arr['query'] = $keyword;
+	            $arr['suggestions'][] = array(
+	                'value'    =>$row->nim
+	            );
+	        }
+	        echo json_encode($arr);
+				} else {
+					$arr['query'] = $keyword;
+					$arr['suggestions'][] = array(
+							'value'    =>'NIM belum terdata di sistem'
+					);
+					echo json_encode($arr);
+				}
+    }
+
 
 
 
