@@ -98,7 +98,7 @@ class Register extends CI_Controller
 		{
 			//check to see if we are creating the user
 			//redirect them to checkout page
-      $this->session->set_flashdata('status',
+      $this->session->set_flashdata('info',
       '  <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>Registrasi Berhasil!</strong> Silakan gunakan NIM dan password anda untuk login.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

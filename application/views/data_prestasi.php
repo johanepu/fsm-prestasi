@@ -21,6 +21,10 @@
               </div>
               <div class="card-body">
                 <div class="row mt">
+                  <?php if($this->session->flashdata('berhasil')){
+                    echo $this->session->flashdata('berhasil');
+                    }
+                  ?>
                   <div class="form-group col-lg-12">
                     <input type="text" class="form-control" id="cariPrestasi" placeholder="Cari Nama Kegiatan atau Prestasi Anda" >
                   </div>

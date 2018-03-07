@@ -50,7 +50,7 @@
                   <div class="form-group row" >
                     <label class="col-md-2 col-form-label" id="referral_label" style="display:none" for="text-input">NIM Anggota</label>
                     <div class="col-md-9" id="referral_input" style="display:none">
-                      <input type="text" id="referral_prestasi" name="referral_prestasi" class="form-control" style="width:100%" value="<?php echo set_value('referral_prestasi'); ?>" placeholder="Masukan NIM anggota lain sebagai bagian dari regu">
+                      <input type="text" id="referral_prestasi" name="referral_prestasi" class="form-control" value="<?php echo set_value('referral_prestasi'); ?>" placeholder="Masukan NIM anggota lain sebagai bagian dari regu">
                     </div>
                   </div>
                   <?php echo form_error('referral_prestasi'); ?>
@@ -184,48 +184,47 @@
 </body>
 
 <script type="text/javascript">
-    // $(document).ready(function () {
-    //     $("#referral_prestasi").keyup(function () {
-    //         $.ajax({
-    //             type: "POST",
-    //             url: '<?=base_url()?>Prestasi/getNim',
-    //             data: {
-    //                 keyword: $("#referral_prestasi").val()
-    //             },
-    //             dataType: "json",
-    //             success: function (data) {
-    //                 if (data.length > 0) {
-    //                     $('#DropdownNim').empty();
-    //                     $('#referral_prestasi').attr("data-toggle", "dropdown");
-    //                     $('#DropdownNim').dropdown('toggle');
-    //                 }
-    //                 else if (data.length == 0) {
-    //                     $('#referral_prestasi').attr("data-toggle", "");
-    //                 }
-    //                 $.each(data, function (key,value) {
-    //                     if (data.length >= 0)
-    //                         $('#DropdownNim').append('<li class="list-group-item" ><a role="menuitem dropdownNimli" class="dropdownlivalue">' + value['nim'] + '</a></li>');
-    //                 });
-    //             }
-    //         });
-    //     });
-    //     $('ul.txtnim').on('click', 'li a', function () {
-    //         $('#referral_prestasi').val($(this).text());
-    //     });
-    // });
+      $( function() {
+      var available_nim = <?= json_encode($available_nim) ?>;
+      function split( val ) {
+        return val.split( /,\s*/ );
+      }
+      function extractLast( term ) {
+        return split( term ).pop();
+      }
 
-    // $(document).ready(function(){
-    //         $( "#referral_prestasi" ).autocomplete({
-    //           source: "<?php echo site_url('Prestasi/searchNim/?');?>"
-    //         });
-    //     });
-
-    var site = "<?php echo site_url();?>";
-    $(function(){
-        $('#referral_prestasi').autocomplete({
-            serviceUrl: site+'Prestasi/get_data',
+      $( "#referral_prestasi" )
+        // don't navigate away from the field on tab when selecting an item
+        .on( "keydown", function( event ) {
+          if ( event.keyCode === $.ui.keyCode.TAB &&
+              $( this ).autocomplete( "instance" ).menu.active ) {
+            event.preventDefault();
+          }
+        })
+        .autocomplete({
+          minLength: 0,
+          source: function( request, response ) {
+            // delegate back to autocomplete, but extract the last term
+            response( $.ui.autocomplete.filter(
+              available_nim, extractLast( request.term ) ) );
+          },
+          focus: function() {
+            // prevent value inserted on focus
+            return false;
+          },
+          select: function( event, ui ) {
+            var terms = split( this.value );
+            // remove the current input
+            terms.pop();
+            // add the selected item
+            terms.push( ui.item.value );
+            // add placeholder to get the comma-and-space at the end
+            terms.push( "" );
+            this.value = terms.join( ", " );
+            return false;
+          }
         });
-    });
+      } );
 
   function TipeCheck() {
       if (document.getElementById('beregu').checked) {

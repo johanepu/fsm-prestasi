@@ -23,6 +23,27 @@ class User_model extends CI_Model {
 		return $hasil->result();
 	}
 
+	public function available_nim(){
+		$this->db->select('nim');
+		$this->db->from('users');
+		$query = $this->db->get();
+		$ret = $query->row();
+		return $ret->nim;
+	}
+
+	function get_all_nim()
+	{
+    $query = $this->db->get('users');
+    $array = array();
+
+    foreach($query->result_array() as $row)
+    {
+        $array[] = $row['nim']; // add each user id to the array
+    }
+
+    return $array;
+	}
+
 	public function tampil_top_user(){
 		$this->db->select('*');
 		$this->db->order_by('date_created', 'ASC');

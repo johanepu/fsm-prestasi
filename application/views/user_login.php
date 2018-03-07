@@ -33,8 +33,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="row justify-content-center">
 
       <div class="col-md-8">
-        <?php if($this->session->flashdata('status')){
-          echo $this->session->flashdata('status');
+        <?php if($this->session->flashdata('info')){
+          echo $this->session->flashdata('info');
         }
         ?>
         <div class="card-group">

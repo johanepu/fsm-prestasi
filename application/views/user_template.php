@@ -25,7 +25,8 @@
   <link type="text/css" href="<?php echo base_url(); ?>assets/node_modules/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
 
   <!-- Main styles for this application -->
-  <link type="text/css" href="<?php echo base_url(); ?>assets/src/css/style.css" rel="stylesheet">
+  <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet">
+  <link type="text/css" href="<?php echo base_url(); ?>assets/src/css/style.css" rel="stylesheet">  
   <!-- Styles required by this views -->
   <!-- <link type="text/css" href="<?php echo base_url(); ?>assets/autocomplete/content/jquery.autocomplete.css" rel="stylesheet"> -->
   <link type="text/css" href="<?php echo base_url(); ?>assets/node_modules/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">

@@ -22,7 +22,7 @@ class Prestasi extends CI_Controller {
 				$this->load->model('Prestasi_model');
 				$this->load->model('User_model');
 				if($this->session->userdata('status') != "login"){
-					redirect("Admin_login");
+					redirect("success");
 				}
 			}
 
@@ -137,6 +137,7 @@ class Prestasi extends CI_Controller {
 
 
 		$this->data['title'] = "Tambah Prestasi";
+		$data['available_nim'] = $this->User_model->get_all_nim();
 
 		//validate form input
 		$this->form_validation->set_rules(
@@ -335,13 +336,13 @@ class Prestasi extends CI_Controller {
 
 			$data = array(
 				'nim' => $this->session->userdata('nim'),
+				'referral_nim' => $this->input->post('referral_prestasi'),
 				'nama_prestasi' 	=> $this->input->post('nama_prestasi'),
 				'peringkat_prestasi'  	=> $this->input->post('peringkat_prestasi'),
         'tipe_prestasi'    	=> $this->input->post('tipe_prestasi'),
-        'role_prestasi'    		=> $this->input->post('role_prestasi'),
 				'jenis_prestasi'    		=> $this->input->post('jenis_prestasi'),
 				'level_prestasi'    		=> $level_prestasi,
-				'deskripsi_prestasi'    		=> $this->input->post('role_prestasi'),
+				'deskripsi_prestasi'    		=> $this->input->post('deskripsi_prestasi'),
 				'reward_poin'    		=> $reward_point,
 				'penyelenggara_prestasi'    		=> $this->input->post('penyelenggara_prestasi'),
 				'tempat_prestasi'    		=> $this->input->post('tempat_prestasi'),
@@ -354,14 +355,14 @@ class Prestasi extends CI_Controller {
 		{
 			//check to see if we are creating the user
 			//redirect them to checkout page
-      $this->session->set_flashdata('status',
+      $this->session->set_flashdata('berhasil',
       '  <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>Registrasi Berhasil!</strong> Silakan gunakan NIM dan password anda untuk login.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div> ');
-			redirect('prestasi');
+			redirect('Prestasi/view');
 		}
 		else
 		{
