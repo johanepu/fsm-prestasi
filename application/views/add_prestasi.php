@@ -50,7 +50,7 @@
                   <div class="form-group row" >
                     <label class="col-md-2 col-form-label" id="referral_label" style="display:none" for="text-input">NIM Anggota</label>
                     <div class="col-md-9" id="referral_input" style="display:none">
-                      <input type="text" id="referral_prestasi" name="referral_prestasi" class="autocomplete form-control" value="<?php echo set_value('referral_prestasi'); ?>" placeholder="Masukan NIM anggota lain sebagai bagian dari regu">
+                      <input type="text" id="referral_prestasi" name="referral_prestasi" class="form-control" style="width:100%" value="<?php echo set_value('referral_prestasi'); ?>" placeholder="Masukan NIM anggota lain sebagai bagian dari regu">
                     </div>
                   </div>
                   <?php echo form_error('referral_prestasi'); ?>
