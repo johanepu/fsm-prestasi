@@ -44,6 +44,23 @@ class User_model extends CI_Model {
     return $array;
 	}
 
+
+	function get_all_nim_except_me($nim)
+	{
+		$this->db->select('nim');
+		$this->db->from('users');
+		$this->db->where('nim !=', $nim);
+		$query = $this->db->get();
+		$array = array();
+
+		foreach($query->result_array() as $row)
+		{
+				$array[] = $row['nim']; // add each user id to the array
+		}
+
+		return $array;
+	}
+
 	public function tampil_top_user(){
 		$this->db->select('*');
 		$this->db->order_by('date_created', 'ASC');

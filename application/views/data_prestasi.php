@@ -338,7 +338,6 @@ $(document).ready(function(){
 
     var nama_prestasi = $('#nama_prestasi_edit').val();
     var peringkat_prestasi = $('#peringkat_prestasi_edit').val();
-    var role_prestasi = $('#role_prestasi_edit').val();
     var deskripsi_prestasi =  $('#deskripsi_prestasi_edit').val();
     var radiotipe = document.getElementsByName('tipe_prestasi_update');
     for (var i = 0, length = radiotipe.length; i < length; i++)
@@ -381,7 +380,6 @@ $(document).ready(function(){
       }else {
          nama_prestasi =   $('#nama_prestasi_edit').val();
          peringkat_prestasi = $('#peringkat_prestasi_edit').val();
-         role_prestasi =  $('#role_prestasi_edit').val();
          deskripsi_prestasi =  $('#deskripsi_prestasi_edit').val();
          penyelenggara_prestasi =  $('#penyelenggara_prestasi_edit').val();
          tempat_prestasi =  $('#tempat_prestasi_edit').val();
@@ -394,7 +392,6 @@ $(document).ready(function(){
           data: {nama_prestasi:nama_prestasi,
                 peringkat_prestasi:peringkat_prestasi,
                 tipe_prestasi:tipe_prestasi,
-                role_prestasi:role_prestasi,
                 jenis_prestasi:jenis_prestasi,
                 deskripsi_prestasi:deskripsi_prestasi,
                 penyelenggara_prestasi:penyelenggara_prestasi,

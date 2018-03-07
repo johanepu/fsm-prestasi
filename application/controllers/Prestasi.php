@@ -137,7 +137,8 @@ class Prestasi extends CI_Controller {
 
 
 		$this->data['title'] = "Tambah Prestasi";
-		$data['available_nim'] = $this->User_model->get_all_nim();
+		$nim = $this->session->userdata('nim');
+		$data['available_nim'] = $this->User_model->get_all_nim_except_me($nim);
 
 		//validate form input
 		$this->form_validation->set_rules(
@@ -193,19 +194,7 @@ class Prestasi extends CI_Controller {
 
 		$this->form_validation->set_rules(
 				'referral_prestasi', 'NIM Anggota',
-				'required|trim',
-				array(
-									'required'      => '
-									<div class="form-group row">
-									<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
-										<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
-										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-											<span aria-hidden="true">×</span>
-										</button>
-									</div>
-									</div>
-									'
-				)
+				'trim'
 		);
 
 		$this->form_validation->set_rules(
@@ -343,7 +332,7 @@ class Prestasi extends CI_Controller {
 				'jenis_prestasi'    		=> $this->input->post('jenis_prestasi'),
 				'level_prestasi'    		=> $level_prestasi,
 				'deskripsi_prestasi'    		=> $this->input->post('deskripsi_prestasi'),
-				'reward_poin'    		=> $reward_point,
+				'reward_poin'    		=> 0,
 				'penyelenggara_prestasi'    		=> $this->input->post('penyelenggara_prestasi'),
 				'tempat_prestasi'    		=> $this->input->post('tempat_prestasi'),
 				'tgl_prestasi_start'	=> $this->input->post('date_start'),
@@ -356,8 +345,8 @@ class Prestasi extends CI_Controller {
 			//check to see if we are creating the user
 			//redirect them to checkout page
       $this->session->set_flashdata('berhasil',
-      '  <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Registrasi Berhasil!</strong> Silakan gunakan NIM dan password anda untuk login.
+      '  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Tambah prestasi berhasil!</strong> Silakan cek kembali untuk kebenaran data.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
@@ -374,6 +363,39 @@ class Prestasi extends CI_Controller {
 			$this->load->view("user_template.php",$data,$this->data);
 			// $this->load->view('add_prestasi', $this->data);
 		}
+	}
+
+	public function addRefPrestasi()
+	{
+      date_default_timezone_set('Asia/Jakarta');
+			$level_prestasi = $this->input->post('level_prestasi');
+				if ($level_prestasi == 1) {
+					$reward_point = 2;
+				} elseif ($level_prestasi == 2) {
+					$reward_point = 3;
+				} elseif ($level_prestasi == 3) {
+					$reward_point = 4;
+				} elseif ($level_prestasi == 4) {
+					$reward_point = 5;
+				}
+
+			$data = array(
+				'nim' => $this->input->post('nim'),
+				'referral_nim' => $this->session->userdata('nim'),
+				'nama_prestasi' 	=> $this->input->post('nama_prestasi'),
+				'peringkat_prestasi'  	=> $this->input->post('peringkat_prestasi'),
+        'tipe_prestasi'    	=> $this->input->post('tipe_prestasi'),
+				'jenis_prestasi'    		=> $this->input->post('jenis_prestasi'),
+				'level_prestasi'    		=> $level_prestasi,
+				'deskripsi_prestasi'    		=> $this->input->post('deskripsi_prestasi'),
+				'reward_poin'    		=> $reward_point,
+				'penyelenggara_prestasi'    		=> $this->input->post('penyelenggara_prestasi'),
+				'tempat_prestasi'    		=> $this->input->post('tempat_prestasi'),
+				'tgl_prestasi_start'	=> $this->input->post('date_start'),
+				'tgl_prestasi_end'	=> $this->input->post('date_end'),
+				'date_modified'	=> date('Y-m-d H:i:s')
+			);
+		$this->Prestasi_model->add_prestasi($data);
 	}
 
 

@@ -169,7 +169,7 @@
 
               </div>
               <div class="card-footer" >
-                <input type="submit" value="Submit" style="float: right;" class="btn btn-sm btn-primary">
+                <input type="submit" id="submit" value="Submit" style="float: right;" class="btn btn-sm btn-primary">
                 <button type="reset" style="float: right; margin-right: 10px" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
               </div>
             </div>
@@ -225,6 +225,119 @@
           }
         });
       } );
+
+      $('#submit').click(function(){
+        if (document.getElementById('beregu').checked) {
+          var array = $('#referral_prestasi').val().split(",");
+          var sorted_arr = array.slice().sort();
+          for(i=0;i<sorted_arr.length;i++)
+          {
+              sorted_arr[i] = sorted_arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+          }
+          var results = [];
+            for (var i = 1; i < sorted_arr.length; i++) {
+                if (sorted_arr[i + 1] != sorted_arr[i] && sorted_arr[i].length == 14) {
+                    results.push(sorted_arr[i]);
+                }
+            }
+          console.log(sorted_arr);
+          console.log(results);
+          var radiotipe = document.getElementsByName('tipe_prestasi');
+          for (var i = 0, length = radiotipe.length; i < length; i++)
+          {
+           if (radiotipe[i].checked)
+           {
+            var tipe_prestasi = radiotipe[i].value;
+            break;
+            } else {
+              tipe_prestasi = $('#tipe_prestasi_raw').val();
+            }
+          }
+          var radiojenis = document.getElementsByName('jenis_prestasi');
+          for (var i = 0, length = radiojenis.length; i < length; i++)
+          {
+           if (radiojenis[i].checked)
+           {
+            var jenis_prestasi = radiojenis[i].value;
+            break;
+            } else {
+              jenis_prestasi = $('#jenis_prestasi_raw').val();
+            }
+          }
+          for (i=0;i<results.length;i++){
+
+              var nim = results[i];
+              var tipe_prestasi = tipe_prestasi;
+              var nama_prestasi = $('#nama_prestasi').val();
+              var peringkat_prestasi =  $('#peringkat_prestasi').val();
+              var jenis_prestasi =  jenis_prestasi;
+              var level_prestasi =  $('#level_prestasi').val();
+              var penyelenggara_prestasi =  $('#penyelenggara_prestasi').val();
+              var tempat_prestasi =  $('#tempat_prestasi').val();
+              var date_start =  $('#date_start').val();
+              var date_end =  $('#date_end').val();
+              var deskripsi_prestasi =  $('#deskripsi_prestasi').val();
+              $.ajax({
+                type: "POST",
+                url: '<?=base_url()?>Prestasi/addRefPrestasi',
+                data: {
+                  nim:nim,
+                  tipe_prestasi:tipe_prestasi,
+                  nama_prestasi:nama_prestasi,
+                  peringkat_prestasi:peringkat_prestasi,
+                  jenis_prestasi:jenis_prestasi,
+                  level_prestasi:level_prestasi,
+                  penyelenggara_prestasi:penyelenggara_prestasi,
+                  tempat_prestasi:tempat_prestasi,
+                  date_start:date_start,
+                  date_end:date_end,
+                  deskripsi_prestasi:deskripsi_prestasi
+                },
+                success: function(data){
+                }
+              });
+          }
+        }
+        //
+        //
+        // if(nama_lengkap==''||email==''||alamat==''||tingkatan==''||nomor_hp==''){
+        //     alert('Data harus diisi lengkap, Cek kembali isian Anda');
+        //     return false;
+        //   }else {
+        //     $.ajax({
+        //       type: "POST",
+        //       url: '<?=base_url()?>User_profile/updateProfil',
+        //       data: {namalengkap:nama_lengkap,
+        //             email:email,
+        //             alamat:alamat,
+        //             tingkatan:tingkatan,
+        //             nomor_hp:nomor_hp},
+        //       success: function(data){
+        //       }
+        //     });
+        //     location.reload();
+        //   }
+        });
+
+        $(document).on('click', 'button.btn-delete,button.btn-delete2', function(){
+          $('#modalDelete').modal('show');
+          var id_prestasi=$(this).val();
+          $('#hiddenIdDelete').val(id_prestasi);
+          $.ajax({
+            type: "POST",
+            url: '<?=base_url()?>Prestasi/fetchData',
+            data: {id_prestasi:id_prestasi},
+            dataType:'json',
+            success: function(data){
+              if(data){
+                  var prestasi = data[0];
+                  $('#namadelete').html('"'+prestasi.nama_prestasi+'"');
+                  $('#btnhapus').prop("disabled",false);
+                }
+              }
+          });
+        });
+
 
   function TipeCheck() {
       if (document.getElementById('beregu').checked) {

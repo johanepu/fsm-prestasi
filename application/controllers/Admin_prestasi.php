@@ -123,6 +123,7 @@ class Admin_prestasi extends CI_Controller {
 
 
 		$this->data['title'] = "Tambah Prestasi";
+		$data['available_nim'] = $this->User_model->get_all_nim();
 
 		//validate form input
 
@@ -335,7 +336,7 @@ class Admin_prestasi extends CI_Controller {
 				'jenis_prestasi'    		=> $this->input->post('jenis_prestasi'),
 				'level_prestasi'    		=> $level_prestasi,
 				'deskripsi_prestasi'    		=> $this->input->post('role_prestasi'),
-				'reward_poin'    		=> $reward_point,
+				'reward_poin'    		=> 0,
 				'penyelenggara_prestasi'    		=> $this->input->post('penyelenggara_prestasi'),
 				'tempat_prestasi'    		=> $this->input->post('tempat_prestasi'),
 				'tgl_prestasi_start'	=> $this->input->post('date_start'),

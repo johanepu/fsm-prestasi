@@ -30,7 +30,6 @@
                     <label class="col-md-2 col-form-label" for="text-input">Nomor Induk Mahasiswa</label>
                     <div class="col-md-9">
                       <input type="text" id="nim" name="nim" class="form-control" value="<?php echo set_value('nim'); ?>" placeholder="Masukkan NIM">
-                      <ul class="dropdown-menu txtnim" role="menu" aria-labelledby="dropdownMenu"  id="DropdownNim"></ul>
                     </div>
                   </div>
                   <?php echo form_error('nim'); ?>
@@ -186,35 +185,13 @@
 </body>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#nim").keyup(function () {
-            $.ajax({
-                type: "POST",
-                url: '<?=base_url()?>Admin_prestasi/getNim',
-                data: {
-                    keyword: $("#nim").val()
-                },
-                dataType: "json",
-                success: function (data) {
-                    if (data.length > 0) {
-                        $('#DropdownNim').empty();
-                        $('#nim').attr("data-toggle", "dropdown");
-                        $('#DropdownNim').dropdown('toggle');
-                    }
-                    else if (data.length == 0) {
-                        $('#nim').attr("data-toggle", "");
-                    }
-                    $.each(data, function (key,value) {
-                        if (data.length >= 0)
-                            $('#DropdownNim').append('<li role="displayNim" ><a role="menuitem dropdownNimli" class="dropdownlivalue">' + value['name'] + '</a></li>');
-                    });
-                }
-            });
-        });
-        $('ul.txtnim').on('click', 'li a', function () {
-            $('#nim').val($(this).text());
-        });
-    });
+    $( function() {
+      var available_nim = <?= json_encode($available_nim) ?>;
+      $( "#nim" ).autocomplete({
+        source: available_nim
+      });
+    } );
+
 
   function TipeCheck() {
       if (document.getElementById('beregu').checked) {
