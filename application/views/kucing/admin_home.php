@@ -6,7 +6,7 @@
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
       <li class="breadcrumb-item">Admin</li>
-      <li class="breadcrumb-item"><a href="<?php echo site_url('User_home'); ?>">Dashboard</a></li>
+      <li class="breadcrumb-item"><a href="<?php echo site_url('Admin_home'); ?>">Dashboard</a></li>
 
     </ol>
 

@@ -283,6 +283,31 @@
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="modalReward" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+      <div class="modal-dialog modal-success" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Validasi Prestasi</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" >
+            <input hidden id="hiddenIdValidasi">
+            <p><b>Isikan Reward Point untuk validasi prestasi ini ?</b></p>
+            <p style="text-align:center" id="nama_prestasi_reward"><strong>"Nama Orangnya"</strong></p>
+            <div style="text-align:center">
+              <input style="text-align:center" align="center" type="number" class="form-control-lg col-md-4" id="reward_point" placeholder="0" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+                <button style="width:100px" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button style="width:100px" class="btn btn-success" id="btn_simpan_reward">Validasi</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- /.conainer-fluid -->
   </main>
 </body>
@@ -459,11 +484,42 @@ $(document).ready(function(){
     });
 
     $(document).on('click', 'button.btn-validate', function() {
+      $('#modalReward').modal('show');
       var id_prestasi = $(this).val();
+      $('#hiddenIdValidasi').val(id_prestasi);
+      $.ajax({
+        type: "POST",
+        url: '<?=base_url()?>Prestasi/fetchData',
+        data: {id_prestasi:id_prestasi},
+        dataType:'json',
+        success: function(data){
+          if(data){
+              var prestasi = data[0];
+              $('#nama_prestasi_reward').html('"'+prestasi.nama_prestasi+'"');
+              $('#btn_simpan_reward').prop("disabled",false);
+            }
+          }
+      });
+    });
+
+    $('#btn_simpan_reward').click(function(){
+      var id = $('#hiddenIdValidasi').val();
+      var id_prestasi = $(this).val();
+      var reward_point = $('#reward_point').val();
+      if(reward_point==''){
+        alert('Validasi gagal, reward point harus diisi');
+        return false;
+      }else if (reward_point<0) {
+        alert('Validasi gagal, reward point tidak boleh negatif');
+        return false;
+      }
       $.ajax({
         type: "POST",
         url: '<?=base_url()?>Prestasi/validate',
-        data: {id_prestasi:id_prestasi},
+        data: {
+          id_prestasi:id,
+          reward_point:reward_point
+        },
         dataType:'json',
         success: function(data){
         }

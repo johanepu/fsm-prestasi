@@ -464,7 +464,8 @@ class Prestasi extends CI_Controller {
 
 	function validate(){
 		$data=array(
-			'validasi'=> 1
+			'validasi'=> 1,
+			'reward_poin'=> $this->input->post('reward_point')
 		);
 		$where = array(
 			'id_prestasi'=> $this->input->post('id_prestasi')
@@ -474,7 +475,8 @@ class Prestasi extends CI_Controller {
 
 	function unvalidate(){
 		$data=array(
-			'validasi'=> 0
+			'validasi'=> 0,
+			'reward_poin'=> 0
 		);
 		$where = array(
 			'id_prestasi'=> $this->input->post('id_prestasi')
