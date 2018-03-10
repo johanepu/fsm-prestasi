@@ -32,7 +32,37 @@ class Admin_prestasi extends CI_Controller {
 
 	public function index()
 	{
-		$data['prestasi'] = $this->Prestasi_model->tampil_all_prestasi();
+		$data_prestasi = $this->Prestasi_model->tampil_all_prestasi();
+		$data['prestasi'] = $data_prestasi;
+		$data['periode'] = 0;
+		$data['semester'] = 0;
+		$data['content'] = 'kucing/data_master_prestasi.php';
+		$this->load->view("kucing/admin_template.php",$data);
+
+	}
+
+	public function tabel()
+	{
+		$periode_select = $this->uri->segment(3);
+		$semester_select = $this->uri->segment(4);
+		if ($periode_select == 0 && $semester_select != 0) {
+			$data_prestasi = $this->Prestasi_model->tampil_prestasi_semester($semester_select);
+
+		} elseif ($periode_select != 0 && $semester_select == 0) {
+			$data_prestasi = $this->Prestasi_model->tampil_prestasi_periode($periode_select);
+
+		} elseif ($periode_select != 0 && $semester_select != 0) {
+			$data_prestasi = $this->Prestasi_model->tampil_prestasi_waktu($periode_select,$semester_select);
+
+		} else {
+			$data_prestasi = $this->Prestasi_model->tampil_all_prestasi();
+
+		}
+
+		$data['periode'] = $periode_select;
+		$data['semester'] = $semester_select;
+
+		$data['prestasi'] = $data_prestasi;
 		$data['content'] = 'kucing/data_master_prestasi.php';
 		$this->load->view("kucing/admin_template.php",$data);
 	}

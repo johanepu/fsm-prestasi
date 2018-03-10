@@ -21,7 +21,23 @@
               </div>
               <div class="card-body">
                 <div class="row mt">
-                  <div class="form-group col-lg-12">
+                  <div class="form-group col-lg-2">
+                      <select id="periode_select" name="select_waktu" class="form-control select_waktu">
+                        <option id="reset_periode" value="0">Pilih Tahun</option>
+                        <option value="1">2017/2018</option>
+                        <option value="2">2018/2019</option>
+                        <option value="3">2019/2020</option>
+                        <option value="4">2020/2021</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <select id="semester_select" name="select_waktu" class="form-control select_waktu">
+                          <option id="reset_semester" value="0">Pilih Semester</option>
+                          <option value="1">Ganjil</option>
+                          <option value="2">Genap</option>
+                        </select>
+                      </div>
+                  <div class="form-group col-lg-8">
                     <input type="text" class="form-control" id="cariPrestasi" placeholder="Cari Nama Kegiatan atau Prestasi Anda" >
                   </div>
                 </div>
@@ -317,13 +333,30 @@ $(document).ready(function(){
 
   // tabel data prestasi datatable
     tabel_prestasi =  $('#tabel_prestasi').DataTable( {
-        "dom": 'lrtip',
+        "dom": 'Blrtip',
         "bPaginate": false,
-        "info":     false
-      } )
+        "info":     false,
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+      } );
       $('#cariPrestasi').keyup(function(){
             tabel_prestasi.search($(this).val()).draw() ;
-      })
+      });
+
+      if($('#periode_select').val(<?php echo $periode?>)){
+        $('#reset_periode').html('Reset Tahun');
+      }
+      if($('#semester_select').val(<?php echo $semester?>)){
+        $('#reset_semester').html('Reset Semester');
+      }
+
+
+  $( '.select_waktu' ).change(function() {
+    var periode_select = $('#periode_select').val();
+    var semester_select = $('#semester_select').val();
+    document.location = "<?= base_url();?>Admin_prestasi/tabel/"+periode_select+"/"+semester_select;
+  });
 
   $(document).on('click', 'button.btn-edit,button.btn-edit2', function() {
     var id_prestasi = $(this).val();

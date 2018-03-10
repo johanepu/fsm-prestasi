@@ -40,6 +40,65 @@ class Prestasi_model extends CI_Model {
 		return $hasil->result();
 	}
 
+	public function tampil_prestasi_semester($semester_select){
+		if ($semester_select == 1) {
+			$semester_index = 'Ganjil';
+		} elseif ($semester_select == 2) {
+			$semester_index = 'Genap';
+		}
+		$this->db->select('*');
+		$this->db->from('periode_prestasi');
+		$this->db->join('user_prestasi' ,
+		'periode_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('periode_prestasi.semester',$semester_index);
+		$hasil = $this->db->get();
+		return $hasil->result();
+	}
+
+	public function tampil_prestasi_periode($periode_select){
+		if ($periode_select == 1) {
+			$periode_index = '2017/2018';
+		} elseif ($periode_select == 2) {
+			$periode_index = '2018/2019';
+		} elseif ($periode_select == 3) {
+			$periode_index = '2019/2020';
+		} elseif ($periode_select == 4) {
+			$periode_index = '2020/2021';
+		}
+		$this->db->select('*');
+		$this->db->from('periode_prestasi');
+		$this->db->join('user_prestasi' ,
+		'periode_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('periode_prestasi.periode',$periode_index);
+		$hasil = $this->db->get();
+		return $hasil->result();
+	}
+
+	public function tampil_prestasi_waktu($periode_select,$semester_select){
+		if ($periode_select == 1) {
+			$periode_index = '2017/2018';
+		} elseif ($periode_select == 2) {
+			$periode_index = '2018/2019';
+		} elseif ($periode_select == 3) {
+			$periode_index = '2019/2020';
+		} elseif ($periode_select == 4) {
+			$periode_index = '2020/2021';
+		}
+		if ($semester_select == 1) {
+			$semester_index = 'Ganjil';
+		} elseif ($semester_select == 2) {
+			$semester_index = 'Genap';
+		}
+		$this->db->select('*');
+		$this->db->from('periode_prestasi');
+		$this->db->join('user_prestasi' ,
+		'periode_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('periode_prestasi.periode',$periode_index);
+		$this->db->where('periode_prestasi.semester',$semester_index);
+		$hasil = $this->db->get();
+		return $hasil->result();
+	}
+
 	public function tampil_all_prestasi(){
 		$this->db->select('*');
 		$this->db->from('user_prestasi');
