@@ -19,6 +19,7 @@ class Admin_setting extends CI_Controller {
 				$this->load->model('Login_model');
 				$this->load->model('Prestasi_model');
 				$this->load->model('User_model');
+				$this->load->model('Admin_model');
         // Gabole ga login bro
         if($this->session->userdata('status') != "login"){
           redirect("Admin_login");
@@ -46,6 +47,30 @@ class Admin_setting extends CI_Controller {
 		// $this->load->view('user_home');
 		$data['content'] = 'kucing/admin_setting.php';
 		$this->load->view("kucing/admin_template.php",$data);
+
+	}
+
+	function fetchSetting(){
+		$id_setting = 1;
+		$result=$this->Admin_model->getSetting($id_setting);
+
+		echo json_encode($result);
+	}
+
+	function updateSetting(){
+
+		$data=array(
+			'judul_pengumuman'=> $this->input->post('judul_pengumuman'),
+			'pesan_admin'=>$this->input->post('pesan_admin'),
+			'periode'=>$this->input->post('periode'),
+			'semester'=>$this->input->post('semester')
+		);
+
+		$where = array(
+			'id_setting'=> 1
+		);
+
+		$this->Admin_model->updateSetting($data,$where);
 
 	}
 }
