@@ -21,6 +21,7 @@ class Prestasi extends CI_Controller {
 				// Load database
 				$this->load->model('Prestasi_model');
 				$this->load->model('User_model');
+				$this->load->model('Admin_model');
 				if($this->session->userdata('status') != "login"){
 					redirect("success");
 				}
@@ -43,11 +44,11 @@ class Prestasi extends CI_Controller {
 		$data['jml_prestasi_individu'] = $this->Prestasi_model->hitung_user_prestasi_individu($nim);
 		$data['jml_prestasi_beregu'] = $this->Prestasi_model->hitung_user_prestasi_beregu($nim);
 		//statistik end
-		// $this->load->view('user_home');
-		// $data['content'] = 'data_prestasi.php';
+
 
 		$data['prestasi'] = $this->Prestasi_model->tampil_user_prestasi($nim);
-		// $this->load->view("user_template.php",$data);
+		$data['content'] = 'data_prestasi.php';
+		$this->load->view("user_template.php",$data);
 
 	}
 
@@ -135,9 +136,22 @@ class Prestasi extends CI_Controller {
 	public function addPrestasi()
 	{
 
-
 		$this->data['title'] = "Tambah Prestasi";
 		$nim = $this->session->userdata('nim');
+		// statistik
+		$data['jml_prestasi'] = $this->Prestasi_model->hitung_user_prestasi($nim);
+		$data['jml_prestasi_validasi'] = $this->Prestasi_model->hitung_user_prestasi_validasi($nim);
+		$data['jml_prestasi_blmvalidasi'] = $this->Prestasi_model->hitung_user_prestasi_blmvalidasi($nim);
+		$data['jml_reward_point'] = $this->Prestasi_model->hitung_reward_point($nim);
+		$data['jml_prestasi_lokal'] = $this->Prestasi_model->hitung_user_prestasi_lokal($nim);
+		$data['jml_prestasi_nasional'] = $this->Prestasi_model->hitung_user_prestasi_nasional($nim);
+		$data['jml_prestasi_regional'] = $this->Prestasi_model->hitung_user_prestasi_regional($nim);
+		$data['jml_prestasi_internasional'] = $this->Prestasi_model->hitung_user_prestasi_internasional($nim);
+		$data['jml_prestasi_akademik'] = $this->Prestasi_model->hitung_user_prestasi_akademik($nim);
+		$data['jml_prestasi_non_akademik'] = $this->Prestasi_model->hitung_user_prestasi_non_akademik($nim);
+		$data['jml_prestasi_individu'] = $this->Prestasi_model->hitung_user_prestasi_individu($nim);
+		$data['jml_prestasi_beregu'] = $this->Prestasi_model->hitung_user_prestasi_beregu($nim);
+		//statistik end
 		$data['available_nim'] = $this->User_model->get_all_nim_except_me($nim);
 
 		//validate form input
@@ -339,8 +353,14 @@ class Prestasi extends CI_Controller {
 				'tgl_prestasi_end'	=> $this->input->post('date_end'),
 				'date_modified'	=> date('Y-m-d H:i:s')
 			);
+
+			$data_periode = array(
+				'id_prestasi'=>$this->Prestasi_model->add_prestasi($data),
+				'periode'=>$this->Admin_model->getPeriode(),
+				'semester'=>$this->Admin_model->getSemester()
+			);
 		}
-		if ($this->form_validation->run() == true && $this->Prestasi_model->add_prestasi($data))
+		if ($this->form_validation->run() == true && $this->Prestasi_model->addPrestasiPeriode($data_periode))
 		{
 			//check to see if we are creating the user
 			//redirect them to checkout page

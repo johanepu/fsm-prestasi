@@ -21,5 +21,23 @@ class Admin_model extends CI_Model {
       $this->db->update('setting_admin',$data);
   }
 
+  function getPeriode(){
+    $query = $this->db->query("SELECT periode FROM setting_admin");
+    $row = $query->row();
+    if (isset($row))
+    {
+        return $row->periode;
+    }
+  }
+
+  function getSemester(){
+    $query = $this->db->query("SELECT semester FROM setting_admin");
+    $row = $query->row();
+    if (isset($row))
+    {
+        return $row->semester;
+    }
+  }
+
 
 }

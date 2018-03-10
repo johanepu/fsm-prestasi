@@ -41,7 +41,7 @@
                       <th>Aksi</th>
                     </tr>
                   </thead>
-                  <tbody id="tabel-prestasi">
+                  <tbody id="tabel_prestasi">
                     <?php
                     foreach($prestasi as $p){
                     ?>
@@ -276,12 +276,17 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-  // tabel data prestasi datatable
-      $('#tabel_prestasi').DataTable( {
-        "bPaginate": false,
-        "info":     false,
-        "bFilter" : false
-      } );
+
+    // tabel data prestasi datatable
+      tabel_prestasi =  $('#tabel_prestasi').DataTable( {
+          "dom": 'lrtip',
+          "bPaginate": false,
+          "info":     false
+        } )
+        $('#cariPrestasi').keyup(function(){
+              tabel_prestasi.search($(this).val()).draw() ;
+        })
+
 
   $(document).on('click', 'button.btn-edit,button.btn-edit2', function() {
     var id_prestasi = $(this).val();
