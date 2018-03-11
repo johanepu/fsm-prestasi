@@ -91,7 +91,7 @@ class Admin_setting extends CI_Controller {
 				'validasi' => 0
 			);
 
-			if ($this->Admin_model->resetPoin($reset)) {
+			if ($this->Admin_model->resetPoin($reset) == true) {
 				$this->session->set_flashdata('reset_status',
 	      '  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
 	        <strong>Reset Poin berhasil!</strong> Silakan cek kembali untuk kebenaran data.
@@ -110,6 +110,15 @@ class Admin_setting extends CI_Controller {
 	      </div> ');
 				redirect('Admin_setting');
 			}
+		}else {
+			$this->session->set_flashdata('reset_status',
+			'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+				<strong>Reset Poin gagal!</strong> Data admin yang dimasukan salah
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div> ');
+			redirect('Admin_setting');
 		}
 	}
 }

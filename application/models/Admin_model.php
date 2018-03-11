@@ -60,6 +60,8 @@ class Admin_model extends CI_Model {
 			$this->db->select('reward_poin','validasi');
 			$this->db->from('user_prestasi');
 			$this->db->update('user_prestasi',$reset);
+
+			return true;
 	}
 
 
