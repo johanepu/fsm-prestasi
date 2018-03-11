@@ -45,7 +45,7 @@ class Prestasi extends CI_Controller {
 		$data['jml_prestasi_beregu'] = $this->Prestasi_model->hitung_user_prestasi_beregu($nim);
 		//statistik end
 
-
+		$data['title'] = 'RewardMe - Data Prestasi';
 		$data['prestasi'] = $this->Prestasi_model->tampil_user_prestasi($nim);
 		$data['content'] = 'data_prestasi.php';
 		$this->load->view("user_template.php",$data);
@@ -136,7 +136,7 @@ class Prestasi extends CI_Controller {
 	public function addPrestasi()
 	{
 
-		$this->data['title'] = "Tambah Prestasi";
+		$data['title'] = "RewardMe - Tambah Prestasi";
 		$nim = $this->session->userdata('nim');
 		// statistik
 		$data['jml_prestasi'] = $this->Prestasi_model->hitung_user_prestasi($nim);

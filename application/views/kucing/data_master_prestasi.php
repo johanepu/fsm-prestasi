@@ -344,10 +344,10 @@ $(document).ready(function(){
             tabel_prestasi.search($(this).val()).draw() ;
       });
 
-      if($('#periode_select').val(<?php echo $periode?>)){
+      if($('#periode_select').val(<?php echo $periode?>)&&<?php echo $periode?>!=0){
         $('#reset_periode').html('Reset Tahun');
       }
-      if($('#semester_select').val(<?php echo $semester?>)){
+      if($('#semester_select').val(<?php echo $semester?>)&&<?php echo $semester?>!=0){
         $('#reset_semester').html('Reset Semester');
       }
 

@@ -40,6 +40,54 @@
             </div>
           <?php else: ?>
             <!-- dashboard prestasi yg ada -->
+            <div class="row">
+              <div class="col-sm-12 col-xl-12">
+                <div class="card">
+                  <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Pengumuman Sistem
+                    <div class="card-actions">
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="jumbotron">
+                      <h1 class="display-3" id="preview_judul">Preview Judul</h1>
+                      <p class="lead" id="preview_pengumuman">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                      <hr class="my-4">
+                      <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                          <div class="card bg-primary">
+                            <div class="card-body text-center">
+                              <div class="text-muted small text-uppercase font-weight-bold">Periode Akademik</div>
+                              <div class="h2 py-3" id="preview_periode">Tahun Akademik</div>
+                            </div>
+                          </div>
+                        </div>
+                        <!--/.col-->
+                        <div class="col-md-4 col-sm-4">
+                          <div class="card bg-primary">
+                            <div class="card-body text-center">
+                              <div class="text-muted small text-uppercase font-weight-bold">Semester</div>
+                              <div class="h2 py-3" id="preview_semester">Semester Sekarang</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                          <div class="card bg-primary">
+
+                              <a  type="button" class=" btn btn-success card-body text-center" href="<?php echo site_url('Prestasi/addPrestasi'); ?>">
+                                <i class="fa fa-plus"></i>&nbsp; Tambah Prestasi</a>
+                              <a  type="button" class=" btn btn-danger card-body text-center" href="<?php echo site_url('User_profile'); ?>">
+                                <i class="fa fa-user"></i>&nbsp; Lihat Profil</a>
+
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
             <div class="col-sm-6 col-lg-3">
               <div class="card text-white bg-primary">
                 <div class="card-body pb-0">
@@ -241,6 +289,26 @@
 </body>
 <script type="text/javascript">
   $(document).ready(function(){
+      $.ajax({
+        type: "POST",
+        url: '<?=base_url()?>Admin_setting/fetchSetting',
+        dataType:'json',
+        success: function(data){
+          console.log(data);
+          if(data)
+          {
+            var stg = data[0];
+              $('#preview_judul').html(stg.judul_pengumuman);
+              $('#preview_pengumuman').html(stg.pesan_admin);
+              $('#preview_periode').html(stg.periode);
+              $('#preview_semester').html(stg.semester);
+              $('#select_periode').val(stg.periode);
+              $('#select_semester').val(stg.semester);
+              $('#input_judul').val(stg.judul_pengumuman);
+              $('#input_isi').val(stg.pesan_admin);
+          }
+        }
+      });
     // progress bar tingkat prestasi
     var lokal_bar=(<?php echo $jml_prestasi_lokal; ?>/<?php echo $jml_prestasi; ?>*100);
     $('#lokal_bar').css('width', lokal_bar + "%");

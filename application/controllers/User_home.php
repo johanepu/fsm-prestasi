@@ -38,7 +38,8 @@ class User_home extends CI_Controller {
 		$data['jml_prestasi_non_akademik'] = $this->Prestasi_model->hitung_user_prestasi_non_akademik($nim);
 		$data['jml_prestasi_individu'] = $this->Prestasi_model->hitung_user_prestasi_individu($nim);
 		$data['jml_prestasi_beregu'] = $this->Prestasi_model->hitung_user_prestasi_beregu($nim);
-		// $this->load->view('user_home');
+
+		$data['title'] = 'RewardMe - Dashboard';
 		$data['content'] = 'user_home.php';
 		$this->load->view("user_template.php",$data);
 

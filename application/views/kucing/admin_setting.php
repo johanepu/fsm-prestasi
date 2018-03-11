@@ -21,6 +21,10 @@
               </div>
               <div class="card-body">
                 <div class="row">
+                  <?php if($this->session->flashdata('reset_status')){
+                    echo $this->session->flashdata('reset_status');
+                    }
+                  ?>
                   <div class="col-4">
                     <div class="list-group" id="list-tab" role="tablist">
                       <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="tab" href="#list-home" role="tab" aria-controls="list-home" aria-selected="true">Tahun Akademik</a>
@@ -73,7 +77,7 @@
                               <div class="card-body">
                                 Klik Tombol Reset Poin untuk menge-nol-kan reward poin seluruh data prestasi
                                 <div class="row card-body">
-                                  <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-exclamation-triangle"></i> Reset Poin</button>
+                                  <button type="submit" id="btn_reset_poin_modal" class="btn btn-sm btn-danger"><i class="fa fa-exclamation-triangle"></i> Reset Poin</button>
                                 </div>
                               </div>
                             </div>
@@ -147,9 +151,6 @@
               <div class="card-header">
                 <i class="fa fa-align-justify"></i> Preview Setting
                 <div class="card-actions">
-                  <a href="http://coreui.io/docs/components/bootstrap-jumbotron/" target="_blank">
-                    <small class="text-muted">docs</small>
-                  </a>
                 </div>
               </div>
               <div class="card-body">
@@ -171,7 +172,7 @@
                       <div class="card bg-primary">
                         <div class="card-body text-center">
                           <div class="text-muted small text-uppercase font-weight-bold">Semester</div>
-                          <div class="h2 py-3" id="preview_semester">1,123</div>
+                          <div class="h2 py-3" id="preview_semester">Semester Sekarang</div>
                         </div>
                       </div>
                     </div>
@@ -181,11 +182,42 @@
           </div>
         </div>
 
-
-
-
     </div>
     <!-- /.conainer-fluid -->
+
+    <div class="modal fade" id="modal_reset_poin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+      <div class="modal-dialog modal-danger" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Reset Poin</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" >
+            <p><b>Apakah anda yakin ingin mereset reward poin ?</b></p>
+            <p style="text-align:center"><strong>Silakan pastikan data admin anda</strong></p>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-user"></i></span>
+              </div>
+              <input type="text" class="form-control" name="username" id="username_poin" placeholder="Username">
+            </div>
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-lock"></i></span>
+              </div>
+              <input type="password" name="password" id="password_poin" class="form-control" placeholder="Password">
+            </div>
+            <p style="text-align:center">Lanjutkan dengan menekan tombol konfirmasi</p>
+          </div>
+          <div class="modal-footer">
+                <button style="width:100px" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button style="width:100px" class="btn btn-danger" id="btn_reset_poin_konf">Konfirmasi</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
 </body>
@@ -211,6 +243,33 @@
             $('#input_isi').val(stg.pesan_admin);
         }
       }
+    });
+
+    $('#btn_reset_poin_modal').click(function(){
+      $('#modal_reset_poin').modal('show');
+    });
+
+    $('#btn_reset_poin_konf').click(function(){
+      var username = $('#username_poin').val();
+      var password = $('#password_poin').val();
+
+      if(username==''||password==''){
+          alert('Anda harus mengisi data admin');
+          return false;
+        }else {
+          $.ajax({
+            type: "POST",
+            url: '<?=base_url()?>Admin_setting/resetPoin',
+            data: {
+              username:username,
+              password:password
+            },
+            dataType:'json',
+            success: function(data){
+            }
+          });
+            location.reload();
+        }
     });
 
     $('#simpan_pengaturan').click(function(){

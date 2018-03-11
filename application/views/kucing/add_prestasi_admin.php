@@ -49,16 +49,7 @@
                     </div>
                   </div>
                   <?php echo form_error('peringkat_prestasi'); ?>
-                  <!-- <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="select1">Tipe Prestasi</label>
-                    <div class="col-md-3">
-                      <select id="tipe_prestasi" name="tipe_prestasi" class="form-control">
-                        <option value="0">Pilih Tipe Prestasi</option>
-                        <option value="1">Beregu</option>
-                        <option value="2">Individu</option>
-                      </select>
-                    </div>
-                  </div> -->
+
 
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label">Tipe Prestasi</label>
@@ -75,23 +66,6 @@
                   </div>
                   <?php echo form_error('tipe_prestasi'); ?>
 
-                  <div class="form-group row" >
-                    <label class="col-md-2 col-form-label" id="role_label" style="display:none" for="text-input">Posisi/Role</label>
-                    <div class="col-md-9" id="role_input" style="display:none">
-                      <input type="text" id="role_prestasi" name="role_prestasi" class="form-control" value="<?php echo set_value('role_prestasi'); ?>" placeholder="Role yang diambil misal Ketua/Anggota..">
-                    </div>
-                  </div>
-                  <?php echo form_error('role_prestasi'); ?>
-                  <!-- <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="select1">Jenis Prestasi</label>
-                    <div class="col-md-4">
-                      <select id="jenis_prestasi" name="jenis_prestasi" class="form-control">
-                        <option value="0">Pilih Jenis Prestasi</option>
-                        <option value="1">Akademik</option>
-                        <option value="2">Non-Akademik</option>
-                      </select>
-                    </div>
-                  </div> -->
 
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label">Jenis Prestasi</label>
@@ -193,14 +167,5 @@
     } );
 
 
-  function TipeCheck() {
-      if (document.getElementById('beregu').checked) {
-          document.getElementById('role_label').style.display = 'block';
-          document.getElementById('role_input').style.display = 'block';
-      } else {
-          document.getElementById('role_label').style.display = 'none';
-          document.getElementById('role_input').style.display = 'none';
-      }
-    }
 
 </script>

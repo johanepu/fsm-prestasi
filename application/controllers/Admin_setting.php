@@ -44,7 +44,8 @@ class Admin_setting extends CI_Controller {
 		$data['jml_prestasi_non_akademik'] = $this->Prestasi_model->hitung_all_prestasi_non_akademik();
 		$data['jml_prestasi_individu'] = $this->Prestasi_model->hitung_all_prestasi_individu();
 		$data['jml_prestasi_beregu'] = $this->Prestasi_model->hitung_all_prestasi_beregu();
-		// $this->load->view('user_home');
+
+		$data['title'] = 'RewardMe - Pengaturan Admin';
 		$data['content'] = 'kucing/admin_setting.php';
 		$this->load->view("kucing/admin_template.php",$data);
 
@@ -72,5 +73,43 @@ class Admin_setting extends CI_Controller {
 
 		$this->Admin_model->updateSetting($data,$where);
 
+	}
+
+	function resetPoin(){
+
+		$data = array(
+			'username' => $this->input->post('username'),
+			'password' => $this->input->post('password')
+		);
+
+		$result=$this->Admin_model->cekAdmin($data['username'],md5($data['password']));
+
+		if($result)
+		{
+			$reset = array(
+				'reward_poin' => 0,
+				'validasi' => 0
+			);
+
+			if ($this->Admin_model->resetPoin($reset)) {
+				$this->session->set_flashdata('reset_status',
+	      '  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
+	        <strong>Reset Poin berhasil!</strong> Silakan cek kembali untuk kebenaran data.
+	        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	          <span aria-hidden="true">×</span>
+	        </button>
+	      </div> ');
+				redirect('Admin_setting');
+			}else {
+				$this->session->set_flashdata('reset_status',
+	      '  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+	        <strong>Reset Poin gagal!</strong> Silakan cek kembali untuk kebenaran data.
+	        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	          <span aria-hidden="true">×</span>
+	        </button>
+	      </div> ');
+				redirect('Admin_setting');
+			}
+		}
 	}
 }

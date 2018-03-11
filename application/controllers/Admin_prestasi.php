@@ -36,6 +36,7 @@ class Admin_prestasi extends CI_Controller {
 		$data['prestasi'] = $data_prestasi;
 		$data['periode'] = 0;
 		$data['semester'] = 0;
+		$data['title'] = 'RewardMe - Data Prestasi';
 		$data['content'] = 'kucing/data_master_prestasi.php';
 		$this->load->view("kucing/admin_template.php",$data);
 
@@ -63,6 +64,7 @@ class Admin_prestasi extends CI_Controller {
 		$data['semester'] = $semester_select;
 
 		$data['prestasi'] = $data_prestasi;
+		$data['title'] = 'RewardMe - Data Prestasi';
 		$data['content'] = 'kucing/data_master_prestasi.php';
 		$this->load->view("kucing/admin_template.php",$data);
 	}
@@ -152,7 +154,7 @@ class Admin_prestasi extends CI_Controller {
 	{
 
 
-		$this->data['title'] = "Tambah Prestasi";
+		$data['title'] = "RewardMe - Tambah Prestasi";
 		$data['available_nim'] = $this->User_model->get_all_nim();
 
 		//validate form input
@@ -224,12 +226,6 @@ class Admin_prestasi extends CI_Controller {
 				)
 		);
 
-		$this->form_validation->set_rules(
-				'role_prestasi', 'Posisi yang diambil',
-				'trim',
-				array(
-				)
-		);
 
 		$this->form_validation->set_rules(
 				'jenis_prestasi', 'Jenis Prestasi',

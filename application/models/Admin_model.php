@@ -39,5 +39,28 @@ class Admin_model extends CI_Model {
     }
   }
 
+	public function cekAdmin($username, $password){
+
+		$this->db->select('*');
+		$this->db->from('admin');
+		$this->db->where('username',$username);
+		$this->db->where('password',$password);
+
+		if($query=$this->db->get())
+		{
+				$admin_login =  $query->row_array();
+				return $admin_login;
+		}
+		else{
+			return false;
+		}
+	}
+
+	function resetPoin($reset){
+			$this->db->select('reward_poin','validasi');
+			$this->db->from('user_prestasi');
+			$this->db->update('user_prestasi',$reset);
+	}
+
 
 }

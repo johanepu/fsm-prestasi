@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <meta name="keyword" content="CoreUI Bootstrap 4 Admin Template">
   <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
 
-  <title>CoreUI Bootstrap 4 Admin Template</title>
+  <title>RewardMe - Login Admin</title>
 
   <!-- Icons -->
   <link type="text/css" href="<?php echo base_url(); ?>assets/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">

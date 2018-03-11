@@ -21,6 +21,7 @@ parent::__construct();
 
 	// Show login page
 	public function index() {
+		$data['title'] = 'RewardMe - Login Admin';
 		$this->load->view('kucing/admin_login');
 	}
 
@@ -115,6 +116,7 @@ public function logout() {
 		$data['message_display'] = 'Berhasil Logout';
 		redirect('Admin_login', $data);
 	}
+
 
 }
 

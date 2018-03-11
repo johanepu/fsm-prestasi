@@ -15,7 +15,7 @@
   <meta name="author" content="Łukasz Holeczek">
   <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,AngularJS,Angular,Angular2,Angular 2,Angular4,Angular 4,jQuery,CSS,HTML,RWD,Dashboard,React,React.js,Vue,Vue.js">
   <link rel="shortcut icon" href="img/favicon.png">
-  <title>CoreUI - Open Source Bootstrap Admin Template</title>
+  <title><?php echo $title ?></title>
 
 
   <!-- Icons -->
@@ -27,7 +27,9 @@
   <!-- Main styles for this application -->
   <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet">
   <link type="text/css" href="<?php echo base_url(); ?>assets/src/css/style.css" rel="stylesheet">
-  <!-- Styles required by this views -->
+  <!-- Styles required by dataTable -->
+  <link type="text/css" href="<?php echo base_url(); ?>assets/export/css/buttons.dataTables.min.css" rel="stylesheet">
+
   <!-- <link type="text/css" href="<?php echo base_url(); ?>assets/node_modules/datatables-bootstrap/css/dataTables.bootstrap.min.css" rel="stylesheet"> -->
   <link type="text/css" href="<?php echo base_url(); ?>assets/node_modules/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
   <!-- Include Date Range Picker -->
@@ -85,7 +87,7 @@
 <!-- End Sidebar -->
 <!-- Start Content -->
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
-  <?php $this->load->view('common_script.php');  ?>
+  <?php $this->load->view('kucing/admin_common_script.php');  ?>
   <?php  $this->load->view($content);?>
 <!-- End Content -->
 </body>

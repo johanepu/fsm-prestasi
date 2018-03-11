@@ -46,7 +46,8 @@ class Admin_home extends CI_Controller {
 		$data['jml_prestasi_non_akademik'] = $this->Prestasi_model->hitung_all_prestasi_non_akademik();
 		$data['jml_prestasi_individu'] = $this->Prestasi_model->hitung_all_prestasi_individu();
 		$data['jml_prestasi_beregu'] = $this->Prestasi_model->hitung_all_prestasi_beregu();
-		// $this->load->view('user_home');
+
+		$data['title'] = 'RewardMe - Dashboard Admin';
 		$data['content'] = 'kucing/admin_home.php';
 		$this->load->view("kucing/admin_template.php",$data);
 
