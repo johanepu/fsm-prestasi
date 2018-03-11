@@ -121,4 +121,90 @@ class Admin_setting extends CI_Controller {
 			redirect('Admin_setting');
 		}
 	}
+
+	function resetPrestasi(){
+
+		$data = array(
+			'username' => $this->input->post('username'),
+			'password' => $this->input->post('password')
+		);
+
+		$result=$this->Admin_model->cekAdmin($data['username'],md5($data['password']));
+
+		if($result)
+		{
+
+			if ($this->Admin_model->resetPrestasi() == true) {
+				$this->session->set_flashdata('reset_status',
+	      '  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
+	        <strong>Reset Data Prestasi berhasil!</strong> Semua data prestasi telah berhasil dihapus.
+	        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	          <span aria-hidden="true">×</span>
+	        </button>
+	      </div> ');
+				redirect('Admin_setting');
+			}else {
+				$this->session->set_flashdata('reset_status',
+	      '  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+	        <strong>Reset Data Prestasi gagal!</strong> Silakan cek kembali untuk kebenaran data.
+	        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	          <span aria-hidden="true">×</span>
+	        </button>
+	      </div> ');
+				redirect('Admin_setting');
+			}
+		}else {
+			$this->session->set_flashdata('reset_status',
+			'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+				<strong>Reset Data Prestasi gagal!</strong> Data admin yang dimasukan salah
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div> ');
+			redirect('Admin_setting');
+		}
+	}
+
+	function resetUser(){
+
+		$data = array(
+			'username' => $this->input->post('username'),
+			'password' => $this->input->post('password')
+		);
+
+		$result=$this->Admin_model->cekAdmin($data['username'],md5($data['password']));
+
+		if($result)
+		{
+
+			if ($this->Admin_model->resetUser() == true) {
+				$this->session->set_flashdata('reset_status',
+				'  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
+					<strong>Reset Data Mahasiswa berhasil!</strong> Semua data mahasiswa berhasil dihapus.
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div> ');
+				redirect('Admin_setting');
+			}else {
+				$this->session->set_flashdata('reset_status',
+				'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+					<strong>Reset Data Mahasiswa gagal!</strong> Silakan cek kembali untuk kebenaran data.
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div> ');
+				redirect('Admin_setting');
+			}
+		}else {
+			$this->session->set_flashdata('reset_status',
+			'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+				<strong>Reset Data Mahasiswa gagal!</strong> Data admin yang dimasukan salah
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div> ');
+			redirect('Admin_setting');
+		}
+	}
 }

@@ -31,9 +31,22 @@
               </div>
               <div class="card-body">
                 <div class="row mt">
-                  <div class="form-group col-lg-12">
-                    <input type="text" class="form-control" id="cariPrestasi" placeholder="Cari Nama Kegiatan atau Prestasi Anda" >
+                  <div class="btn-group col-lg-2">
+                    <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Cetak Data Sebagai
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" id="exportCopy" href="#">Kopi sebagai teks</a>
+                        <a class="dropdown-item" id="exportCSV" href="#">CSV</a>
+                        <a class="dropdown-item" id="exportExcel" href="#">Excel</a>
+                        <a class="dropdown-item" id="exportPDF" href="#">PDF</a>
+                        <a class="dropdown-item" id="exportPrint" href="#">Cetak Print</a>
+                      </div>
+                    </div>
                   </div>
+                  <div class="form-group col-lg-10">
+                    <input type="text" class="form-control" id="cariPrestasi" placeholder="Cari nama mahasiswa atau atribut mahasiswa">
                 </div>
                 <table id="tabel_prestasi" class="table table-responsive-sm table-striped table-hover">
                   <thead>
@@ -285,13 +298,39 @@ $(document).ready(function(){
 
   // tabel data prestasi datatable
     tabel_prestasi =  $('#tabel_prestasi').DataTable( {
-        "dom": 'lrtip',
+        "dom": 'lrtipB',
+        "sScrollY": "500px",
         "bPaginate": false,
-        "info":     false
-      } )
+        "info":     false,
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+      } );
       $('#cariPrestasi').keyup(function(){
             tabel_prestasi.search($(this).val()).draw() ;
-      })
+      });
+
+      $( 'button.dt-button,button.button-html5' ).hide();
+
+      $('#exportCopy').on('click', function() {
+        $('.buttons-copy').click()
+      });
+
+      $('#exportCSV').on('click', function() {
+        $('.buttons-csv').click()
+      });
+
+      $('#exportExcel').on('click', function() {
+        $('.buttons-excel').click()
+      });
+
+      $('#exportPDF').on('click', function() {
+        $('.buttons-pdf').click()
+      });
+
+      $('#exportPrint').on('click', function() {
+        $('.buttons-print').click()
+      });
 
   $(document).on('click', 'button.btn-edit,button.btn-edit2', function() {
     var id_prestasi = $(this).val();

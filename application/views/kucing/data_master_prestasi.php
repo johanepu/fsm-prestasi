@@ -36,8 +36,22 @@
                           <option value="1">Ganjil</option>
                           <option value="2">Genap</option>
                         </select>
+                    </div>
+                    <div class="btn-group">
+                      <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Cetak Data Sebagai
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" id="exportCopy" href="#">Kopi sebagai teks</a>
+                          <a class="dropdown-item" id="exportCSV" href="#">CSV</a>
+                          <a class="dropdown-item" id="exportExcel" href="#">Excel</a>
+                          <a class="dropdown-item" id="exportPDF" href="#">PDF</a>
+                          <a class="dropdown-item" id="exportPrint" href="#">Cetak Print</a>
+                        </div>
                       </div>
-                  <div class="form-group col-lg-8">
+                    </div>
+                  <div class="form-group col-lg-6">
                     <input type="text" class="form-control" id="cariPrestasi" placeholder="Cari Nama Kegiatan atau Prestasi Anda" >
                   </div>
                 </div>
@@ -333,7 +347,8 @@ $(document).ready(function(){
 
   // tabel data prestasi datatable
     tabel_prestasi =  $('#tabel_prestasi').DataTable( {
-        "dom": 'Blrtip',
+        "dom": 'lrtipB',
+        "sScrollY": "500px",
         "bPaginate": false,
         "info":     false,
         buttons: [
@@ -342,6 +357,28 @@ $(document).ready(function(){
       } );
       $('#cariPrestasi').keyup(function(){
             tabel_prestasi.search($(this).val()).draw() ;
+      });
+
+      $( 'button.dt-button,button.button-html5' ).hide();
+
+      $('#exportCopy').on('click', function() {
+        $('.buttons-copy').click()
+      });
+
+      $('#exportCSV').on('click', function() {
+        $('.buttons-csv').click()
+      });
+
+      $('#exportExcel').on('click', function() {
+        $('.buttons-excel').click()
+      });
+
+      $('#exportPDF').on('click', function() {
+        $('.buttons-pdf').click()
+      });
+
+      $('#exportPrint').on('click', function() {
+        $('.buttons-print').click()
       });
 
       if($('#periode_select').val(<?php echo $periode?>)&&<?php echo $periode?>!=0){

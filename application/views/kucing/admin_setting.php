@@ -94,7 +94,7 @@
                               <div class="card-body">
                                 Klik Tombol Reset Prestasi untuk mengehapus semua data prestasi
                                 <div class="row card-body">
-                                  <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-exclamation-triangle"></i> Reset Prestasi</button>
+                                  <button type="submit" id="btn_reset_pres_modal" class="btn btn-sm btn-danger"><i class="fa fa-exclamation-triangle"></i> Reset Prestasi</button>
                                 </div>
                               </div>
                             </div>
@@ -111,7 +111,7 @@
                               <div class="card-body">
                                 Klik Tombol Reset User untuk mengehapus semua data mahasiswa
                                 <div class="row card-body">
-                                  <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-exclamation-triangle"></i> Reset User</button>
+                                  <button type="submit" id="btn_reset_mhs_modal" class="btn btn-sm btn-danger"><i class="fa fa-exclamation-triangle"></i> Reset User</button>
                                 </div>
                               </div>
                             </div>
@@ -218,6 +218,74 @@
         </div>
       </div>
     </div>
+    <div class="modal fade" id="modal_reset_prestasi" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+      <div class="modal-dialog modal-danger" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Reset Data Prestasi</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" >
+            <p><b>Apakah anda yakin ingin mereset data prestasi ?</b></p>
+            <p style="text-align:center"><strong>Silakan pastikan data admin anda</strong></p>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-user"></i></span>
+              </div>
+              <input type="text" class="form-control" name="username" id="username_prestasi" placeholder="Username">
+            </div>
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-lock"></i></span>
+              </div>
+              <input type="password" name="password" id="password_prestasi" class="form-control" placeholder="Password">
+            </div>
+            <p style="text-align:center">Lanjutkan dengan menekan tombol konfirmasi</p>
+          </div>
+          <div class="modal-footer">
+                <button style="width:100px" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button style="width:100px" class="btn btn-danger" id="btn_reset_pres_konf">Konfirmasi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="modal_reset_mhs" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+      <div class="modal-dialog modal-danger" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Reset Data Mahasiswa</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" >
+            <p><b>Apakah anda yakin ingin mereset data mahasiswa ?</b></p>
+            <p style="text-align:center"><strong>Silakan pastikan data admin anda</strong></p>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-user"></i></span>
+              </div>
+              <input type="text" class="form-control" name="username" id="username_mhs" placeholder="Username">
+            </div>
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-lock"></i></span>
+              </div>
+              <input type="password" name="password" id="password_mhs" class="form-control" placeholder="Password">
+            </div>
+            <p style="text-align:center">Lanjutkan dengan menekan tombol konfirmasi</p>
+          </div>
+          <div class="modal-footer">
+                <button style="width:100px" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button style="width:100px" class="btn btn-danger" id="btn_reset_mhs_konf">Konfirmasi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </main>
 
 </body>
@@ -260,6 +328,60 @@
           $.ajax({
             type: "POST",
             url: '<?=base_url()?>Admin_setting/resetPoin',
+            data: {
+              username:username,
+              password:password
+            },
+            dataType:'json',
+            success: function(data){
+            }
+          });
+            location.reload();
+        }
+    });
+
+    $('#btn_reset_pres_modal').click(function(){
+      $('#modal_reset_prestasi').modal('show');
+    });
+
+    $('#btn_reset_pres_konf').click(function(){
+      var username = $('#username_prestasi').val();
+      var password = $('#password_prestasi').val();
+
+      if(username==''||password==''){
+          alert('Anda harus mengisi data admin');
+          return false;
+        }else {
+          $.ajax({
+            type: "POST",
+            url: '<?=base_url()?>Admin_setting/resetPrestasi',
+            data: {
+              username:username,
+              password:password
+            },
+            dataType:'json',
+            success: function(data){
+            }
+          });
+            location.reload();
+        }
+    });
+
+    $('#btn_reset_mhs_modal').click(function(){
+      $('#modal_reset_mhs').modal('show');
+    });
+
+    $('#btn_reset_mhs_konf').click(function(){
+      var username = $('#username_mhs').val();
+      var password = $('#password_mhs').val();
+
+      if(username==''||password==''){
+          alert('Anda harus mengisi data admin');
+          return false;
+        }else {
+          $.ajax({
+            type: "POST",
+            url: '<?=base_url()?>Admin_setting/resetUser',
             data: {
               username:username,
               password:password

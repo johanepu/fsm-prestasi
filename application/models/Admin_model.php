@@ -64,5 +64,17 @@ class Admin_model extends CI_Model {
 			return true;
 	}
 
+	function resetPrestasi(){
+			$this->db->empty_table('user_prestasi');
+
+			return true;
+	}
+
+	function resetUser(){
+			$this->db->empty_table('users');
+
+			return true;
+	}
+
 
 }
