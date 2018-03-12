@@ -15,6 +15,9 @@ class User_profile extends CI_Controller {
 				// Load session library
 				$this->load->library('session');
 
+				// Load upload library
+				$this->load->library('upload');
+
 				// Load database
 				$this->load->model('Prestasi_model');
 				$this->load->model('User_model');
@@ -40,6 +43,7 @@ class User_profile extends CI_Controller {
 		$data['jml_prestasi_individu'] = $this->Prestasi_model->hitung_user_prestasi_individu($nim);
 		$data['jml_prestasi_beregu'] = $this->Prestasi_model->hitung_user_prestasi_beregu($nim);
 
+		$data['error'] = '';
 		$data['title'] = 'RewardMe - Profil';
 		$data['content'] = 'user_profile.php';
 		$this->load->view("user_template.php",$data);
@@ -220,4 +224,46 @@ class User_profile extends CI_Controller {
 		$this->session->set_userdata('nomor_hp',$nomor_hp);
 
 	}
+
+	public function profilUpload(){
+
+		$config['upload_path']          = './image-upload/';
+		$config['allowed_types']        = 'gif|jpg|png';
+		$config['max_size']             = 2000;
+		$config['max_width']            = 3000;
+		$config['max_height']           = 3000;
+
+		$this->upload->initialize($config);
+
+		if ( ! $this->upload->do_upload('profile_photo')){
+			$this->session->set_flashdata('upload_status',
+			'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+				<strong>Uppload foto gagal!</strong> Silakan upload foto dengan resolusi lebih kecil dari 3000x3000 px.
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div> ');
+			redirect('User_profile');
+		}else{
+			$photo=$this->upload->file_name;
+			$data = array(
+	     	'foto' => $photo
+		 	);
+			$where = array(
+				'nim' => $this->session->userdata('nim')
+			);
+			if ($this->User_model->profilUpload($data,$where) == true) {
+				$this->session->set_userdata('foto',$photo);
+				$this->session->set_flashdata('upload_status',
+				'  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
+					<strong>Uppload foto berhasil!</strong> Silakan cek kembali untuk kebenaran data.
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div> ');
+				redirect('User_profile');
+			}
+		}
+	}
+
 }

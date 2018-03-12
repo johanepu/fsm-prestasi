@@ -35,6 +35,14 @@
 
 
 </head>
+<style>
+    .profile_small{
+      object-fit: cover;
+      width:34px;
+      height:40px;
+    }
+
+</style>
 
 <header class="app-header navbar">
   <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
@@ -57,7 +65,11 @@
     </li>
     <li class="nav-item dropdown" >
       <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-        <img src="<?php echo base_url(); ?>assets/src/img/avatars/6.jpg" class="img-avatar" alt="<?php echo $this->session->userdata('nim')?>">
+        <?php if ($this->session->userdata('foto')==NULL): ?>
+          <img src="<?php echo base_url(); ?>assets/src/img/avatars/0.jpg" class="mx-auto profile_small img-avatar " alt="<?php echo $this->session->userdata('nim')?>">
+        <?php else: ?>
+          <img src=" <?php echo base_url('image-upload/'.$this->session->userdata('foto'));?>" class="mx-auto profile_small img-avatar " alt="<?php echo $this->session->userdata('nim')?>">
+        <?php endif; ?>
       </a>
       <div class="dropdown-menu dropdown-menu-right">
         <div class="dropdown-header text-center">

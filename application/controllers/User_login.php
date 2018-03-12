@@ -70,6 +70,10 @@ public function user_login_process() {
 					$this->session->set_userdata('namalengkap',$result['namalengkap']);
 					$this->session->set_userdata('jurusan',$result['jurusan']);
 					$this->session->set_userdata('email',$result['email']);
+					$this->session->set_userdata('alamat',$result['alamat']);
+					$this->session->set_userdata('tingkatan',$result['tingkatan']);
+					$this->session->set_userdata('nomor_hp',$result['nomor_hp']);
+					$this->session->set_userdata('foto',$result['foto']);
 					$this->session->set_userdata('date_created',$result['date_created']);
 					// $sessionuser = $this->session->set_userdata('status');
 					redirect('User_home', 'refresh');

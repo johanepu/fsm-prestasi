@@ -1,4 +1,12 @@
 
+<style>
+    .profile_photo{
+      object-fit: cover;
+      width:230px;
+      height:230px;
+    }
+
+</style>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
   <!-- Main content -->
   <main class="main">
@@ -21,6 +29,9 @@
                     Mahasiswa
                   </div>
                   <div class="card-body">
+                    <?php if($this->session->flashdata('upload_status')){
+                      echo $this->session->flashdata('upload_status');
+                    }?>
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a href="" role="tab" data-target="#profile" data-toggle="tab" class="nav-link profil active">Profil</a>
@@ -34,12 +45,26 @@
                             <div class="row">
                               <div class="col-md-4 ">
                                 <div class="col-md-9 text-center">
-                                    <img src="//placehold.it/150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
-                                    <h6 class="mt-2">Upload a different photo</h6>
-                                    <label class="custom-file">
-                                        <input type="file" id="file" class="custom-file-input btn-primary" hidden>
-                                        <span class="btn btn-primary">Choose file</span>
-                                    </label>
+                                  <?php if ($this->session->userdata('foto')==NULL): ?>
+                                    <img src="<?php echo base_url(); ?>assets/src/img/avatars/0.jpg" class="mx-auto profile_photo img-avatar" alt="avatar">
+                                  <?php else: ?>
+                                    <img src="<?php echo base_url('image-upload/'.$this->session->userdata('foto'));?>" class="mx-auto profile_photo img-avatar" alt="avatar">
+                                  <?php endif; ?>
+                                    <div class="text-center" style="margin-left:40px">
+                                      <h6 class="mt-2">Upload foto profil</h6>
+                                      <?php echo form_open_multipart('User_profile/profilUpload');?>
+                                      <div id="loading"></div>
+                                      <input id="filename" class="form-control text-center" type="text" placeholder="Nama File" disabled></input>
+                                      <label class="custom-file">
+                                        <div class="form-group row" style="margin-left:0px">
+                                          <input type="file" id="photo_file" name="profile_photo" class="custom-file-input btn-primary"
+                                           onchange='changeEventHandler(event);' accept="image/x-png,image/gif,image/jpeg,image/jpg" hidden>
+                                          <span class="btn btn-primary">Pilih file</span>
+                                          <input type="submit" id="upload" class="btn btn-success"style="margin-left:2px" value="Upload">
+                                          <!-- <span class="btn btn-success">Upload</span> -->
+                                        </div>
+                                      </label>
+                                    </div>
                                 </div>
                               </div>
                                 <div class="col-md-6">
@@ -72,6 +97,22 @@
                                       }if ($jurusan == 6) {
                                         echo 'Informatika';
                                       }?>
+                                    </p>
+                                    <h6>Angkatan</h6>
+                                    <p>
+                                      <?php if ($this->session->userdata('tingkatan') == 0): ?>
+                                        <?php echo 'Harap isi di ubah biodata'?>
+                                      <?php else: ?>
+                                        <?php echo $this->session->userdata('tingkatan')?>
+                                      <?php endif; ?>
+                                    </p>
+                                    <h6>Alamat</h6>
+                                    <p>
+                                      <?php if ($this->session->userdata('alamat') == NULL): ?>
+                                        <?php echo 'Harap isi di ubah biodata'?>
+                                      <?php else: ?>
+                                        <?php echo $this->session->userdata('alamat')?>
+                                      <?php endif; ?>
                                     </p>
                                     <h6>Tanggal Akun Dibuat</h6>
                                     <p>
@@ -271,6 +312,9 @@
               document.getElementById('role_prestasi_edit').style.display = 'none';
               document.getElementById('role_prestasi_editlabel').style.display = 'none';
           }
+        }
+        function changeEventHandler(event){
+            $('#filename').val(event.target.value);
         }
 
     </script>

@@ -136,9 +136,14 @@ class User_model extends CI_Model {
         $this->db->order_by('nim', 'ASC');
         $this->db->limit(10);
         return $this->db->get('users')->result();
-    }
+  }
 
-
+	function profilUpload($data,$where)
+	{
+		$this->db->where($where);
+	  $this->db->update('users',$data);
+		return true;
+	}
 
 
 }

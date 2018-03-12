@@ -223,7 +223,11 @@
                         <tr>
                           <td class="text-center">
                             <div class="avatar">
-                              <img src="<?php echo base_url(); ?>assets/src/img/avatars/1.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                              <?php if ($mhs->foto ==  NULL): ?>
+                                <img src="<?php echo base_url(); ?>assets/src/img/avatars/0.jpg" class="img-avatar" alt=<?php echo $mhs->nim; ?>>
+                              <?php else: ?>
+                                <img src="<?php echo base_url('image-upload/'.$mhs->foto);?>" class="img-avatar" alt="admin@bootstrapmaster.com">
+                              <?php endif; ?>
                             </div>
                           </td>
                           <td>
