@@ -20,6 +20,10 @@
                 <a  type="button" class="btn btn-primary" href="<?php echo site_url('Admin_prestasi/addPrestasi_admin'); ?>" style="float: right;"><i class="fa fa-plus"></i>&nbsp; Tambah Prestasi</a>
               </div>
               <div class="card-body">
+                <?php if($this->session->flashdata('status_prestasi')){
+                  echo $this->session->flashdata('status_prestasi');
+                  }
+                ?>
                 <div class="row mt">
                   <div class="form-group col-lg-2">
                       <select id="periode_select" name="select_waktu" class="form-control select_waktu">
@@ -65,67 +69,77 @@
                       <th>Level</th>
                       <th>Tanggal Kegiatan</th>
                       <th>Status</th>
+                      <!-- <th>Poin</th> -->
                       <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody id="tabel-prestasi">
                     <?php
-                    foreach($prestasi as $p){
+                    foreach($prestasi as $p => $pres){
                     ?>
-                    <tr id="<?php echo $p->id_prestasi?>">
-                      <td ><?php echo $p->nim; ?></td>
-                      <td ><?php echo $p->nama_prestasi; ?></td>
-                      <td ><?php echo $p->peringkat_prestasi; ?></td>
+                    <tr id="<?php echo $pres->id_prestasi?>">
+                      <td ><?php echo $pres->nim; ?></td>
+                      <td ><?php echo $pres->nama_prestasi; ?></td>
+                      <td ><?php echo $pres->peringkat_prestasi; ?></td>
                       <td title="Jenis Prestasi" name="jenis_prestasi" id="jenis_prestasi">
                       <?php
-                      if ($p->jenis_prestasi == "1") {
+                      if ($pres->jenis_prestasi == "1") {
                           echo '<span class="label label-success label-mini">Akademik</span>';
-                      }elseif ($p->jenis_prestasi == "2") {
+                      }elseif ($pres->jenis_prestasi == "2") {
                           echo '<span class="label label-warning label-mini">Non-Akademik</span>';
                       }
                       ?></td>
                       <!-- <td title="Tipe Prestasi" name="tipe_prestasi" id="tipe_prestasi">
                       <?php
-                      if ($p->tipe_prestasi == "1") {
+                      if ($pres->tipe_prestasi == "1") {
                           echo '<span class="label label-success label-mini">Individu</span>';
-                      }elseif ($p->tipe_prestasi == "2") {
+                      }elseif ($pres->tipe_prestasi == "2") {
                           echo '<span class="label label-warning label-mini">Beregu</span>';
                       }
                       ?></td> -->
 
                       <td title="Level Prestasi" name="level_prestasi" id="level_prestasi">
                       <?php
-                      if ($p->level_prestasi == "1") {
+                      if ($pres->level_prestasi == "1") {
                           echo '<span class="label label-success label-mini">Lokal</span>';
-                      }elseif ($p->level_prestasi == "2") {
+                      }elseif ($pres->level_prestasi == "2") {
                           echo '<span class="label label-warning label-mini">Nasional</span>';
-                      }elseif ($p->level_prestasi == "3") {
+                      }elseif ($pres->level_prestasi == "3") {
                           echo '<span class="label label-warning label-mini">Regional</span>';
-                      }elseif ($p->level_prestasi == "4") {
+                      }elseif ($pres->level_prestasi == "4") {
                           echo '<span class="label label-warning label-mini">Internasional</span>';
                       }
                       ?></td>
-                      <td ><?php echo $p->tgl_prestasi_start; ?></td>
+                      <td ><?php echo $pres->tgl_prestasi_start; ?></td>
                       <td title="Status Prestasi" name="status_prestasi" id="status_prestasi">
                       <?php
-                      if ($p->validasi == "1") {
+                      if ($pres->validasi == "1") {
                           echo '<span class="badge badge-success">Tervalidasi</span>';
-                      }elseif ($p->validasi == "0") {
+                      }elseif ($pres->validasi == "0") {
                           echo '<span class="badge badge-danger">Belum Valid</span>';
                       }
                       ?></td>
+                      <!-- <td title="Reward Poin" name="reward_poin" id="reward_poin">
+                        <?php
+                        if ($reward_poin[$p] == "0") {
+                          echo '<h5><span class="badge badge-danger">'.$reward_poin[$p].'</span></h5>';
+                        }else {
+                          echo '<h5><span class="badge badge-success">'.$reward_poin[$p].'</span></h5>';
+                        }
+                        ?>
+                      </td> -->
                       <td>
                           <div class="btn-group" >
-                            <?php if ($p->validasi == 0): ?>
-                              <button class="btn btn-success btn-validate" name="btn-edit" title="Validasi Prestasi" value="<?=$p->id_prestasi?>" type="button">
+                            <?php if ($pres->validasi == 0): ?>
+                              <button class="btn btn-success btn-validate" name="btn-edit" title="Validasi Prestasi" value="<?=$pres->id_prestasi?>" type="button">
                                   <i class="fa fa-fw s fa-check"></i></button>
                             <?php else: ?>
-                              <button class="btn btn-secondary btn-unvalidate" name="btn-edit" title="Hapus Validasi Prestasi" value="<?=$p->id_prestasi?>" type="button">
+                              <button class="btn btn-secondary btn-unvalidate" name="btn-edit" title="Hapus Validasi Prestasi" value="<?=$pres->id_prestasi?>" type="button">
                                   <i class="fa fa-fw s fa-times"></i></button>
                             <?php endif; ?>
-                              <button class="btn btn-primary btn-edit" name="btn-edit" title="Edit/Lihat Prestasi" value="<?=$p->id_prestasi?>" type="button">
+                              <button class="btn btn-primary btn-edit" name="btn-edit" title="Edit/Lihat Prestasi" value="<?=$pres->id_prestasi?>" type="button">
                                   <i class="fa fa-fw s fa-pencil"></i></button>
-                              <button class="btn btn-danger btn-delete" name="btn-delete" title="Hapus Prestasi" value="<?=$p->id_prestasi?>" type="button">
+                              <button class="btn btn-danger btn-delete" name="btn-delete" title="Hapus Prestasi" value="<?=$pres->id_prestasi?>" type="button">
                                   <i class="fa fa-fw fa-remove"></i></button>
                           </div>
                       </td>

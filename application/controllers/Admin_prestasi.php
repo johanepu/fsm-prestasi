@@ -34,6 +34,7 @@ class Admin_prestasi extends CI_Controller {
 	{
 		$data_prestasi = $this->Prestasi_model->tampil_all_prestasi();
 		$data['prestasi'] = $data_prestasi;
+		$data['reward_poin'] = $this->Prestasi_model->user_reward_point();
 		$data['periode'] = 0;
 		$data['semester'] = 0;
 		$data['title'] = 'RewardMe - Data Prestasi';
@@ -358,10 +359,9 @@ class Admin_prestasi extends CI_Controller {
 				'nama_prestasi' 	=> $this->input->post('nama_prestasi'),
 				'peringkat_prestasi'  	=> $this->input->post('peringkat_prestasi'),
         'tipe_prestasi'    	=> $this->input->post('tipe_prestasi'),
-        'role_prestasi'    		=> $this->input->post('role_prestasi'),
 				'jenis_prestasi'    		=> $this->input->post('jenis_prestasi'),
 				'level_prestasi'    		=> $level_prestasi,
-				'deskripsi_prestasi'    		=> $this->input->post('role_prestasi'),
+				'deskripsi_prestasi'    		=> $this->input->post('deskripsi_prestasi'),
 				'reward_poin'    		=> 0,
 				'penyelenggara_prestasi'    		=> $this->input->post('penyelenggara_prestasi'),
 				'tempat_prestasi'    		=> $this->input->post('tempat_prestasi'),
@@ -374,9 +374,9 @@ class Admin_prestasi extends CI_Controller {
 		{
 			//check to see if we are creating the user
 			//redirect them to checkout page
-      $this->session->set_flashdata('status',
+      $this->session->set_flashdata('status_prestasi',
       '  <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Registrasi Berhasil!</strong> Silakan gunakan NIM dan password anda untuk login.
+        <strong>Tambah Prestasi Berhasil!</strong> Silakan cek kembali di data prestasi.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>

@@ -267,7 +267,7 @@
                           </td>
                           <td>
                             <?php
-                            if ($reward_poin[$p] <= "10") {
+                            if ($reward_poin[$p] == "0") {
                               echo '<h5><span class="badge badge-danger">'.$reward_poin[$p].'</span></h5>';
                             }else {
                               echo '<h5><span class="badge badge-success">'.$reward_poin[$p].'</span></h5>';

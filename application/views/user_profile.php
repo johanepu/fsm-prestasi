@@ -29,8 +29,8 @@
                     Mahasiswa
                   </div>
                   <div class="card-body">
-                    <?php if($this->session->flashdata('upload_status')){
-                      echo $this->session->flashdata('upload_status');
+                    <?php if($this->session->flashdata('profile_status')){
+                      echo $this->session->flashdata('profile_status');
                     }?>
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
