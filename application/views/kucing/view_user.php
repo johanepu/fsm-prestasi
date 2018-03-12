@@ -1,4 +1,11 @@
+<style>
+    .profile_photo{
+      object-fit: cover;
+      width:230px;
+      height:230px;
+    }
 
+</style>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
   <!-- Main content -->
   <main class="main">
@@ -34,12 +41,11 @@
                             <div class="row">
                               <div class="col-md-4 ">
                                 <div class="col-md-9 text-center">
-                                    <img src="//placehold.it/150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
-                                    <h6 class="mt-2">Upload a different photo</h6>
-                                    <label class="custom-file">
-                                        <input type="file" id="file" class="custom-file-input btn-primary" hidden>
-                                        <span class="btn btn-primary">Choose file</span>
-                                    </label>
+                                  <?php if ($data_user[0]->foto==NULL): ?>
+                                    <img src="<?php echo base_url(); ?>assets/src/img/avatars/0.jpg" class="mx-auto profile_photo img-avatar" alt="avatar">
+                                  <?php else: ?>
+                                    <img src="<?php echo base_url('image-upload/'.$data_user[0]->foto);?>" class="mx-auto profile_photo img-avatar" alt="avatar">
+                                  <?php endif; ?>
                                 </div>
                               </div>
                                 <div class="col-md-6">
@@ -73,6 +79,30 @@
                                         echo 'Informatika';
                                       }?>
                                     </p>
+                                    <h6>Angkatan</h6>
+                                    <p>
+                                      <?php if ($data_user[0]->tingkatan == 0): ?>
+                                        <?php echo 'User belum mengisi data angkatan'?>
+                                      <?php else: ?>
+                                        <?php echo $data_user[0]->tingkatan?>
+                                      <?php endif; ?>
+                                    </p>
+                                    <h6>Alamat</h6>
+                                    <p>
+                                      <?php if ($data_user[0]->alamat == NULL): ?>
+                                        <?php echo 'User belum mengisi data alamat'?>
+                                      <?php else: ?>
+                                        <?php echo $data_user[0]->alamat?>
+                                      <?php endif; ?>
+                                    </p>
+                                    <h6>Kontak</h6>
+                                    <p>
+                                      <?php if ($data_user[0]->nomor_hp == NULL): ?>
+                                        <?php echo 'User belum mengisi data nomor handphone'?>
+                                      <?php else: ?>
+                                        <?php echo $data_user[0]->nomor_hp?>
+                                      <?php endif; ?>
+                                    </p>
                                     <h6>Tanggal Akun Dibuat</h6>
                                     <p>
                                       <?php
@@ -102,8 +132,8 @@
                                       foreach($prestasi_user as $p){
                                       ?>
                                       <tr id="<?php echo $p->id_prestasi?>">
-                                        <td title="Data ini tidak dapat di ubah" ><?php echo $p->nama_prestasi; ?></td>
-                                        <td title="Data ini tidak dapat di edit" ><?php echo $p->peringkat_prestasi; ?></td>
+                                        <td ><?php echo $p->nama_prestasi; ?></td>
+                                        <td ><?php echo $p->peringkat_prestasi; ?></td>
                                         <td title="Jenis Prestasi" name="jenis_prestasi" id="jenis_prestasi">
                                         <?php
                                         if ($p->jenis_prestasi == "1") {
@@ -132,7 +162,7 @@
                                             echo '<span class="label label-warning label-mini">Internasional</span>';
                                         }
                                         ?></td>
-                                        <td title="Data ini tidak dapat di edit" ><?php echo $p->tgl_prestasi_start; ?></td>
+                                        <td ><?php echo $p->tgl_prestasi_start; ?></td>
                                         <td>
                                             <div class="btn-group" >
                                                 <button class="btn btn-primary btn-edit" name="btn-edit" title="Edit Prestasi" value="<?=$p->id_prestasi?>" type="button">
@@ -210,7 +240,7 @@
                                     <label class="col-lg-3 col-form-label form-control-label"></label>
                                     <div class="col-lg-9">
                                         <input type="reset" class="btn btn-secondary" value="Cancel">
-                                        <input type="submit" id="btnSimpanProfil" class="btn btn-primary" value="Submit">
+                                        <input type="submit" id="btnSimpanProfil" class="btn btn-primary" value="Simpan">
                                     </div>
                                 </div>
                                 <input class="form-control" type="hidden" id="hidden_nim" value="">

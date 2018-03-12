@@ -114,6 +114,14 @@
                                         <?php echo $this->session->userdata('alamat')?>
                                       <?php endif; ?>
                                     </p>
+                                    <h6>Kontak</h6>
+                                    <p>
+                                      <?php if ($this->session->userdata('nomor_hp') == NULL): ?>
+                                        <?php echo 'Harap isi di ubah biodata'?>
+                                      <?php else: ?>
+                                        <?php echo $this->session->userdata('nomor_hp')?>
+                                      <?php endif; ?>
+                                    </p>
                                     <h6>Tanggal Akun Dibuat</h6>
                                     <p>
                                       <?php
@@ -185,7 +193,7 @@
                                     <label class="col-lg-3 col-form-label form-control-label"></label>
                                     <div class="col-lg-9">
                                         <input type="reset" class="btn btn-secondary" value="Cancel">
-                                        <input type="submit" id="btnSimpanProfil" class="btn btn-primary" value="Submit">
+                                        <input type="submit" id="btnSimpanProfil" class="btn btn-primary" value="Simpan">
                                     </div>
                                 </div>
                             </form>
