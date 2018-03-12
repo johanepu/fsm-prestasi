@@ -48,9 +48,11 @@
                   <?php echo form_error('tipe_prestasi'); ?>
 
                   <div class="form-group row" >
-                    <label class="col-md-2 col-form-label" id="referral_label" style="display:none" for="text-input">NIM Anggota</label>
+                    <label class="col-md-2 col-form-label" id="referral_label" style="display:none" for="text-input">NIM Anggota
+                      <a href="#" data-toggle="referral_tooltip" title="Pisahkan NIM dengan koma ',' untuk masukan lebih dari satu">*</i></a>
+                    </label>
                     <div class="col-md-9" id="referral_input" style="display:none">
-                      <input type="text" id="referral_prestasi" name="referral_prestasi" class="form-control" value="<?php echo set_value('referral_prestasi'); ?>" placeholder="Masukan NIM anggota lain sebagai bagian dari regu">
+                      <input type="text" id="referral_prestasi" name="referral_prestasi"  class="form-control" value="<?php echo set_value('referral_prestasi'); ?>" placeholder="Masukan NIM anggota lain sebagai bagian dari regu">
                     </div>
                   </div>
                   <?php echo form_error('referral_prestasi'); ?>
@@ -108,7 +110,13 @@
                   <?php echo form_error('jenis_prestasi'); ?>
 
                   <div class="form-group row">
-                  <label class="col-md-2 col-form-label" for="select1">Skala Kegiatan</label>
+                  <label class="col-md-2 col-form-label" for="select1">Skala Kegiatan
+                    <a href="#" data-toggle="skala_tooltip"
+                    title="1. Lokal ⇒ Untuk prestasi di ruang lingkup daerah lokal atau lingkup
+2. Nasional ⇒ Untuk prestasi di lingkup dalam negara lokal saja
+3. Regional ⇒ Untuk prestasi di satu kawasan yang terdiri dari beberapa negara
+4. Internasional ⇒ Untuk prestasi dengan ruang lingkup seluruh dunia.">*</i></a>
+                  </label>
                   <div class="col-md-3">
                       <select id="level_prestasi" name="level_prestasi" class="form-control">
                         <option value="0">Pilih Skala Kegiatan</option>
@@ -184,6 +192,10 @@
 </body>
 
 <script type="text/javascript">
+    $(document).ready(function(){
+        $('[data-toggle="referral_tooltip"]').tooltip();
+    });
+
       $( function() {
       var available_nim = <?= json_encode($available_nim) ?>;
       function split( val ) {
