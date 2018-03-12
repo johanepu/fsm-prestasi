@@ -119,7 +119,7 @@
                                     </p>
                                     <h6>Kontak</h6>
                                     <p>
-                                      <?php if ($this->session->userdata('nomor_hp') == NULL): ?>
+                                      <?php if ($this->session->userdata('nomor_hp') == 0): ?>
                                         <?php echo 'Harap isi di ubah biodata'?>
                                       <?php else: ?>
                                         <?php echo $this->session->userdata('nomor_hp')?>
