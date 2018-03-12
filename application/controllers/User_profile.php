@@ -236,7 +236,7 @@ class User_profile extends CI_Controller {
 		$this->upload->initialize($config);
 
 		if ( ! $this->upload->do_upload('profile_photo')){
-			$this->session->set_flashdata('profile_status',
+			$this->session->set_flashdata('profile_photo_status',
 			'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
 				<strong>Uppload foto gagal!</strong> Silakan upload foto dengan resolusi lebih kecil dari 3000x3000 px.
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -254,7 +254,7 @@ class User_profile extends CI_Controller {
 			);
 			if ($this->User_model->profilUpload($data,$where) == true) {
 				$this->session->set_userdata('foto',$photo);
-				$this->session->set_flashdata('profile_status',
+				$this->session->set_flashdata('profile_photo_status',
 				'  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
 					<strong>Uppload foto berhasil!</strong> Silakan cek kembali untuk kebenaran data.
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">

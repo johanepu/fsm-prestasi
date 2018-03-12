@@ -32,6 +32,9 @@
                     <?php if($this->session->flashdata('profile_status')){
                       echo $this->session->flashdata('profile_status');
                     }?>
+                    <?php if($this->session->flashdata('profile_photo_status')){
+                      echo $this->session->flashdata('profile_photo_status');
+                    }?>
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a href="" role="tab" data-target="#profile" data-toggle="tab" class="nav-link profil active">Profil</a>
