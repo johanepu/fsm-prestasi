@@ -56,29 +56,15 @@
                       <div class="row">
                         <div class="col-md-4 col-sm-4">
                           <div class="card bg-primary">
-                            <div class="card-body text-center">
-                              <div class="text-muted small text-uppercase font-weight-bold">Periode Akademik</div>
-                              <div class="h2 py-3" id="preview_periode">Tahun Akademik</div>
-                            </div>
+                            <a  type="button" class=" btn btn-success card-body text-center" href="<?php echo site_url('Prestasi/addPrestasi'); ?>">
+                              <i class="fa fa-plus"></i>&nbsp; Tambah Prestasi</a>
                           </div>
                         </div>
                         <!--/.col-->
                         <div class="col-md-4 col-sm-4">
                           <div class="card bg-primary">
-                            <div class="card-body text-center">
-                              <div class="text-muted small text-uppercase font-weight-bold">Semester</div>
-                              <div class="h2 py-3" id="preview_semester">Semester Sekarang</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                          <div class="card bg-primary">
-
-                              <a  type="button" class=" btn btn-success card-body text-center" href="<?php echo site_url('Prestasi/addPrestasi'); ?>">
-                                <i class="fa fa-plus"></i>&nbsp; Tambah Prestasi</a>
-                              <a  type="button" class=" btn btn-danger card-body text-center" href="<?php echo site_url('User_profile'); ?>">
-                                <i class="fa fa-user"></i>&nbsp; Lihat Profil</a>
-
+                            <a  type="button" class=" btn btn-danger card-body text-center" href="<?php echo site_url('User_profile'); ?>">
+                              <i class="fa fa-user"></i>&nbsp; Lihat Profil</a>
                           </div>
                         </div>
                     </div>

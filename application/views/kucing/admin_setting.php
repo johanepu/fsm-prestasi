@@ -186,25 +186,6 @@
                   <h1 class="display-3" id="preview_judul">Preview Judul</h1>
                   <p class="lead" id="preview_pengumuman">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
                   <hr class="my-4">
-                  <div class="row">
-                    <div class="col-md-4 col-sm-4">
-                      <div class="card bg-primary">
-                        <div class="card-body text-center">
-                          <div class="text-muted small text-uppercase font-weight-bold">Periode Akademik</div>
-                          <div class="h2 py-3" id="preview_periode">Tahun Akademik</div>
-                        </div>
-                      </div>
-                    </div>
-                    <!--/.col-->
-                    <div class="col-md-4 col-sm-4">
-                      <div class="card bg-primary">
-                        <div class="card-body text-center">
-                          <div class="text-muted small text-uppercase font-weight-bold">Semester</div>
-                          <div class="h2 py-3" id="preview_semester">Semester Sekarang</div>
-                        </div>
-                      </div>
-                    </div>
-                </div>
               </div>
             </div>
           </div>
@@ -456,10 +437,6 @@
           var stg = data[0];
             $('#preview_judul').html(stg.judul_pengumuman);
             $('#preview_pengumuman').html(stg.pesan_admin);
-            $('#preview_periode').html(stg.periode);
-            $('#preview_semester').html(stg.semester);
-            $('#select_periode').val(stg.periode);
-            $('#select_semester').val(stg.semester);
             $('#input_judul').val(stg.judul_pengumuman);
             $('#input_isi').val(stg.pesan_admin);
         }
@@ -682,10 +659,8 @@
 
       var judul_pengumuman = $('#input_judul').val();
       var pesan_admin = $('#input_isi').val();
-      var periode = $('#select_periode').val();
-      var semester =  $('#select_semester').val();
 
-      if(judul_pengumuman==''||pesan_admin==''||periode==''||semester==''){
+      if(judul_pengumuman==''||pesan_admin==''){
           console.log('gagal edit');
           alert('Simpan Pengaturan Gagal, Cek kembali isian Anda');
           return false;
@@ -695,9 +670,7 @@
             url: '<?=base_url()?>Admin_setting/updateSetting',
             data: {
               judul_pengumuman:judul_pengumuman,
-              pesan_admin:pesan_admin,
-              periode:periode,
-              semester:semester
+              pesan_admin:pesan_admin
               },
             success: function(data){
             }

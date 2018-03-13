@@ -71,8 +71,6 @@ class Admin_setting extends CI_Controller {
 		$data=array(
 			'judul_pengumuman'=> $this->input->post('judul_pengumuman'),
 			'pesan_admin'=>$this->input->post('pesan_admin'),
-			'periode'=>$this->input->post('periode'),
-			'semester'=>$this->input->post('semester')
 		);
 
 		$where = array(
