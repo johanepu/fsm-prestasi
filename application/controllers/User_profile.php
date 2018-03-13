@@ -137,6 +137,7 @@ class User_profile extends CI_Controller {
 		);
 
 
+
 		if ($this->form_validation->run() == true)
 		{
       date_default_timezone_set('Asia/Jakarta');
@@ -148,6 +149,7 @@ class User_profile extends CI_Controller {
 				'alamat'=>$this->input->post('alamat'),
 				'tingkatan'=>$this->input->post('tingkatan'),
 				'nomor_hp'=>$this->input->post('nomor_hp'),
+				'Keterangan'=>$this->input->post('Keterangan')
 			);
 			$where = array(
 				'nim'=> $nim
@@ -161,6 +163,7 @@ class User_profile extends CI_Controller {
 			$this->session->set_userdata('alamat',$alamat);
 			$this->session->set_userdata('tingkatan',$tingkatan);
 			$this->session->set_userdata('nomor_hp',$nomor_hp);
+			$this->session->set_userdata('keterangan',$nomor_hp);
       $this->session->set_flashdata('profile_status',
       '  <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>Ubah Biodata Berhasil!</strong> Pastikan data profil anda valid untuk mendapat reward point
@@ -235,20 +238,11 @@ class User_profile extends CI_Controller {
 
 		$this->upload->initialize($config);
 
-		if ( ! $this->upload->do_upload('profile_photo')){
-			$this->session->set_flashdata('profile_photo_status',
-			'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
-				<strong>Uppload foto gagal!</strong> Silakan upload foto dengan resolusi lebih kecil dari 3000x3000 px.
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div> ');
-			redirect('User_profile');
-		}else{
+		if ($this->upload->do_upload('profile_photo')){
 			$photo=$this->upload->file_name;
 			$data = array(
-	     	'foto' => $photo
-		 	);
+				'foto' => $photo
+			);
 			$where = array(
 				'nim' => $this->session->userdata('nim')
 			);
@@ -257,6 +251,15 @@ class User_profile extends CI_Controller {
 				$this->session->set_flashdata('profile_photo_status',
 				'  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
 					<strong>Uppload foto berhasil!</strong> Silakan cek kembali untuk kebenaran data.
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div> ');
+				redirect('User_profile');
+			} else {
+				$this->session->set_flashdata('profile_photo_status',
+				'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+					<strong>Uppload foto gagal!</strong> Silakan upload foto dengan resolusi lebih kecil dari 3000x3000 px.
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>

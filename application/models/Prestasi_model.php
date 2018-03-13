@@ -18,13 +18,6 @@ class Prestasi_model extends CI_Model {
 
 	public function addPrestasiPeriode($data_periode)
 	{
-		// $id_prestasi = $this->add_prestasi($data);
-		// $id_prestasi_periode = array(
-		// 							'id_prestasi' => $id_prestasi
-		// 				);
-		//
-		// array_push($data_periode, $id_prestasi_periode);
-
 		$this->db->insert('periode_prestasi', $data_periode);
 		$id_periode = $this->db->insert_id();
 		return (isset($id_periode)) ? $id_periode : FALSE;

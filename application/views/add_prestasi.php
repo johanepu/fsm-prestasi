@@ -36,7 +36,7 @@
                     <label class="col-md-2 col-form-label">Tipe Prestasi</label>
                     <div class="col-md-9 col-form-label">
                       <div class="form-check form-check-inline mr-1">
-                        <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="individu" value="1" name="tipe_prestasi">
+                        <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="individu" value="1" name="tipe_prestasi" checked>
                         <label class="form-check-label" for="inline-radio1">Individu</label>
                       </div>
                       <div class="form-check form-check-inline mr-1">
@@ -49,13 +49,24 @@
 
                   <div class="form-group row" >
                     <label class="col-md-2 col-form-label" id="referral_label" style="display:none" for="text-input">NIM Anggota
-                      <a href="#" data-toggle="referral_tooltip" title="Pisahkan NIM dengan koma ',' untuk masukan lebih dari satu">*</i></a>
+                      <a href="#" data-toggle="referral_tooltip" title="Pisahkan NIM dengan koma ',' untuk masukan lebih dari satu, tidak termasuk NIM sendiri"><h7>info</h7></a>
                     </label>
                     <div class="col-md-9" id="referral_input" style="display:none">
-                      <input type="text" id="referral_prestasi" name="referral_prestasi"  class="form-control" value="<?php echo set_value('referral_prestasi'); ?>" placeholder="Masukan NIM anggota lain sebagai bagian dari regu">
+                      <input type="text" id="referral_prestasi" name="referral_prestasi"  class="form-control" value="<?php echo set_value('referral_prestasi'); ?>"
+                      placeholder="Pisahkan NIM dengan koma ',' untuk masukan lebih dari satu (Misal : 2402XXXXXXXX, 2401XXXXXXXXX)" onfocusout="hitungAnggota()">
                     </div>
                   </div>
                   <?php echo form_error('referral_prestasi'); ?>
+
+                  <div class="form-group row" >
+                    <label class="col-md-2 col-form-label" id="jml_regu_label" style="display:none" for="text-input">Jumlah Anggota
+                    </label>
+                    <div class="col-md-9" id="jml_regu_input" style="display:none">
+                      <input type="text" id="jml_anggota" name="jml_anggota"  class="form-control" value="<?php echo set_value('jml_anggota'); ?>"
+                      placeholder="Jumlah mahasiswa yang terdaftar prestasi">
+                    </div>
+                  </div>
+                  <?php echo form_error('jml_anggota'); ?>
 
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="text-input">Nama Kegiatan</label>
@@ -68,7 +79,8 @@
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="text-input">Peringkat yang diraih</label>
                     <div class="col-md-9">
-                      <input type="text" id="peringkat_prestasi" name="peringkat_prestasi" class="form-control" value="<?php echo set_value('peringkat_prestasi'); ?>" placeholder="Misal Juara 1, Best Paper..">
+                      <input type="text" id="peringkat_prestasi" name="peringkat_prestasi" class="form-control" value="<?php echo set_value('peringkat_prestasi'); ?>"
+                      placeholder="Misal Juara 1, Best Paper, Best Presenter..">
                     </div>
                   </div>
                   <?php echo form_error('peringkat_prestasi'); ?>
@@ -98,7 +110,7 @@
                     <label class="col-md-2 col-form-label">Jenis Prestasi</label>
                     <div class="col-md-9 col-form-label">
                       <div class="form-check form-check-inline mr-1">
-                        <input class="form-check-input" type="radio" id="jenis_prestasi" value="1" name="jenis_prestasi">
+                        <input class="form-check-input" type="radio" id="jenis_prestasi" value="1" name="jenis_prestasi" checked>
                         <label class="form-check-label" for="inline-radio1">Akademik</label>
                       </div>
                       <div class="form-check form-check-inline mr-1">
@@ -110,16 +122,16 @@
                   <?php echo form_error('jenis_prestasi'); ?>
 
                   <div class="form-group row">
-                  <label class="col-md-2 col-form-label" for="select1">Skala Kegiatan
+                  <label class="col-md-2 col-form-label" for="select1">Level Prestasi
                     <a href="#" data-toggle="skala_tooltip"
-                    title="1. Lokal ⇒ Untuk prestasi di ruang lingkup daerah lokal atau lingkup
-2. Nasional ⇒ Untuk prestasi di lingkup dalam negara lokal saja
-3. Regional ⇒ Untuk prestasi di satu kawasan yang terdiri dari beberapa negara
-4. Internasional ⇒ Untuk prestasi dengan ruang lingkup seluruh dunia.">*</i></a>
+                    title="1. Lokal ⇒ Untuk prestasi di ruang lingkup daerah lokal atau lingkup universitas.
+2. Regional ⇒ Untuk prestasi yang di lingkup daerah/provinsi.
+3. Nasional ⇒ Untuk prestasi di lingkup nasional (dalam negeri) saja.
+4. Internasional ⇒ Untuk prestasi di tingkat luar negara."><h7>info</h7></a>
                   </label>
                   <div class="col-md-3">
                       <select id="level_prestasi" name="level_prestasi" class="form-control">
-                        <option value="0">Pilih Skala Kegiatan</option>
+                        <option value="0">Pilih Level Prestasi</option>
                         <option value="1">Lokal</option>
                         <option value="2">Nasional</option>
                         <option value="3">Regional</option>
@@ -247,13 +259,16 @@
               sorted_arr[i] = sorted_arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
           }
           var results = [];
-            for (var i = 1; i < sorted_arr.length; i++) {
+            for (var i = 0; i < sorted_arr.length; i++) {
                 if (sorted_arr[i + 1] != sorted_arr[i] && sorted_arr[i].length == 14) {
                     results.push(sorted_arr[i]);
                 }
             }
+          var ref_length = results.length + 1;
+
           console.log(sorted_arr);
           console.log(results);
+
           var radiotipe = document.getElementsByName('tipe_prestasi');
           for (var i = 0, length = radiotipe.length; i < length; i++)
           {
@@ -279,6 +294,7 @@
           for (i=0;i<results.length;i++){
 
               var nim = results[i];
+              var jml_anggota = $('#jml_anggota').val();
               var tipe_prestasi = tipe_prestasi;
               var nama_prestasi = $('#nama_prestasi').val();
               var peringkat_prestasi =  $('#peringkat_prestasi').val();
@@ -294,6 +310,7 @@
                 url: '<?=base_url()?>Prestasi/addRefPrestasi',
                 data: {
                   nim:nim,
+                  jml_anggota:jml_anggota,
                   tipe_prestasi:tipe_prestasi,
                   nama_prestasi:nama_prestasi,
                   peringkat_prestasi:peringkat_prestasi,
@@ -310,26 +327,7 @@
               });
           }
         }
-        //
-        //
-        // if(nama_lengkap==''||email==''||alamat==''||tingkatan==''||nomor_hp==''){
-        //     alert('Data harus diisi lengkap, Cek kembali isian Anda');
-        //     return false;
-        //   }else {
-        //     $.ajax({
-        //       type: "POST",
-        //       url: '<?=base_url()?>User_profile/updateProfil',
-        //       data: {namalengkap:nama_lengkap,
-        //             email:email,
-        //             alamat:alamat,
-        //             tingkatan:tingkatan,
-        //             nomor_hp:nomor_hp},
-        //       success: function(data){
-        //       }
-        //     });
-        //     location.reload();
-        //   }
-        });
+      });
 
         $(document).on('click', 'button.btn-delete,button.btn-delete2', function(){
           $('#modalDelete').modal('show');
@@ -350,15 +348,40 @@
           });
         });
 
-
-  function TipeCheck() {
+    function hitungAnggota() {
       if (document.getElementById('beregu').checked) {
-          document.getElementById('referral_label').style.display = 'block';
-          document.getElementById('referral_input').style.display = 'block';
-      } else {
-          document.getElementById('referral_label').style.display = 'none';
-          document.getElementById('referral_input').style.display = 'none';
+        var array = $('#referral_prestasi').val().split(",");
+        var sorted_arr = array.slice().sort();
+        for(i=0;i<sorted_arr.length;i++)
+        {
+            sorted_arr[i] = sorted_arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+        }
+        var results = [];
+          for (var i = 0; i < sorted_arr.length; i++) {
+              if (sorted_arr[i + 1] != sorted_arr[i] && sorted_arr[i].length == 14) {
+                  results.push(sorted_arr[i]);
+              }
+          }
+        var ref_length = results.length + 1;
       }
+        var x = document.getElementById("jml_anggota");
+        if (ref_length >= 1) {
+            x.value = ref_length;
+        }
     }
+
+    function TipeCheck() {
+        if (document.getElementById('beregu').checked) {
+            document.getElementById('referral_label').style.display = 'block';
+            document.getElementById('referral_input').style.display = 'block';
+            document.getElementById('jml_regu_label').style.display = 'block';
+            document.getElementById('jml_regu_input').style.display = 'block';
+        } else {
+            document.getElementById('referral_label').style.display = 'none';
+            document.getElementById('referral_input').style.display = 'none';
+            document.getElementById('jml_regu_label').style.display = 'none';
+            document.getElementById('jml_regu_input').style.display = 'none';
+        }
+      }
 
 </script>

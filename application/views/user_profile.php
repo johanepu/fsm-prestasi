@@ -119,7 +119,7 @@
                                     </p>
                                     <h6>Kontak</h6>
                                     <p>
-                                      <?php if ($this->session->userdata('nomor_hp') == 0): ?>
+                                      <?php if ($this->session->userdata('nomor_hp') == NULL): ?>
                                         <?php echo 'Harap isi di ubah biodata'?>
                                       <?php else: ?>
                                         <?php echo $this->session->userdata('nomor_hp')?>
@@ -191,6 +191,15 @@
                                     </div>
                                 </div>
                                 <?php echo form_error('nomor_hp'); ?>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label form-control-label">Keterangan</label>
+                                    <div class="col-lg-9">
+                                        <input class="form-control" type="text" id="profil_keterangan" value=""
+                                        placeholder="Misal: Penerima Bidikmisi, atau beasiswa lain">
+                                    </div>
+                                </div>
+                                <?php echo form_error('Keterangan'); ?>
 
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label form-control-label"></label>

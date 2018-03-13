@@ -171,6 +171,22 @@ class Prestasi extends CI_Controller {
 							)
     );
 
+		$this->form_validation->set_rules(
+				'jml_anggota', 'Jumlah Anggota',
+				'numeric|trim',
+				array(
+								'numeric'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data salah!</strong> %s hanya ditulis angka.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>'
+							)
+		);
+
     $this->form_validation->set_rules(
         'peringkat_prestasi', 'Peringkat yang diraih',
         'required|trim',
@@ -337,9 +353,24 @@ class Prestasi extends CI_Controller {
 					$reward_point = 5;
 				}
 
+			$datetime = new DateTime();
+			$tgl_prestasi = $this->input->post('date_start');
+			// $tgl_prestasi = date('d/m/Y', $date_input);
+
+			$bulan_gasal = $datetime->createFromFormat('d/m/Y','15/07/Y');
+			$bulan_genap = $datetime->createFromFormat('d/m/Y','15/03/Y');
+
+			if ($tgl_prestasi >= $bulan_gasal && $tgl_prestasi < $bulan_genap) {
+				$semester = 'Gasal';
+			} else {
+				$semester = 'Genap';
+			}
+
+
 			$data = array(
 				'nim' => $this->session->userdata('nim'),
 				'referral_nim' => $this->input->post('referral_prestasi'),
+				'jml_anggota' => $this->input->post('jml_anggota'),
 				'nama_prestasi' 	=> $this->input->post('nama_prestasi'),
 				'peringkat_prestasi'  	=> $this->input->post('peringkat_prestasi'),
         'tipe_prestasi'    	=> $this->input->post('tipe_prestasi'),
@@ -349,21 +380,19 @@ class Prestasi extends CI_Controller {
 				'reward_poin'    		=> 0,
 				'penyelenggara_prestasi'    		=> $this->input->post('penyelenggara_prestasi'),
 				'tempat_prestasi'    		=> $this->input->post('tempat_prestasi'),
-				'tgl_prestasi_start'	=> $this->input->post('date_start'),
+				'tgl_prestasi_start'	=> $tgl_prestasi,
 				'tgl_prestasi_end'	=> $this->input->post('date_end'),
 				'date_modified'	=> date('Y-m-d H:i:s')
 			);
 
 			$data_periode = array(
 				'id_prestasi'=>$this->Prestasi_model->add_prestasi($data),
-				'periode'=>$this->Admin_model->getPeriode(),
-				'semester'=>$this->Admin_model->getSemester()
+				'periode'=>strtok($tgl_prestasi, '-'),
+				'semester'=>$semester
 			);
 		}
 		if ($this->form_validation->run() == true && $this->Prestasi_model->addPrestasiPeriode($data_periode))
 		{
-			//check to see if we are creating the user
-			//redirect them to checkout page
       $this->session->set_flashdata('berhasil',
       '  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
         <strong>Tambah prestasi berhasil!</strong> Silakan cek kembali untuk kebenaran data.
@@ -371,17 +400,13 @@ class Prestasi extends CI_Controller {
           <span aria-hidden="true">×</span>
         </button>
       </div> ');
-			redirect('Prestasi/view');
+			redirect('Prestasi');
 		}
 		else
 		{
-			//display the create user form
-			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->session->flashdata('message')));
-			// $this->load->view('user_home');
 			$data['content'] = 'add_prestasi.php';
 			$this->load->view("user_template.php",$data,$this->data);
-			// $this->load->view('add_prestasi', $this->data);
 		}
 	}
 
@@ -399,8 +424,22 @@ class Prestasi extends CI_Controller {
 					$reward_point = 5;
 				}
 
+				$datetime = new DateTime();
+				$tgl_prestasi = $this->input->post('date_start');
+				// $tgl_prestasi = date('d/m/Y', $date_input);
+
+				$bulan_gasal = $datetime->createFromFormat('d/m/Y','15/07/Y');
+				$bulan_genap = $datetime->createFromFormat('d/m/Y','15/03/Y');
+
+				if ($tgl_prestasi >= $bulan_gasal && $tgl_prestasi < $bulan_genap) {
+					$semester = 'Gasal';
+				} else {
+					$semester = 'Genap';
+				}
+
 			$data = array(
 				'nim' => $this->input->post('nim'),
+				'jml_anggota' => $this->input->post('jml_anggota'),
 				'referral_nim' => $this->session->userdata('nim'),
 				'nama_prestasi' 	=> $this->input->post('nama_prestasi'),
 				'peringkat_prestasi'  	=> $this->input->post('peringkat_prestasi'),
@@ -411,11 +450,24 @@ class Prestasi extends CI_Controller {
 				'reward_poin'    		=> $reward_point,
 				'penyelenggara_prestasi'    		=> $this->input->post('penyelenggara_prestasi'),
 				'tempat_prestasi'    		=> $this->input->post('tempat_prestasi'),
-				'tgl_prestasi_start'	=> $this->input->post('date_start'),
+				'tgl_prestasi_start'	=> $tgl_prestasi,
 				'tgl_prestasi_end'	=> $this->input->post('date_end'),
 				'date_modified'	=> date('Y-m-d H:i:s')
 			);
-		$this->Prestasi_model->add_prestasi($data);
+
+			$data_periode = array(
+				'id_prestasi'=>$this->Prestasi_model->add_prestasi($data),
+				'periode'=>strtok($tgl_prestasi, '-'),
+				'semester'=>$semester
+			);
+	}
+
+	public function addPrestasiRegu()
+	{
+			$data = array(
+				'jml_anggota' => $this->input->post('jml_anggota')
+			);
+		$this->Prestasi_model->add_prestasi_regu($data);
 	}
 
 
