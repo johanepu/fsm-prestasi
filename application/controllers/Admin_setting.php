@@ -45,6 +45,7 @@ class Admin_setting extends CI_Controller {
 		$data['jml_prestasi_individu'] = $this->Prestasi_model->hitung_all_prestasi_individu();
 		$data['jml_prestasi_beregu'] = $this->Prestasi_model->hitung_all_prestasi_beregu();
 
+		$data['reward_set'] = $this->Admin_model->tampil_set_reward();
 		$data['title'] = 'RewardMe - Pengaturan Admin';
 		$data['content'] = 'kucing/admin_setting.php';
 		$this->load->view("kucing/admin_template.php",$data);
@@ -54,6 +55,13 @@ class Admin_setting extends CI_Controller {
 	function fetchSetting(){
 		$id_setting = 1;
 		$result=$this->Admin_model->getSetting($id_setting);
+
+		echo json_encode($result);
+	}
+
+	function fetchReward(){
+		$id_setting = $this->input->post('id_setting');
+		$result=$this->Admin_model->getRewardSet($id_setting);
 
 		echo json_encode($result);
 	}
@@ -73,6 +81,38 @@ class Admin_setting extends CI_Controller {
 
 		$this->Admin_model->updateSetting($data,$where);
 
+	}
+
+	function updateSetReward(){
+
+		$data=array(
+			'level'=> $this->input->post('level'),
+			'peringkat'=>$this->input->post('peringkat'),
+			'poin'=>$this->input->post('poin')
+		);
+
+		$where = array(
+			'id_setting'=> $this->input->post('id_setting')
+		);
+
+		$this->Admin_model->updateSetReward($data,$where);
+
+	}
+
+	function simpanSetReward(){
+
+		$data=array(
+			'peringkat'=> $this->input->post('peringkat'),
+			'level'=>$this->input->post('level'),
+			'poin'=>$this->input->post('poin')
+		);
+		$this->Admin_model->simpanSetReward($data);
+
+	}
+
+	function deleteSet(){
+		$id_setting = $this->input->post('id_setting');
+		$result=$this->Admin_model->deleteSet($id_setting);
 	}
 
 	function resetPoin(){

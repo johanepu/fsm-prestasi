@@ -27,7 +27,7 @@
                   ?>
                   <div class="col-4">
                     <div class="list-group" id="list-tab" role="tablist">
-                      <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="tab" href="#list-home" role="tab" aria-controls="list-home" aria-selected="true">Tahun Akademik</a>
+                      <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="tab" href="#list-home" role="tab" aria-controls="list-home" aria-selected="true">Set Poin Reward</a>
                       <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="tab" href="#list-profile" role="tab" aria-controls="list-profile">Data Prestasi</a>
                       <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="tab" href="#list-messages" role="tab" aria-controls="list-messages">Pesan Admin</a>
                       <div style="margin-top:20px">
@@ -38,28 +38,56 @@
                   <div class="col-8">
                     <div class="tab-content" id="nav-tabContent">
                       <div class="tab-pane fade active show" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-                        <div class="form-group row">
-                          <label class="col-md-3 col-form-label" for="select2">Set Periode</label>
-                          <div class="col-md-9">
-                            <select id="select_periode" name="select_periode" class="form-control form-control-lg">
-                              <option value="0">Pilih tahun akademik</option>
-                              <option value="2017/2018">2017/2018</option>
-                              <option value="2018/2019">2018/2019</option>
-                              <option value="2019/2020">2019/2020</option>
-                              <option value="2020/2021">2020/2021</option>
-                            </select>
+                        <div class="row mt">
+                          <div class="form-group col-lg-3">
+                            <button class="btn btn-primary btn-tambah" id="btn_tambah_set" name="btn-tambah" title="Tambah Set" type="button">
+                                <i class="fa fa-fw fa-plus"></i>Tambah Set</button>
+                          </div>
+                          <div class="form-group col-lg-9">
+                            <input type="text" class="form-control" id="cariPrestasi" placeholder="Cari Set Reward" >
                           </div>
                         </div>
-                        <div class="form-group row">
-                          <label class="col-md-3 col-form-label" for="select2">Set Semester</label>
-                          <div class="col-md-9">
-                            <select id="select_semester" name="select_semester" class="form-control form-control-lg">
-                              <option value="0">Pilih semester</option>
-                              <option value="Ganjil">Ganjil</option>
-                              <option value="Genap">Genap</option>
-                            </select>
-                          </div>
-                        </div>
+                        <table id="tabel_set_rewarding" class="table table-responsive-sm table-striped">
+                          <thead>
+                            <tr>
+                              <th>Level</th>
+                              <th>Peringkat</th>
+                              <th>Poin</th>
+                              <th>Aksi</th>
+                            </tr>
+                          </thead>
+                          <tbody id="tabel_prestasi">
+                            <?php
+                            foreach($reward_set as $r){
+                            ?>
+                            <tr id="<?php echo $r->id_setting?>">
+                              <td >
+                                <?php
+                                if ($r->level == "1") {
+                                    echo '<span class="label label-success label-mini">Lokal</span>';
+                                }elseif ($r->level == "2") {
+                                    echo '<span class="label label-warning label-mini">Regional</span>';
+                                }elseif ($r->level == "3") {
+                                    echo '<span class="label label-warning label-mini">Nasional</span>';
+                                }elseif ($r->level == "4") {
+                                    echo '<span class="label label-warning label-mini">Internasional</span>';
+                                }
+                                ?>
+                              </td>
+                              <td ><?php echo $r->peringkat; ?></td>
+                              <td ><?php echo $r->poin; ?></td>
+                              <td>
+                                  <div class="btn-group" >
+                                      <button class="btn btn-primary btn-edit" name="btn-edit" title="Edit Set" value="<?=$r->id_setting?>" type="button">
+                                          <i class="fa fa-fw s fa-pencil"></i></button>
+                                      <button class="btn btn-danger btn-delete" name="btn-delete" title="Hapus Set" value="<?=$r->id_setting?>" type="button">
+                                          <i class="fa fa-fw fa-remove"></i></button>
+                                  </div>
+                              </td>
+                            </tr>
+                            <?php }?>
+                          </tbody>
+                        </table>
                       </div>
 
                       <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
@@ -218,6 +246,7 @@
         </div>
       </div>
     </div>
+
     <div class="modal fade" id="modal_reset_prestasi" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
       <div class="modal-dialog modal-danger" role="document">
         <div class="modal-content">
@@ -251,6 +280,7 @@
         </div>
       </div>
     </div>
+
     <div class="modal fade" id="modal_reset_mhs" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
       <div class="modal-dialog modal-danger" role="document">
         <div class="modal-content">
@@ -285,6 +315,117 @@
       </div>
     </div>
 
+    <div class="modal fade" id="tambah_set_modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-primary">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="tambah_set_label">Tambah Setting Rewarding</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="col-md-12 mb-4">
+              <div class="form-group text-left">
+                <label for="" class="">Peringkat Prestasi</label>
+                <input type="text" class="form-control" id="peringkat_prestasi_reward" name="peringkat_prestasi_reward" placeholder="Peringkat yang didapat misal : Juara 1.." required>
+              </div>
+              <div class="row">
+              <div class="form-group col-8 text-left">
+                <label for="" class="">Level Prestasi</label>
+                <div styclass="col-md-9 col-form-label">
+                    <select id="level_prestasi_reward" name="level_prestasi_reward" class="form-control">
+                      <option value="0">Pilih Skala Kegiatan</option>
+                      <option value="1">Lokal</option>
+                      <option value="2">Regional</option>
+                      <option value="3">Nasional</option>
+                      <option value="4">Internasional</option>
+                    </select>
+                  </div>
+              </div>
+              <div class="form-group col-4 text-left">
+                <label for="" class="">Reward Poin</label>
+                <input type="number" class="form-control col-12" id="poin_reward" name="poin_reward" placeholder="Poin Angka" required>
+              </div>
+            </div>
+            </div>
+          </div>
+          <input hidden id="hiddenId" >
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="btn_simpan_reward" name="btn_simpan_reward" class="btn btn-primary">Simpan Setting</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="edit_set_modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-primary">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="edit_set_label">Tambah Setting Rewarding</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="col-md-12 mb-4">
+              <div class="form-group text-left">
+                <label for="" class="">Peringkat Prestasi</label>
+                <input type="text" class="form-control" id="peringkat_edit_reward" name="peringkat_edit_reward" placeholder="Peringkat yang didapat misal : Juara 1.." required>
+              </div>
+              <div class="row">
+              <div class="form-group col-8 text-left">
+                <label for="" class="">Level Prestasi</label>
+                <div styclass="col-md-9 col-form-label">
+                    <select id="level_edit_reward" name="level_edit_reward" class="form-control">
+                      <option value="0">Pilih Skala Kegiatan</option>
+                      <option value="1">Lokal</option>
+                      <option value="2">Regional</option>
+                      <option value="3">Nasional</option>
+                      <option value="4">Internasional</option>
+                    </select>
+                  </div>
+              </div>
+              <div class="form-group col-4 text-left">
+                <label for="" class="">Reward Poin</label>
+                <input type="number" class="form-control col-12" id="poin_edit_reward" name="poin_edit_reward" placeholder="Poin Angka" required>
+              </div>
+            </div>
+            </div>
+          </div>
+          <input hidden id="hidden_id_setting_edit" >
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="btn_update_reward" name="btn_simpan_reward" class="btn btn-primary">Simpan Setting</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="delete_set_modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
+      <div class="modal-dialog modal-danger" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Hapus Setting</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" >
+            <input hidden id="hidden_id_setting">
+            <p><b>Apakah anda yakin ingin menghapus set untuk</b></p>
+            <p style="text-align:center" id="level_delete"><strong>"Level"</strong></p>
+            <p style="text-align:center" id="peringkat_delete"><strong>"Peringkat"</strong></p>
+          </div>
+          <div class="modal-footer">
+                <button style="width:100px" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                <button style="width:100px" class="btn btn-danger" id="btn_hapus_set">Ya</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </main>
 
@@ -292,6 +433,18 @@
 <script type="text/javascript">
 
   $(document).ready(function(){
+
+    // tabel data prestasi datatable
+      tabel_set_rewarding =  $('#tabel_set_rewarding').DataTable( {
+          "dom": 'lrtip',
+          "sScrollY": "300px",
+          "bPaginate": false,
+          "info":     false
+        } )
+        $('#cariSet').keyup(function(){
+              tabel_set_rewarding.search($(this).val()).draw() ;
+        })
+
     $.ajax({
       type: "POST",
       url: '<?=base_url()?>Admin_setting/fetchSetting',
@@ -316,6 +469,137 @@
     $('#btn_reset_poin_modal').click(function(){
       $('#modal_reset_poin').modal('show');
     });
+
+    $('#btn_tambah_set').click(function(){
+      $('#tambah_set_modal').modal('show');
+    });
+
+    $(document).on('click', 'button.btn-edit,button.btn-edit2', function() {
+      var id_setting = $(this).val();
+      $('#edit_set_modal').modal('show');
+      $.ajax({
+        type: "POST",
+        url: '<?=base_url()?>Admin_setting/fetchReward',
+        data: {id_setting:id_setting},
+        dataType:'json',
+        success: function(data){
+          console.log(data);
+          if(data)
+          {
+            var setting = data[0];
+            var level_teks ='';
+            if (setting.level == 1) {
+              level_teks = 'Lokal';
+            } else if(setting.level == 2) {
+              level_teks = 'Regional';
+            } else if(setting.level == 3) {
+              level_teks = 'Nasional';
+            } else if(setting.level == 4) {
+              level_teks = 'Internasional';
+            }
+
+            $('#level_edit_reward option[value="'+setting.level+'"]').prop('selected', true);
+            $('#peringkat_edit_reward').val(setting.peringkat);
+            $('#poin_edit_reward').val(setting.poin);
+          }
+        }
+      });
+    });
+
+    $('#btn_update_reward').click(function(){
+
+      var peringkat = $('#peringkat_edit_reward').val();
+      var level = $('#level_edit_reward').val();
+      var poin =  $('#poin_edit_reward').val();
+      var id_setting =$('#hidden_id_setting_edit').val();
+
+      if(peringkat==''||level==0||poin==''||poin<=0){
+          console.log('gagal edit');
+          alert('Tambah Set gagal, Cek kembali isian Anda');
+          return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: '<?=base_url()?>Admin_setting/updateSetReward',
+            data: {
+                  peringkat:peringkat,
+                  level:level,
+                  poin:poin,
+                  id_setting
+                },
+            success: function(data){
+            }
+          });
+          location.reload();
+      });
+
+    $('#btn_simpan_reward').click(function(){
+
+      var peringkat = $('#peringkat_prestasi_reward').val();
+      var level = $('#level_prestasi_reward').val();
+      var poin =  $('#poin_reward').val();
+
+      if(peringkat==''||level==0||poin==''||poin<=0){
+          console.log('gagal edit');
+          alert('Tambah Set gagal, Cek kembali isian Anda');
+          return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: '<?=base_url()?>Admin_setting/simpanSetReward',
+            data: {
+                  peringkat:peringkat,
+                  level:level,
+                  poin:poin
+                },
+            success: function(data){
+            }
+          });
+          location.reload();
+      });
+
+      $(document).on('click', 'button.btn-delete,button.btn-delete2', function(){
+        $('#delete_set_modal').modal('show');
+        var id_setting = $(this).val();
+        $('#hidden_id_setting').val(id_setting);
+        $.ajax({
+          type: "POST",
+          url: '<?=base_url()?>Admin_setting/fetchReward',
+          data: {id_setting:id_setting},
+          dataType:'json',
+          success: function(data){
+            if(data){
+                var setting = data[0];
+                var level_teks ='';
+                if (setting.level == 1) {
+                  level_teks = 'Lokal';
+                } else if(setting.level == 2) {
+                  level_teks = 'Regional';
+                } else if(setting.level == 3) {
+                  level_teks = 'Nasional';
+                } else if(setting.level == 4) {
+                  level_teks = 'Internasional';
+                }
+                $('#level_delete').html('"'+level_teks+'"');
+                $('#peringkat_delete').html('"'+setting.peringkat+'"');
+                $('#btnhapus').prop("disabled",false);
+              }
+            }
+        });
+      });
+
+      $('#btn_hapus_set').click(function(){
+        var id = $('#hidden_id_setting').val();
+        $.ajax({
+          type: "POST",
+          url: '<?=base_url()?>Admin_setting/deleteSet',
+          data: {id_setting:id},
+          dataType:'json',
+          success: function(data){
+          }
+        });
+          location.reload();
+      });
 
     $('#btn_reset_poin_konf').click(function(){
       var username = $('#username_poin').val();

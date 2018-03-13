@@ -16,10 +16,30 @@ class Admin_model extends CI_Model {
     }
   }
 
+	public function tampil_set_reward(){
+		$this->db->select('*');
+		$this->db->from('setting_rewarding');
+		$hasil = $this->db->get();
+		return $hasil->result();
+	}
+
+	public function getRewardSet($id_setting){
+		$this->db->select('*');
+		$this->db->where('id_setting',$id_setting);
+		$this->db->from('setting_rewarding');
+		$hasil = $this->db->get();
+		return $hasil->result();
+	}
+
   function updateSetting($data,$where){
       $this->db->where($where);
       $this->db->update('setting_admin',$data);
   }
+
+	function updateSetReward($data,$where){
+			$this->db->where($where);
+			$this->db->update('setting_rewarding',$data);
+	}
 
   function getPeriode(){
     $query = $this->db->query("SELECT periode FROM setting_admin");
@@ -74,6 +94,19 @@ class Admin_model extends CI_Model {
 			$this->db->empty_table('users');
 
 			return true;
+	}
+
+	public function simpanSetReward($data)
+	{
+		$this->db->insert('setting_rewarding', $data);
+
+		$id_setting = $this->db->insert_id();
+
+		return (isset($id_setting)) ? $id_setting : FALSE;
+	}
+
+	function deleteSet($id_setting){
+		return $this->db->query("DELETE FROM setting_rewarding WHERE id_setting='$id_setting'");
 	}
 
 

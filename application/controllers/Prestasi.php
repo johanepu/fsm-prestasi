@@ -482,7 +482,6 @@ class Prestasi extends CI_Controller {
 			'nama_prestasi'=> $this->input->post('nama_prestasi'),
 			'peringkat_prestasi'=>$this->input->post('peringkat_prestasi'),
 			'tipe_prestasi'=>$this->input->post('tipe_prestasi'),
-			'role_prestasi'=>$this->input->post('role_prestasi'),
 			'jenis_prestasi'=>$this->input->post('jenis_prestasi'),
 			'deskripsi_prestasi'=>$this->input->post('deskripsi_prestasi'),
 			'reward_poin'    		=> 0,

@@ -175,10 +175,6 @@
                       </div>
                       </div>
                       <div class="form-group text-left">
-                        <label for="" id="role_prestasi_editlabel" class="">Role Regu</label>
-                        <input type="text" class="form-control" style="display:block" id="role_prestasi_edit" name="role_prestasi_edit" placeholder="Role Prestasi">
-                      </div>
-                      <div class="form-group text-left">
                         <label for="" class="">Skala Kegiatan</label>
                         <div styclass="col-md-9 col-form-label">
                             <select id="level_prestasi_edit" name="level_prestasi_edit" class="form-control">
@@ -324,7 +320,6 @@ $(document).ready(function(){
             $('#peringkat_prestasi_edit').val(prestasi.peringkat_prestasi);
             $('#tipe_prestasi_edit').val(tipePrestasi);
             $('#tipe_prestasi_raw').val(prestasi.tipe_prestasi);
-            $('#role_prestasi_edit').val(prestasi.role_prestasi);
             $('#jenis_prestasi_edit').val(jenisPrestasi);
             $('#jenis_prestasi_raw').val(prestasi.jenis_prestasi);
             $('#level_prestasi_edit option[value="'+prestasi.level_prestasi+'"]').prop('selected', true);
