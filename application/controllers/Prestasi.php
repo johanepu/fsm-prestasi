@@ -342,6 +342,7 @@ class Prestasi extends CI_Controller {
 		if ($this->form_validation->run() == true)
 		{
       date_default_timezone_set('Asia/Jakarta');
+			$nim = $this->session->userdata('nim');
 			$level_prestasi = $this->input->post('level_prestasi');
 				if ($level_prestasi == 1) {
 					$reward_point = 2;
@@ -366,11 +367,18 @@ class Prestasi extends CI_Controller {
 				$semester = 'Genap';
 			}
 
+			$jml_anggota_input = $this->input->post('jml_anggota');
+			if ($jml_anggota_input == '') {
+				$jml_anggota = 1;
+			} else {
+				$jml_anggota = $jml_anggota_input;
+			}
+
 
 			$data = array(
-				'nim' => $this->session->userdata('nim'),
+				'nim' => $nim,
 				'referral_nim' => $this->input->post('referral_prestasi'),
-				'jml_anggota' => $this->input->post('jml_anggota'),
+				'jml_anggota' => $jml_anggota,
 				'nama_prestasi' 	=> $this->input->post('nama_prestasi'),
 				'peringkat_prestasi'  	=> $this->input->post('peringkat_prestasi'),
         'tipe_prestasi'    	=> $this->input->post('tipe_prestasi'),
@@ -385,8 +393,10 @@ class Prestasi extends CI_Controller {
 				'date_modified'	=> date('Y-m-d H:i:s')
 			);
 
+			$return_id = $this->Prestasi_model->add_prestasi($data);
+			$this->addRefThisPrestasi($return_id,$nim);
 			$data_periode = array(
-				'id_prestasi'=>$this->Prestasi_model->add_prestasi($data),
+				'id_prestasi'=>$return_id,
 				'periode'=>strtok($tgl_prestasi, '-'),
 				'semester'=>$semester
 			);
@@ -412,62 +422,25 @@ class Prestasi extends CI_Controller {
 
 	public function addRefPrestasi()
 	{
-      date_default_timezone_set('Asia/Jakarta');
-			$level_prestasi = $this->input->post('level_prestasi');
-				if ($level_prestasi == 1) {
-					$reward_point = 2;
-				} elseif ($level_prestasi == 2) {
-					$reward_point = 3;
-				} elseif ($level_prestasi == 3) {
-					$reward_point = 4;
-				} elseif ($level_prestasi == 4) {
-					$reward_point = 5;
-				}
-
-				$datetime = new DateTime();
-				$tgl_prestasi = $this->input->post('date_start');
-				// $tgl_prestasi = date('d/m/Y', $date_input);
-
-				$bulan_gasal = $datetime->createFromFormat('d/m/Y','15/07/Y');
-				$bulan_genap = $datetime->createFromFormat('d/m/Y','15/03/Y');
-
-				if ($tgl_prestasi >= $bulan_gasal && $tgl_prestasi < $bulan_genap) {
-					$semester = 'Gasal';
-				} else {
-					$semester = 'Genap';
-				}
-
+			$id_prestasi = $this->Prestasi_model->getLastId();
 			$data = array(
+				// 'id_prestasi'=>$this->session->userdata('return_id'),
+				'id_prestasi'=>$id_prestasi,
 				'nim' => $this->input->post('nim'),
-				'jml_anggota' => $this->input->post('jml_anggota'),
-				'referral_nim' => $this->session->userdata('nim'),
-				'nama_prestasi' 	=> $this->input->post('nama_prestasi'),
-				'peringkat_prestasi'  	=> $this->input->post('peringkat_prestasi'),
-        'tipe_prestasi'    	=> $this->input->post('tipe_prestasi'),
-				'jenis_prestasi'    		=> $this->input->post('jenis_prestasi'),
-				'level_prestasi'    		=> $level_prestasi,
-				'deskripsi_prestasi'    		=> $this->input->post('deskripsi_prestasi'),
-				'reward_poin'    		=> $reward_point,
-				'penyelenggara_prestasi'    		=> $this->input->post('penyelenggara_prestasi'),
-				'tempat_prestasi'    		=> $this->input->post('tempat_prestasi'),
-				'tgl_prestasi_start'	=> $tgl_prestasi,
-				'tgl_prestasi_end'	=> $this->input->post('date_end'),
-				'date_modified'	=> date('Y-m-d H:i:s')
+				'poin' => 0
 			);
-
-			$data_periode = array(
-				'id_prestasi'=>$this->Prestasi_model->add_prestasi($data),
-				'periode'=>strtok($tgl_prestasi, '-'),
-				'semester'=>$semester
-			);
+			$this->Prestasi_model->addReward($data);
 	}
 
-	public function addPrestasiRegu()
+	public function addRefThisPrestasi($id_prestasi,$nim)
 	{
 			$data = array(
-				'jml_anggota' => $this->input->post('jml_anggota')
+				// 'id_prestasi'=>$this->session->userdata('return_id'),
+				'id_prestasi'=>$id_prestasi,
+				'nim' => $nim,
+				'poin' => 0
 			);
-		$this->Prestasi_model->add_prestasi_regu($data);
+			$this->Prestasi_model->addReward($data);
 	}
 
 

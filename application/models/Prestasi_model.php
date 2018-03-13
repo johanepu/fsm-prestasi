@@ -23,7 +23,28 @@ class Prestasi_model extends CI_Model {
 		return (isset($id_periode)) ? $id_periode : FALSE;
 	}
 
+	public function addReward($data)
+	{
+		$this->db->insert('reward_prestasi', $data);
 
+		$id_reward = $this->db->insert_id();
+
+		return (isset($id_reward)) ? $id_reward : FALSE;
+	}
+
+	public function getLastId()
+	{
+		$this->db->select_max('id_prestasi');
+		$this->db->limit(1);
+		$query = $this->db->get('user_prestasi');
+
+		if ($query->num_rows() > 0)
+    {
+        $last_row = $query->result_array();
+        $result = $last_row[0]['id_prestasi'];
+		}
+		return $result;
+	}
 
 	public function tampil_user_prestasi($nim){
 		$this->db->select('*');
@@ -240,7 +261,7 @@ class Prestasi_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('user_prestasi');
 		$this->db->where('user_prestasi.nim', $nim);
-		$this->db->where('user_prestasi.level_prestasi', 2);
+		$this->db->where('user_prestasi.level_prestasi', 3);
 		$hasil = $this->db->get();
 		$hitung = $hasil->num_rows();
 		return $hitung;
@@ -250,7 +271,7 @@ class Prestasi_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('user_prestasi');
 		$this->db->where('user_prestasi.nim', $nim);
-		$this->db->where('user_prestasi.level_prestasi', 3);
+		$this->db->where('user_prestasi.level_prestasi', 2);
 		$hasil = $this->db->get();
 		$hitung = $hasil->num_rows();
 		return $hitung;

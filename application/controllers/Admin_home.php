@@ -39,8 +39,8 @@ class Admin_home extends CI_Controller {
 		$data['reward_poin'] = $this->Prestasi_model->user_reward_point();
 		$data['jml_prestasi_user'] = $this->Prestasi_model->user_jml_prestasi();
 		$data['jml_prestasi_lokal'] = $this->Prestasi_model->hitung_all_prestasi_lokal();
-		$data['jml_prestasi_nasional'] = $this->Prestasi_model->hitung_all_prestasi_nasional();
 		$data['jml_prestasi_regional'] = $this->Prestasi_model->hitung_all_prestasi_regional();
+		$data['jml_prestasi_nasional'] = $this->Prestasi_model->hitung_all_prestasi_nasional();
 		$data['jml_prestasi_internasional'] = $this->Prestasi_model->hitung_all_prestasi_internasional();
 		$data['jml_prestasi_akademik'] = $this->Prestasi_model->hitung_all_prestasi_akademik();
 		$data['jml_prestasi_non_akademik'] = $this->Prestasi_model->hitung_all_prestasi_non_akademik();

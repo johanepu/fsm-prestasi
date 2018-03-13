@@ -69,9 +69,9 @@
                       if ($p->level_prestasi == "1") {
                           echo '<span class="label label-success label-mini">Lokal</span>';
                       }elseif ($p->level_prestasi == "2") {
-                          echo '<span class="label label-warning label-mini">Nasional</span>';
-                      }elseif ($p->level_prestasi == "3") {
                           echo '<span class="label label-warning label-mini">Regional</span>';
+                      }elseif ($p->level_prestasi == "3") {
+                          echo '<span class="label label-warning label-mini">Nasional</span>';
                       }elseif ($p->level_prestasi == "4") {
                           echo '<span class="label label-warning label-mini">Internasional</span>';
                       }

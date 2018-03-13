@@ -59,10 +59,10 @@
                   <?php echo form_error('referral_prestasi'); ?>
 
                   <div class="form-group row" >
-                    <label class="col-md-2 col-form-label" id="jml_regu_label" style="display:none" for="text-input">Jumlah Anggota
+                    <label class="col-md-2 col-form-label" id="jml_regu_label" style="display:none" for="text-input">Jumlah Total Anggota
                     </label>
                     <div class="col-md-9" id="jml_regu_input" style="display:none">
-                      <input type="text" id="jml_anggota" name="jml_anggota"  class="form-control" value="<?php echo set_value('jml_anggota'); ?>"
+                      <input type="number" id="jml_anggota" name="jml_anggota"  class="form-control" value="<?php echo set_value('jml_anggota'); ?>"
                       placeholder="Jumlah mahasiswa yang terdaftar prestasi">
                     </div>
                   </div>
@@ -113,8 +113,8 @@
                       <select id="level_prestasi" name="level_prestasi" class="form-control">
                         <option value="0">Pilih Level Prestasi</option>
                         <option value="1">Lokal</option>
-                        <option value="2">Nasional</option>
-                        <option value="3">Regional</option>
+                        <option value="2">Regional</option>
+                        <option value="3">Nasional</option>
                         <option value="4">Internasional</option>
                       </select>
                     </div>
@@ -166,7 +166,7 @@
                   </div>
                   <?php echo form_error('deskripsi_prestasi'); ?>
 
-
+                  <input id="hidden_nim" name="hidden_nim" class="form-control" value="<?php echo $this->session->userdata('nim')?>" type="text" hidden>
               </div>
               <div class="card-footer" >
                 <input type="submit" id="submit" value="Submit" style="float: right;" class="btn btn-sm btn-primary">
@@ -232,6 +232,7 @@
 
       $('#submit').click(function(){
         if (document.getElementById('beregu').checked) {
+          var head_nim = $('#hidden_nim').val();
           var array = $('#referral_prestasi').val().split(",");
           var sorted_arr = array.slice().sort();
           for(i=0;i<sorted_arr.length;i++)
@@ -244,63 +245,18 @@
                     results.push(sorted_arr[i]);
                 }
             }
-          var ref_length = results.length + 1;
 
           console.log(sorted_arr);
           console.log(results);
 
-          var radiotipe = document.getElementsByName('tipe_prestasi');
-          for (var i = 0, length = radiotipe.length; i < length; i++)
-          {
-           if (radiotipe[i].checked)
-           {
-            var tipe_prestasi = radiotipe[i].value;
-            break;
-            } else {
-              tipe_prestasi = $('#tipe_prestasi_raw').val();
-            }
-          }
-          var radiojenis = document.getElementsByName('jenis_prestasi');
-          for (var i = 0, length = radiojenis.length; i < length; i++)
-          {
-           if (radiojenis[i].checked)
-           {
-            var jenis_prestasi = radiojenis[i].value;
-            break;
-            } else {
-              jenis_prestasi = $('#jenis_prestasi_raw').val();
-            }
-          }
           for (i=0;i<results.length;i++){
 
               var nim = results[i];
-              var jml_anggota = $('#jml_anggota').val();
-              var tipe_prestasi = tipe_prestasi;
-              var nama_prestasi = $('#nama_prestasi').val();
-              var peringkat_prestasi =  $('#peringkat_prestasi').val();
-              var jenis_prestasi =  jenis_prestasi;
-              var level_prestasi =  $('#level_prestasi').val();
-              var penyelenggara_prestasi =  $('#penyelenggara_prestasi').val();
-              var tempat_prestasi =  $('#tempat_prestasi').val();
-              var date_start =  $('#date_start').val();
-              var date_end =  $('#date_end').val();
-              var deskripsi_prestasi =  $('#deskripsi_prestasi').val();
               $.ajax({
                 type: "POST",
                 url: '<?=base_url()?>Prestasi/addRefPrestasi',
                 data: {
-                  nim:nim,
-                  jml_anggota:jml_anggota,
-                  tipe_prestasi:tipe_prestasi,
-                  nama_prestasi:nama_prestasi,
-                  peringkat_prestasi:peringkat_prestasi,
-                  jenis_prestasi:jenis_prestasi,
-                  level_prestasi:level_prestasi,
-                  penyelenggara_prestasi:penyelenggara_prestasi,
-                  tempat_prestasi:tempat_prestasi,
-                  date_start:date_start,
-                  date_end:date_end,
-                  deskripsi_prestasi:deskripsi_prestasi
+                  nim:nim
                 },
                 success: function(data){
                 }

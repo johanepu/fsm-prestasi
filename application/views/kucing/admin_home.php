@@ -123,17 +123,6 @@
                         </div>
                       </li>
                       <li>
-                        <i class="icon-map"></i>
-                        <span class="title">Nasional</span>
-                        <span class="value"><?php echo $jml_prestasi_nasional; ?>
-                        </span>
-                        <div class="bars">
-                          <div class="progress progress-xs">
-                            <div id="nasional_bar" class="progress-bar bg-success" role="progressbar"style="width: 0%" aria-valuenow="<?php echo $jml_prestasi_nasional; ?>" aria-valuemin="0" aria-valuemax="<?php echo $jml_prestasi; ?>"></div>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
                         <i class="icon-plane"></i>
                         <span class="title">Regional</span>
                         <span class="value"><?php echo $jml_prestasi_regional; ?>
@@ -141,6 +130,17 @@
                         <div class="bars">
                           <div class="progress progress-xs">
                             <div id="regional_bar" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="<?php echo $jml_prestasi_regional; ?>" aria-valuemin="0" aria-valuemax="<?php echo $jml_prestasi; ?>"></div>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <i class="icon-map"></i>
+                        <span class="title">Nasional</span>
+                        <span class="value"><?php echo $jml_prestasi_nasional; ?>
+                        </span>
+                        <div class="bars">
+                          <div class="progress progress-xs">
+                            <div id="nasional_bar" class="progress-bar bg-success" role="progressbar"style="width: 0%" aria-valuenow="<?php echo $jml_prestasi_nasional; ?>" aria-valuemin="0" aria-valuemax="<?php echo $jml_prestasi; ?>"></div>
                           </div>
                         </div>
                       </li>
@@ -309,10 +309,10 @@
     // progress bar tingkat prestasi
     var lokal_bar=(<?php echo $jml_prestasi_lokal; ?>/<?php echo $jml_prestasi; ?>*100);
     $('#lokal_bar').css('width', lokal_bar + "%");
-    var nasional_bar=(<?php echo $jml_prestasi_nasional; ?>/<?php echo $jml_prestasi; ?>*100);
-    $('#nasional_bar').css('width', nasional_bar + "%");
     var regional_bar=(<?php echo $jml_prestasi_regional; ?>/<?php echo $jml_prestasi; ?>*100);
     $('#regional_bar').css('width', regional_bar + "%");
+    var nasional_bar=(<?php echo $jml_prestasi_nasional; ?>/<?php echo $jml_prestasi; ?>*100);
+    $('#nasional_bar').css('width', nasional_bar + "%");
     var internasional_bar=(<?php echo $jml_prestasi_internasional; ?>/<?php echo $jml_prestasi; ?>*100);
     $('#internasional_bar').css('width', internasional_bar + "%");
 
