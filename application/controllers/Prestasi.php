@@ -512,7 +512,7 @@ class Prestasi extends CI_Controller {
 			'role_prestasi'=>$this->input->post('role_prestasi'),
 			'jenis_prestasi'=>$this->input->post('jenis_prestasi'),
 			'deskripsi_prestasi'=>$this->input->post('deskripsi_prestasi'),
-			'reward_poin'    		=> $reward_point,
+			'reward_poin'    		=> 0,
 			'penyelenggara_prestasi' => $this->input->post('penyelenggara_prestasi'),
 			'tempat_prestasi' => $this->input->post('tempat_prestasi'),
 			'level_prestasi' => $level_prestasi,
