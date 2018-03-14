@@ -576,6 +576,11 @@ class Prestasi extends CI_Controller {
 				}
     }
 
+	public function getPeringkat($level) { 
+		$result = $this->db->where("level",$level)->get("setting_rewarding")->result();
+		echo json_encode($result);
+	}
+
 
 
 
