@@ -59,7 +59,8 @@
                   <?php echo form_error('referral_prestasi'); ?>
 
                   <div class="form-group row" >
-                    <label class="col-md-2 col-form-label" id="jml_regu_label" style="display:none" for="text-input">Jumlah Total Anggota
+                    <label class="col-md-2 col-form-label" id="jml_regu_label" style="display:none" for="text-input">Jumlah Anggota
+                      <a href="#" data-toggle="jml_tooltip" title="Anggota dihitung dari NIM anggota VALID ditambah user "><h7>info</h7></a>
                     </label>
                     <div class="col-md-9" id="jml_regu_input" style="display:none">
                       <input type="number" id="jml_anggota" name="jml_anggota"  class="form-control" value="<?php echo set_value('jml_anggota'); ?>"
@@ -86,7 +87,7 @@
                     </label>
                     <div class="col-md-3">
                       <select id="level_prestasi" name="level_prestasi" class="form-control">
-                        <option value="">Pilih Skala Kegiatan</option>
+                        <option value="">Pilih Level Prestasi</option>
                         <?php
                         foreach ($setting_reward as $sr => $value) {
                           echo "<option value='".$value->level."'>".$value->nama_level."</option>";
@@ -102,10 +103,7 @@
                   </div>
                   <?php echo form_error('level_prestasi'); ?>
                   <?php echo form_error('peringkat_prestasi'); ?>
-<!-- 
-                  <div class="form-group row">
 
-                    </div> -->
                   </div>
 
 
@@ -190,6 +188,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('[data-toggle="referral_tooltip"]').tooltip();
+        $('[data-toggle="jml_tooltip"]').tooltip();
 
         $('select[name="level_prestasi"]').on('change', function() {
             var level = $(this).val();

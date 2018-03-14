@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
     .table tr {
         cursor: pointer;
     }
@@ -11,7 +11,7 @@
       background-color: #4eb2fc;
       color:#ffffff;
     }
-</style>
+</style> -->
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
   <!-- Main content -->
   <main class="main">
@@ -69,7 +69,7 @@
                     <?php
                     foreach($user as $p => $mhs){
                     ?>
-                    <tr  class='clickable-row' data-href="<?php echo site_url('Admin_user/user/'.$mhs->nim);?>" id="<?php echo $mhs->nim?>">
+                    <tr id="<?php echo $mhs->nim?>">
                       <td ><?php echo $mhs->nim; ?></td>
                       <td ><?php echo $mhs->namalengkap; ?></td>
                       <td title="Departemen" name="departemen" id="departemen">
@@ -103,8 +103,11 @@
 
                       <td>
                           <div class="btn-group action-table" >
-                              <button class="btn btn-danger btn-delete" name="btn-delete" title="Hapus User" value="<?=$mhs->nim?>" type="button">
-                                  <i class="fa fa-fw fa-remove"></i></button>
+                              <a class="btn btn-success" href="<?php echo site_url('Admin_user/user/'.$mhs->nim);?>"
+                                title="Lihat User">
+                                <i class="fa fa-fw s fa-eye"></i></a>
+                              <a class="btn btn-danger btn-delete" name="delete_user" id="delete_user" title="Hapus User" value="<?=$mhs->nim?>">
+                                <i class="fa fa-fw fa-remove"></i></a>
                           </div>
                       </td>
                     </tr>

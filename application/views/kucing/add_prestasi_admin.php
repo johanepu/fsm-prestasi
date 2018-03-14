@@ -27,7 +27,7 @@
                   <?php echo form_open("Admin_prestasi/addPrestasi_admin");?>
 
                   <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="text-input">Nomor Induk Mahasiswa</label>
+                    <label class="col-md-2 col-form-label" for="text-input">NIM</label>
                     <div class="col-md-9">
                       <input type="text" id="nim" name="nim" class="form-control" value="<?php echo set_value('nim'); ?>" placeholder="Masukkan NIM">
                     </div>
@@ -43,19 +43,39 @@
                   <?php echo form_error('nama_prestasi'); ?>
 
                   <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="text-input">Peringkat yang diraih</label>
-                    <div class="col-md-9">
-                      <input type="text" id="peringkat_prestasi" name="peringkat_prestasi" class="form-control" value="<?php echo set_value('peringkat_prestasi'); ?>" placeholder="Misal Juara 1, Best Paper..">
+                    <label class="col-md-2 col-form-label" for="select1">Level Prestasi
+                      <a href="#" data-toggle="skala_tooltip"
+                      title="1. Lokal ⇒ Untuk prestasi di ruang lingkup daerah lokal atau lingkup universitas.
+2. Regional ⇒ Untuk prestasi yang di lingkup daerah/provinsi.
+3. Nasional ⇒ Untuk prestasi di lingkup nasional (dalam negeri) saja.
+4. Internasional ⇒ Untuk prestasi di tingkat luar negara."><h7>info</h7></a>
+                    </label>
+                    <div class="col-md-3">
+                      <select id="level_prestasi" name="level_prestasi" class="form-control">
+                        <option value="">Pilih Level Prestasi</option>
+                        <?php
+                        foreach ($setting_reward as $sr => $value) {
+                          echo "<option value='".$value->level."'>".$value->nama_level."</option>";
+                        }
+                        ?>
+                      </select>
                     </div>
+                    <label class="col-md-2 col-form-label" for="text-input">Peringkat yang diraih</label>
+                    <div class="col-md-4">
+                      <select  id="peringkat_prestasi" name="peringkat_prestasi" class="form-control">
+                      <option value="">Pilih level prestasi terlebih dulu</option>
+                      </select>
                   </div>
+                  <?php echo form_error('level_prestasi'); ?>
                   <?php echo form_error('peringkat_prestasi'); ?>
 
+                  </div>
 
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label">Tipe Prestasi</label>
                     <div class="col-md-9 col-form-label">
                       <div class="form-check form-check-inline mr-1">
-                        <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="individu" value="1" name="tipe_prestasi">
+                        <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="individu" value="1" name="tipe_prestasi" checked>
                         <label class="form-check-label" for="inline-radio1">Individu</label>
                       </div>
                       <div class="form-check form-check-inline mr-1">
@@ -71,7 +91,7 @@
                     <label class="col-md-2 col-form-label">Jenis Prestasi</label>
                     <div class="col-md-9 col-form-label">
                       <div class="form-check form-check-inline mr-1">
-                        <input class="form-check-input" type="radio" id="jenis_prestasi" value="1" name="jenis_prestasi">
+                        <input class="form-check-input" type="radio" id="jenis_prestasi" value="1" name="jenis_prestasi" checked>
                         <label class="form-check-label" for="inline-radio1">Akademik</label>
                       </div>
                       <div class="form-check form-check-inline mr-1">
@@ -81,20 +101,6 @@
                     </div>
                   </div>
                   <?php echo form_error('jenis_prestasi'); ?>
-
-                  <div class="form-group row">
-                  <label class="col-md-2 col-form-label" for="select1">Skala Kegiatan</label>
-                  <div class="col-md-3">
-                      <select id="level_prestasi" name="level_prestasi" class="form-control">
-                        <option value="0">Pilih Skala Kegiatan</option>
-                        <option value="1">Lokal</option>
-                        <option value="2">Regional</option>
-                        <option value="3">Nasional</option>
-                        <option value="4">Internasional</option>
-                      </select>
-                    </div>
-                  </div>
-                  <?php echo form_error('level_prestasi'); ?>
 
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="text-input">Nama Penyelenggara</label>
@@ -159,6 +165,29 @@
 </body>
 
 <script type="text/javascript">
+
+    $(document).ready(function(){
+
+        $('select[name="level_prestasi"]').on('change', function() {
+            var level = $(this).val();
+            if(level) {
+                $.ajax({
+                    url: '<?= base_url();?>Prestasi/getPeringkat/'+level,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data) {
+                        $('select[name="peringkat_prestasi"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="peringkat_prestasi"]').append('<option value="'+ value.peringkat +'">'+ value.peringkat +'</option>');
+                        });
+                    }
+                });
+            }else{
+                $('select[name="peringkat_prestasi"]').empty();
+            }
+        });
+    });
+
     $( function() {
       var available_nim = <?= json_encode($available_nim) ?>;
       $( "#nim" ).autocomplete({

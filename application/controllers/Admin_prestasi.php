@@ -157,6 +157,7 @@ class Admin_prestasi extends CI_Controller {
 
 		$data['title'] = "RewardMe - Tambah Prestasi";
 		$data['available_nim'] = $this->User_model->get_all_nim();
+		$data['setting_reward'] = $this->Prestasi_model->getLevelValue();
 
 		//validate form input
 
