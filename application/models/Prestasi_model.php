@@ -56,7 +56,7 @@ class Prestasi_model extends CI_Model {
 
 	public function tampil_prestasi_semester($semester_select){
 		if ($semester_select == 1) {
-			$semester_index = 'Ganjil';
+			$semester_index = 'Gasal';
 		} elseif ($semester_select == 2) {
 			$semester_index = 'Genap';
 		}
@@ -71,13 +71,13 @@ class Prestasi_model extends CI_Model {
 
 	public function tampil_prestasi_periode($periode_select){
 		if ($periode_select == 1) {
-			$periode_index = '2017/2018';
+			$periode_index = '2017';
 		} elseif ($periode_select == 2) {
-			$periode_index = '2018/2019';
+			$periode_index = '2018';
 		} elseif ($periode_select == 3) {
-			$periode_index = '2019/2020';
+			$periode_index = '2019';
 		} elseif ($periode_select == 4) {
-			$periode_index = '2020/2021';
+			$periode_index = '2020';
 		}
 		$this->db->select('*');
 		$this->db->from('periode_prestasi');
@@ -90,16 +90,16 @@ class Prestasi_model extends CI_Model {
 
 	public function tampil_prestasi_waktu($periode_select,$semester_select){
 		if ($periode_select == 1) {
-			$periode_index = '2017/2018';
+			$periode_index = '2017';
 		} elseif ($periode_select == 2) {
-			$periode_index = '2018/2019';
+			$periode_index = '2018';
 		} elseif ($periode_select == 3) {
-			$periode_index = '2019/2020';
+			$periode_index = '2019';
 		} elseif ($periode_select == 4) {
-			$periode_index = '2020/2021';
+			$periode_index = '2020';
 		}
 		if ($semester_select == 1) {
-			$semester_index = 'Ganjil';
+			$semester_index = 'Gasal';
 		} elseif ($semester_select == 2) {
 			$semester_index = 'Genap';
 		}
@@ -421,7 +421,26 @@ class Prestasi_model extends CI_Model {
 		return $hitung;
 	}
 
+	public function getPoinPrestasi($level_prestasi,$peringkat_prestasi){
+		$this->db->select('poin');
+		$this->db->from('setting_rewarding');
+		$this->db->where('level',$level_prestasi);
+		$this->db->where('peringkat',$peringkat_prestasi);
+		$hasil = $this->db->get();
+    $row = $hasil->row();
+    if (isset($row))
+    {
+        return $row->poin;
+    }
+	}
 
+	public function getLevelValue(){
+		$this->db->select('level, nama_level');
+		$this->db->from('setting_rewarding');
+		$this->db->distinct();
+		$result = $this->db->get();
+		return $result->result();
+	}
 
 
 }

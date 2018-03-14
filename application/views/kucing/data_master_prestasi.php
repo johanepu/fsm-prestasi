@@ -28,16 +28,16 @@
                   <div class="form-group col-lg-2">
                       <select id="periode_select" name="select_waktu" class="form-control select_waktu">
                         <option id="reset_periode" value="0">Pilih Tahun</option>
-                        <option value="1">2017/2018</option>
-                        <option value="2">2018/2019</option>
-                        <option value="3">2019/2020</option>
-                        <option value="4">2020/2021</option>
+                        <option value="1">2017</option>
+                        <option value="2">2018</option>
+                        <option value="3">2019</option>
+                        <option value="4">2020</option>
                       </select>
                     </div>
                     <div class="form-group col-lg-2">
                         <select id="semester_select" name="select_waktu" class="form-control select_waktu">
                           <option id="reset_semester" value="0">Pilih Semester</option>
-                          <option value="1">Ganjil</option>
+                          <option value="1">Gasal</option>
                           <option value="2">Genap</option>
                         </select>
                     </div>
@@ -59,17 +59,17 @@
                     <input type="text" class="form-control" id="cariPrestasi" placeholder="Cari Nama Kegiatan atau Prestasi Anda" >
                   </div>
                 </div>
-                <table id="tabel_prestasi" class="table table-responsive-sm table-striped">
+                <table id="tabel_prestasi" class="table table-responsive-sm table-bordered table-striped table-sm">
                   <thead>
                     <tr>
-                      <th>NIM</th>
+                      <th>NIM Pengisi</th>
                       <th>Nama Prestasi</th>
                       <th>Peringkat</th>
-                      <th>Jenis</th>
+                      <th>Jml</th>
+                      <!-- <th>Jenis</th> -->
                       <th>Level</th>
-                      <th>Tanggal Kegiatan</th>
+                      <th>Tgl Kegiatan</th>
                       <th>Status</th>
-                      <!-- <th>Poin</th> -->
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -81,14 +81,15 @@
                       <td ><?php echo $pres->nim; ?></td>
                       <td ><?php echo $pres->nama_prestasi; ?></td>
                       <td ><?php echo $pres->peringkat_prestasi; ?></td>
-                      <td title="Jenis Prestasi" name="jenis_prestasi" id="jenis_prestasi">
+                      <td ><?php echo $pres->jml_anggota; ?></td>
+                      <!-- <td title="Jenis Prestasi" name="jenis_prestasi" id="jenis_prestasi">
                       <?php
                       if ($pres->jenis_prestasi == "1") {
                           echo '<span class="label label-success label-mini">Akademik</span>';
                       }elseif ($pres->jenis_prestasi == "2") {
                           echo '<span class="label label-warning label-mini">Non-Akademik</span>';
                       }
-                      ?></td>
+                      ?></td> -->
                       <!-- <td title="Tipe Prestasi" name="tipe_prestasi" id="tipe_prestasi">
                       <?php
                       if ($pres->tipe_prestasi == "1") {
@@ -363,6 +364,7 @@ $(document).ready(function(){
     tabel_prestasi =  $('#tabel_prestasi').DataTable( {
         "dom": 'lrtipB',
         "sScrollY": "500px",
+        responsive: true,
         "bPaginate": false,
         "info":     false,
         buttons: [

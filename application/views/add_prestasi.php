@@ -111,11 +111,12 @@
                   </label>
                   <div class="col-md-3">
                       <select id="level_prestasi" name="level_prestasi" class="form-control">
-                        <option value="0">Pilih Level Prestasi</option>
-                        <option value="1">Lokal</option>
-                        <option value="2">Regional</option>
-                        <option value="3">Nasional</option>
-                        <option value="4">Internasional</option>
+                        <option value="0">Pilih Skala Kegiatan</option>
+                        <?php
+                        foreach ($setting_reward as $sr => $value) {
+                            echo "<option value='".$value->level."'>".$value->nama_level."</option>";
+                        }
+                        ?>
                       </select>
                     </div>
                   </div>

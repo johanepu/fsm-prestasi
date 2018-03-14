@@ -153,7 +153,7 @@ class Prestasi extends CI_Controller {
 		$data['jml_prestasi_beregu'] = $this->Prestasi_model->hitung_user_prestasi_beregu($nim);
 		//statistik end
 		$data['available_nim'] = $this->User_model->get_all_nim_except_me($nim);
-
+		$data['setting_reward'] = $this->Prestasi_model->getLevelValue();
 		//validate form input
 		$this->form_validation->set_rules(
         'nama_prestasi', 'Nama Kegiatan',
@@ -344,15 +344,8 @@ class Prestasi extends CI_Controller {
       date_default_timezone_set('Asia/Jakarta');
 			$nim = $this->session->userdata('nim');
 			$level_prestasi = $this->input->post('level_prestasi');
-				if ($level_prestasi == 1) {
-					$reward_point = 2;
-				} elseif ($level_prestasi == 2) {
-					$reward_point = 3;
-				} elseif ($level_prestasi == 3) {
-					$reward_point = 4;
-				} elseif ($level_prestasi == 4) {
-					$reward_point = 5;
-				}
+			$peringkat_prestasi = $this->input->post('peringkat_prestasi');
+			$reward_point = $this->Prestasi_model->getPoinPrestasi($level_prestasi,$peringkat_prestasi);
 
 			$datetime = new DateTime();
 			$tgl_prestasi = $this->input->post('date_start');
@@ -380,12 +373,12 @@ class Prestasi extends CI_Controller {
 				'referral_nim' => $this->input->post('referral_prestasi'),
 				'jml_anggota' => $jml_anggota,
 				'nama_prestasi' 	=> $this->input->post('nama_prestasi'),
-				'peringkat_prestasi'  	=> $this->input->post('peringkat_prestasi'),
+				'peringkat_prestasi'  	=> $peringkat_prestasi,
         'tipe_prestasi'    	=> $this->input->post('tipe_prestasi'),
 				'jenis_prestasi'    		=> $this->input->post('jenis_prestasi'),
 				'level_prestasi'    		=> $level_prestasi,
 				'deskripsi_prestasi'    		=> $this->input->post('deskripsi_prestasi'),
-				'reward_poin'    		=> 0,
+				'reward_poin'    		=> $reward_point,
 				'penyelenggara_prestasi'    		=> $this->input->post('penyelenggara_prestasi'),
 				'tempat_prestasi'    		=> $this->input->post('tempat_prestasi'),
 				'tgl_prestasi_start'	=> $tgl_prestasi,
@@ -414,6 +407,7 @@ class Prestasi extends CI_Controller {
 		}
 		else
 		{
+
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->session->flashdata('message')));
 			$data['content'] = 'add_prestasi.php';
 			$this->load->view("user_template.php",$data,$this->data);
