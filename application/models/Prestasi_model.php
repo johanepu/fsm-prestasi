@@ -195,14 +195,14 @@ class Prestasi_model extends CI_Model {
 		$this->db->select('poin');
 		$this->db->from('reward_prestasi');
 		$this->db->join('user_prestasi' ,
-		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi', 'inner');
 		$this->db->where('reward_prestasi.nim', $nim);
 		$this->db->where('user_prestasi.validasi', 1);
 		$query = $this->db->get();
 		$result = 0;
 		if ($query->result()>0) {
 			foreach($query->result() as $row) {
-					$result += $row->reward_poin;
+					$result += $row->poin;
 			}
 		} else {
 			$result = 0;
@@ -212,36 +212,37 @@ class Prestasi_model extends CI_Model {
 
 
 	public function user_reward_point(){
-		$result[] ='0';
 	  $this->db->select('*');
 	  $this->db->from('users');
 	  $query = $this->db->get();
-		if ($query->result()>0) {
-		  foreach($query->result() as $row) {
+		if ($query->result()==0) {
+			$result[] = 0;
+		}else {
+			foreach($query->result() as $row) {
 		    $nim = (string)$row->nim;
 		    $poin = $this->hitung_reward_point($row->nim);
 				$result[] = $poin;
 		    // $result += $row->reward_poin;
 		  }
-		}else {
-			$result[]='0';
 		}
-
 	  return $result;
 	 }
 
 	 public function user_jml_prestasi(){
-		 $result[]='0';
+
 		 $this->db->select('*');
 		 $this->db->from('users');
 		 $query = $this->db->get();
-		 foreach($query->result() as $row) {
-			 $nim = (string)$row->nim;
-			 $poin = $this->hitung_user_prestasi($row->nim);
-			 $result[] = $poin;
-			 // $result += $row->reward_poin;
-		 }
-
+		 if ($query->result()==0) {
+ 			$result[] = 0;
+ 		 } else {
+			 foreach($query->result() as $row) {
+				 $nim = (string)$row->nim;
+				 $poin = $this->hitung_user_prestasi($row->nim);
+				 $result[] = $poin;
+				 // $result += $row->reward_poin;
+				}
+			}
 		 return $result;
 		}
 
