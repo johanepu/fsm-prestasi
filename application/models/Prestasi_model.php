@@ -48,8 +48,10 @@ class Prestasi_model extends CI_Model {
 
 	public function tampil_user_prestasi($nim){
 		$this->db->select('*');
-		$this->db->from('user_prestasi');
-		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->from('reward_prestasi');
+		$this->db->join('user_prestasi' ,
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('reward_prestasi.nim', $nim);
 		$hasil = $this->db->get();
 		return $hasil->result();
 	}
@@ -132,9 +134,14 @@ class Prestasi_model extends CI_Model {
 	}
 
 	function getPrestasi($id_prestasi){
-		$result=$this->db->query("SELECT * FROM user_prestasi WHERE id_prestasi='$id_prestasi'");
-		if($result->num_rows()>0){
-			return $result->result();
+		$this->db->select('*');
+		$this->db->from('reward_prestasi');
+		$this->db->join('user_prestasi' ,
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('user_prestasi.id_prestasi', $id_prestasi);
+		$hasil = $this->db->get();
+		if($hasil->num_rows()>0){
+			return $hasil->result();
 		}else{
 			return false;
 		}
@@ -153,8 +160,8 @@ class Prestasi_model extends CI_Model {
 	// fungsi dashboard
 	public function hitung_user_prestasi($nim){
 		$this->db->select('*');
-		$this->db->from('user_prestasi');
-		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->from('reward_prestasi');
+		$this->db->where('reward_prestasi.nim', $nim);
 		$hasil = $this->db->get();
 		$hitung = $hasil->num_rows();
 		return $hitung;
@@ -162,8 +169,10 @@ class Prestasi_model extends CI_Model {
 
 	public function hitung_user_prestasi_validasi($nim){
 		$this->db->select('*');
-		$this->db->from('user_prestasi');
-		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->from('reward_prestasi');
+		$this->db->join('user_prestasi' ,
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('reward_prestasi.nim', $nim);
 		$this->db->where('user_prestasi.validasi', 1);
 		$hasil = $this->db->get();
 		$hitung = $hasil->num_rows();
@@ -172,8 +181,10 @@ class Prestasi_model extends CI_Model {
 
 	public function hitung_user_prestasi_blmvalidasi($nim){
 		$this->db->select('*');
-		$this->db->from('user_prestasi');
-		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->from('reward_prestasi');
+		$this->db->join('user_prestasi' ,
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('reward_prestasi.nim', $nim);
 		$this->db->where('user_prestasi.validasi', 0);
 		$hasil = $this->db->get();
 		$hitung = $hasil->num_rows();
@@ -181,10 +192,13 @@ class Prestasi_model extends CI_Model {
 	}
 
 	public function hitung_reward_point($nim){
-		$this->db->select_sum('reward_poin');
-		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->select('poin');
+		$this->db->from('reward_prestasi');
+		$this->db->join('user_prestasi' ,
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('reward_prestasi.nim', $nim);
 		$this->db->where('user_prestasi.validasi', 1);
-		$query = $this->db->get('user_prestasi');
+		$query = $this->db->get();
 		$result = 0;
 		if ($query->result()>0) {
 			foreach($query->result() as $row) {
@@ -249,8 +263,10 @@ class Prestasi_model extends CI_Model {
 
 	public function hitung_user_prestasi_lokal($nim){
 		$this->db->select('*');
-		$this->db->from('user_prestasi');
-		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->from('reward_prestasi');
+		$this->db->join('user_prestasi' ,
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('reward_prestasi.nim', $nim);
 		$this->db->where('user_prestasi.level_prestasi', 1);
 		$hasil = $this->db->get();
 		$hitung = $hasil->num_rows();
@@ -259,8 +275,10 @@ class Prestasi_model extends CI_Model {
 
 	public function hitung_user_prestasi_nasional($nim){
 		$this->db->select('*');
-		$this->db->from('user_prestasi');
-		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->from('reward_prestasi');
+		$this->db->join('user_prestasi' ,
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('reward_prestasi.nim', $nim);
 		$this->db->where('user_prestasi.level_prestasi', 3);
 		$hasil = $this->db->get();
 		$hitung = $hasil->num_rows();
@@ -269,8 +287,10 @@ class Prestasi_model extends CI_Model {
 
 	public function hitung_user_prestasi_regional($nim){
 		$this->db->select('*');
-		$this->db->from('user_prestasi');
-		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->from('reward_prestasi');
+		$this->db->join('user_prestasi' ,
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('reward_prestasi.nim', $nim);
 		$this->db->where('user_prestasi.level_prestasi', 2);
 		$hasil = $this->db->get();
 		$hitung = $hasil->num_rows();
@@ -279,8 +299,10 @@ class Prestasi_model extends CI_Model {
 
 	public function hitung_user_prestasi_internasional($nim){
 		$this->db->select('*');
-		$this->db->from('user_prestasi');
-		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->from('reward_prestasi');
+		$this->db->join('user_prestasi' ,
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('reward_prestasi.nim', $nim);
 		$this->db->where('user_prestasi.level_prestasi', 4);
 		$hasil = $this->db->get();
 		$hitung = $hasil->num_rows();
@@ -289,8 +311,10 @@ class Prestasi_model extends CI_Model {
 
 	public function hitung_user_prestasi_akademik($nim){
 		$this->db->select('*');
-		$this->db->from('user_prestasi');
-		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->from('reward_prestasi');
+		$this->db->join('user_prestasi' ,
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('reward_prestasi.nim', $nim);
 		$this->db->where('user_prestasi.jenis_prestasi', 1);
 		$hasil = $this->db->get();
 		$hitung = $hasil->num_rows();
@@ -298,8 +322,10 @@ class Prestasi_model extends CI_Model {
 	}
 	public function hitung_user_prestasi_non_akademik($nim){
 		$this->db->select('*');
-		$this->db->from('user_prestasi');
-		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->from('reward_prestasi');
+		$this->db->join('user_prestasi' ,
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('reward_prestasi.nim', $nim);
 		$this->db->where('user_prestasi.jenis_prestasi', 2);
 		$hasil = $this->db->get();
 		$hitung = $hasil->num_rows();
@@ -308,8 +334,10 @@ class Prestasi_model extends CI_Model {
 
 	public function hitung_user_prestasi_individu($nim){
 		$this->db->select('*');
-		$this->db->from('user_prestasi');
-		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->from('reward_prestasi');
+		$this->db->join('user_prestasi' ,
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('reward_prestasi.nim', $nim);
 		$this->db->where('user_prestasi.tipe_prestasi', 1);
 		$hasil = $this->db->get();
 		$hitung = $hasil->num_rows();
@@ -317,8 +345,10 @@ class Prestasi_model extends CI_Model {
 	}
 	public function hitung_user_prestasi_beregu($nim){
 		$this->db->select('*');
-		$this->db->from('user_prestasi');
-		$this->db->where('user_prestasi.nim', $nim);
+		$this->db->from('reward_prestasi');
+		$this->db->join('user_prestasi' ,
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('reward_prestasi.nim', $nim);
 		$this->db->where('user_prestasi.tipe_prestasi', 2);
 		$hasil = $this->db->get();
 		$hitung = $hasil->num_rows();

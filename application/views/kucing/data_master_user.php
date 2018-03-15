@@ -106,8 +106,8 @@
                               <a class="btn btn-success" href="<?php echo site_url('Admin_user/user/'.$mhs->nim);?>"
                                 title="Lihat User">
                                 <i class="fa fa-fw s fa-eye"></i></a>
-                              <a class="btn btn-danger btn-delete" name="delete_user" id="delete_user" title="Hapus User" value="<?=$mhs->nim?>">
-                                <i class="fa fa-fw fa-remove"></i></a>
+                              <button class="btn btn-danger btn-delete" name="delete_user" id="delete_user" title="Hapus User" value="<?=$mhs->nim?>">
+                                <i class="fa fa-fw fa-remove"></i></button>
                           </div>
                       </td>
                     </tr>
@@ -129,7 +129,7 @@
       <div class="modal-dialog modal-danger" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Hapus Data</h4>
+            <h4 class="modal-title">Hapus User</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
@@ -189,19 +189,20 @@ $(document).ready(function(){
         $('.buttons-print').click()
       });
 
-    $(document).on('click', 'button.btn-delete,button.btn-delete2', function(){
+    $(document).on('click', '#delete_user', function(){
       $('#modalDelete').modal('show');
-      var id_prestasi=$(this).val();
-      $('#hiddenIdDelete').val(id_prestasi);
+      var nim=$(this).val();
+      alert(nim);
+      $('#hiddenIdDelete').val(nim);
       $.ajax({
         type: "POST",
-        url: '<?=base_url()?>Prestasi/fetchData',
-        data: {id_prestasi:id_prestasi},
+        url: '<?=base_url()?>Admin_user/userData',
+        data: {nim:nim},
         dataType:'json',
         success: function(data){
           if(data){
-              var prestasi = data[0];
-              $('#namadelete').html('"'+prestasi.nama_prestasi+'"');
+              var user = data[0];
+              $('#namadelete').html('"'+user.namalengkap+'"');
               $('#btnhapus').prop("disabled",false);
             }
           }
@@ -209,11 +210,11 @@ $(document).ready(function(){
     });
 
     $('#btnhapus').click(function(){
-      var id = $('#hiddenIdDelete').val();
+      var nim = $('#hiddenIdDelete').val();
       $.ajax({
         type: "POST",
-        url: '<?=base_url()?>Prestasi/delete',
-        data: {id_prestasi:id},
+        url: '<?=base_url()?>Admin_user/deleteUser',
+        data: {nim:nim},
         dataType:'json',
         success: function(data){
         }
@@ -247,9 +248,6 @@ $(document).ready(function(){
         location.reload();
     });
 
-    $(".clickable-row").click(function() {
-       window.location = $(this).data("href");
-   });
 
     // $('#cariPrestasi').keyup(function(){
     //   var query = $(this).val();

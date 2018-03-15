@@ -199,6 +199,11 @@ class Admin_user extends CI_Controller {
 
 	}
 
+	function delete(){
+		$nim = $this->input->post('nim');
+		$result=$this->User_model->deleteUser($nim);
+	}
+
 
 
 }

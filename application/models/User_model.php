@@ -112,8 +112,8 @@ class User_model extends CI_Model {
 			$this->db->update('users',$data);
 	}
 
-	function delete($id){
-		return $this->db->query("DELETE FROM user_prestasi WHERE id_prestasi='$id'");
+	function deleteUser($nim){
+		return $this->db->query("DELETE FROM users WHERE nim='$nim'");
 	}
 
 	public function GetNimRow($keyword) {
