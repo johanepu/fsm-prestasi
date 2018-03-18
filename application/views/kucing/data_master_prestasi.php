@@ -73,7 +73,7 @@
                       <th>Aksi</th>
                     </tr>
                   </thead>
-                  <tbody id="tabel-prestasi">
+                  <tbody>
                     <?php
                     foreach($prestasi as $p => $pres){
                     ?>
@@ -115,7 +115,7 @@
                       <td title="Status Prestasi" name="status_prestasi" id="status_prestasi">
                       <?php
                       if ($pres->validasi == "1") {
-                          echo '<span class="badge badge-success">Tervalidasi</span>';
+                          echo '<span class="badge badge-success">Poin Valid : '.$pres->reward_poin.'</span>';
                       }elseif ($pres->validasi == "0") {
                           echo '<span class="badge badge-danger">Belum Valid</span>';
                       }

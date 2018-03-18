@@ -50,9 +50,9 @@
                     </div>
                   </div>
                   <div class="form-group col-lg-10">
-                    <input type="text" class="form-control" id="cariPrestasi" placeholder="Cari nama mahasiswa atau atribut mahasiswa">
+                    <input type="text" class="form-control" id="cariUser" placeholder="Cari nama mahasiswa atau atribut mahasiswa">
                 </div>
-                <table id="tabel_prestasi" class="table table-responsive-sm table-striped table-hover">
+                <table id="tabel_user" class="table table-responsive-sm table-striped table-hover">
                   <thead>
                     <tr>
                       <th>NIM</th>
@@ -65,7 +65,7 @@
                       <th>Aksi</th>
                     </tr>
                   </thead>
-                  <tbody id="tabel-prestasi">
+                  <tbody>
                     <?php
                     foreach($user as $p => $mhs){
                     ?>
@@ -154,17 +154,18 @@
 $(document).ready(function(){
 
   // tabel data prestasi datatable
-    tabel_prestasi =  $('#tabel_prestasi').DataTable( {
+    tabel_user =  $('#tabel_user').DataTable( {
         "dom": 'lrtipB',
         "sScrollY": "500px",
         "bPaginate": false,
         "info":     false,
+        responsive: true,
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
       } );
-      $('#cariPrestasi').keyup(function(){
-            tabel_prestasi.search($(this).val()).draw() ;
+      $('#cariUser').keyup(function(){
+            tabel_user.search($(this).val()).draw() ;
       });
 
       $( 'button.dt-button,button.button-html5' ).hide();
