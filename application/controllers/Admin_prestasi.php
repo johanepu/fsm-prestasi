@@ -418,6 +418,17 @@ class Admin_prestasi extends CI_Controller {
 		}
 	}
 
+	public function addRefPrestasi()
+	{
+			$id_prestasi = $this->Prestasi_model->getLastAI();
+			$data = array(
+				'id_prestasi'=>$id_prestasi,
+				'nim' => $this->input->post('nim'),
+				'poin' => 0
+			);
+			$this->Prestasi_model->addReward($data);
+	}
+
 	public function addRefThisPrestasi($id_prestasi,$nim)
 	{
 			$data = array(

@@ -29,10 +29,47 @@
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="text-input">NIM</label>
                     <div class="col-md-9">
-                      <input type="text" id="nim" name="nim" class="form-control" value="<?php echo set_value('nim'); ?>" placeholder="Masukkan NIM">
+                      <input type="text" id="nim" name="nim" class="form-control" value="<?php echo set_value('nim'); ?>" placeholder="Masukkan NIM" required>
                     </div>
                   </div>
                   <?php echo form_error('nim'); ?>
+
+                  <div class="form-group row">
+                    <label class="col-md-2 col-form-label">Tipe Prestasi</label>
+                    <div class="col-md-9 col-form-label">
+                      <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="individu" value="1" name="tipe_prestasi" checked>
+                        <label class="form-check-label" for="inline-radio1">Individu</label>
+                      </div>
+                      <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="beregu" value="2" name="tipe_prestasi">
+                        <label class="form-check-label" for="inline-radio2">Beregu/Kelompok</label>
+                      </div>
+                    </div>
+                  </div>
+                  <?php echo form_error('tipe_prestasi'); ?>
+
+                  <div class="form-group row" >
+                    <label class="col-md-2 col-form-label" id="referral_label" style="display:none" for="text-input">NIM Anggota
+                      <a href="#" data-toggle="referral_tooltip" title="Pisahkan NIM dengan koma ',' untuk masukan lebih dari satu, tidak termasuk NIM sendiri"><h7>info</h7></a>
+                    </label>
+                    <div class="col-md-9" id="referral_input" style="display:none">
+                      <input type="text" id="referral_prestasi" name="referral_prestasi"  class="form-control" value="<?php echo set_value('referral_prestasi'); ?>"
+                      placeholder="Pisahkan NIM dengan koma ',' untuk masukan lebih dari satu (Misal : 2402XXXXXXXX, 2401XXXXXXXXX)" onfocusout="hitungAnggota()">
+                    </div>
+                  </div>
+                  <?php echo form_error('referral_prestasi'); ?>
+
+                  <div class="form-group row" >
+                    <label class="col-md-2 col-form-label" id="jml_regu_label" style="display:none" for="text-input">Jumlah Anggota
+                      <a href="#" data-toggle="jml_tooltip" title="Anggota dihitung dari NIM anggota VALID ditambah user "><h7>info</h7></a>
+                    </label>
+                    <div class="col-md-9" id="jml_regu_input" style="display:none">
+                      <input type="number" id="jml_anggota" name="jml_anggota"  class="form-control" value="<?php echo set_value('jml_anggota'); ?>"
+                      placeholder="Jumlah mahasiswa yang terdaftar prestasi">
+                    </div>
+                  </div>
+                  <?php echo form_error('jml_anggota'); ?>
 
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="text-input">Nama Kegiatan</label>
@@ -70,21 +107,6 @@
                   <?php echo form_error('peringkat_prestasi'); ?>
 
                   </div>
-
-                  <div class="form-group row">
-                    <label class="col-md-2 col-form-label">Tipe Prestasi</label>
-                    <div class="col-md-9 col-form-label">
-                      <div class="form-check form-check-inline mr-1">
-                        <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="individu" value="1" name="tipe_prestasi" checked>
-                        <label class="form-check-label" for="inline-radio1">Individu</label>
-                      </div>
-                      <div class="form-check form-check-inline mr-1">
-                        <input class="form-check-input" onclick="javascript:TipeCheck();" type="radio" id="beregu" value="2" name="tipe_prestasi">
-                        <label class="form-check-label" for="inline-radio2">Beregu/Kelompok</label>
-                      </div>
-                    </div>
-                  </div>
-                  <?php echo form_error('tipe_prestasi'); ?>
 
 
                   <div class="form-group row">
@@ -150,7 +172,7 @@
 
               </div>
               <div class="card-footer" >
-                <input type="submit" value="Submit" style="float: right;" class="btn btn-sm btn-primary">
+                <input type="submit" id="submit" value="Submit" style="float: right;" class="btn btn-sm btn-primary">
                 <button type="reset" style="float: right; margin-right: 10px" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
               </div>
             </div>
@@ -167,25 +189,27 @@
 <script type="text/javascript">
 
     $(document).ready(function(){
+      $('[data-toggle="referral_tooltip"]').tooltip();
+      $('[data-toggle="jml_tooltip"]').tooltip();
 
-        $('select[name="level_prestasi"]').on('change', function() {
-            var level = $(this).val();
-            if(level) {
-                $.ajax({
-                    url: '<?= base_url();?>Prestasi/getPeringkat/'+level,
-                    type: "GET",
-                    dataType: "json",
-                    success:function(data) {
-                        $('select[name="peringkat_prestasi"]').empty();
-                        $.each(data, function(key, value) {
-                            $('select[name="peringkat_prestasi"]').append('<option value="'+ value.peringkat +'">'+ value.peringkat +'</option>');
-                        });
-                    }
-                });
-            }else{
-                $('select[name="peringkat_prestasi"]').empty();
-            }
-        });
+      $('select[name="level_prestasi"]').on('change', function() {
+          var level = $(this).val();
+          if(level) {
+              $.ajax({
+                  url: '<?= base_url();?>Prestasi/getPeringkat/'+level,
+                  type: "GET",
+                  dataType: "json",
+                  success:function(data) {
+                      $('select[name="peringkat_prestasi"]').empty();
+                      $.each(data, function(key, value) {
+                          $('select[name="peringkat_prestasi"]').append('<option value="'+ value.peringkat +'">'+ value.peringkat +'</option>');
+                      });
+                  }
+              });
+          }else{
+              $('select[name="peringkat_prestasi"]').empty();
+          }
+      });
     });
 
     $( function() {
@@ -193,8 +217,114 @@
       $( "#nim" ).autocomplete({
         source: available_nim
       });
+      function split( val ) {
+        return val.split( /,\s*/ );
+      }
+      function extractLast( term ) {
+        return split( term ).pop();
+      }
+      $( "#referral_prestasi" )
+        // don't navigate away from the field on tab when selecting an item
+        .on( "keydown", function( event ) {
+          if ( event.keyCode === $.ui.keyCode.TAB &&
+              $( this ).autocomplete( "instance" ).menu.active ) {
+            event.preventDefault();
+          }
+        })
+        .autocomplete({
+          minLength: 0,
+          source: function( request, response ) {
+            // delegate back to autocomplete, but extract the last term
+            response( $.ui.autocomplete.filter(
+              available_nim, extractLast( request.term ) ) );
+          },
+          focus: function() {
+            // prevent value inserted on focus
+            return false;
+          },
+          select: function( event, ui ) {
+            var terms = split( this.value );
+            // remove the current input
+            terms.pop();
+            // add the selected item
+            terms.push( ui.item.value );
+            // add placeholder to get the comma-and-space at the end
+            terms.push( "" );
+            this.value = terms.join( ", " );
+            return false;
+          }
+        });
     } );
 
+    $('#submit').click(function(){
+      if (document.getElementById('beregu').checked) {
+        var head_nim = $('#nim').val();
+        var array = $('#referral_prestasi').val().split(",");
+        var sorted_arr = array.slice().sort();
+        for(i=0;i<sorted_arr.length;i++)
+        {
+            sorted_arr[i] = sorted_arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+        }
+        var results = [];
+          for (var i = 0; i < sorted_arr.length; i++) {
+              if (sorted_arr[i + 1] != sorted_arr[i] && sorted_arr[i].length == 14) {
+                  results.push(sorted_arr[i]);
+              }
+          }
 
+        console.log(sorted_arr);
+        console.log(results);
+
+        for (i=0;i<results.length;i++){
+
+            var nim = results[i];
+            $.ajax({
+              type: "POST",
+              url: '<?=base_url()?>Admin_prestasi/addRefPrestasi',
+              data: {
+                nim:nim
+              },
+              success: function(data){
+              }
+            });
+        }
+      }
+    });
+
+    function hitungAnggota() {
+      if (document.getElementById('beregu').checked) {
+        var array = $('#referral_prestasi').val().split(",");
+        var sorted_arr = array.slice().sort();
+        for(i=0;i<sorted_arr.length;i++)
+        {
+            sorted_arr[i] = sorted_arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+        }
+        var results = [];
+          for (var i = 0; i < sorted_arr.length; i++) {
+              if (sorted_arr[i + 1] != sorted_arr[i] && sorted_arr[i].length == 14) {
+                  results.push(sorted_arr[i]);
+              }
+          }
+        var ref_length = results.length + 1;
+      }
+        var x = document.getElementById("jml_anggota");
+        if (ref_length >= 1) {
+            x.value = ref_length;
+        }
+    }
+
+    function TipeCheck() {
+        if (document.getElementById('beregu').checked) {
+            document.getElementById('referral_label').style.display = 'block';
+            document.getElementById('referral_input').style.display = 'block';
+            document.getElementById('jml_regu_label').style.display = 'block';
+            document.getElementById('jml_regu_input').style.display = 'block';
+        } else {
+            document.getElementById('referral_label').style.display = 'none';
+            document.getElementById('referral_input').style.display = 'none';
+            document.getElementById('jml_regu_label').style.display = 'none';
+            document.getElementById('jml_regu_input').style.display = 'none';
+        }
+      }
 
 </script>

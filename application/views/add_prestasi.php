@@ -287,25 +287,6 @@
         }
       });
 
-        $(document).on('click', 'button.btn-delete,button.btn-delete2', function(){
-          $('#modalDelete').modal('show');
-          var id_prestasi=$(this).val();
-          $('#hiddenIdDelete').val(id_prestasi);
-          $.ajax({
-            type: "POST",
-            url: '<?=base_url()?>Prestasi/fetchData',
-            data: {id_prestasi:id_prestasi},
-            dataType:'json',
-            success: function(data){
-              if(data){
-                  var prestasi = data[0];
-                  $('#namadelete').html('"'+prestasi.nama_prestasi+'"');
-                  $('#btnhapus').prop("disabled",false);
-                }
-              }
-          });
-        });
-
     function hitungAnggota() {
       if (document.getElementById('beregu').checked) {
         var array = $('#referral_prestasi').val().split(",");

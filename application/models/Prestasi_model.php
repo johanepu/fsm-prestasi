@@ -64,6 +64,20 @@ class Prestasi_model extends CI_Model {
 		return $result;
 	}
 
+	public function getLastAI()
+	{
+		$query = $this->db->query("SELECT `AUTO_INCREMENT`
+FROM  INFORMATION_SCHEMA.TABLES
+WHERE TABLE_SCHEMA = 'fsm_prestasi'
+AND   TABLE_NAME   = 'user_prestasi'");
+		if ($query->num_rows() > 0)
+		{
+				$last_row = $query->result_array();
+				$result = $last_row[0]['AUTO_INCREMENT'];
+		}
+		return $result;
+	}
+
 	public function tampil_user_prestasi($nim){
 		$this->db->select('*');
 		$this->db->from('reward_prestasi');
