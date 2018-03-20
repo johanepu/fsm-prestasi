@@ -61,9 +61,9 @@
                                       <label class="custom-file">
                                         <div class="form-group row" style="margin-left:0px">
                                           <input type="file" id="photo_file" name="profile_photo" class="custom-file-input btn-primary"
-                                           onchange='changeEventHandler(event);' accept="image/x-png,image/gif,image/jpeg,image/jpg" hidden>
+                                           onchange='changeEventHandler(event);' accept="image/x-png,image/gif,image/jpeg,image/jpg" required hidden>
                                           <span class="btn btn-primary">Pilih file</span>
-                                          <input type="submit" id="upload" class="btn btn-success"style="margin-left:2px" value="Upload">
+                                          <input type="submit" id="upload" class="btn btn-success"style="margin-left:2px" value="Upload" disabled>
                                           <!-- <span class="btn btn-success">Upload</span> -->
                                         </div>
                                       </label>
@@ -125,6 +125,14 @@
                                         <?php echo $this->session->userdata('nomor_hp')?>
                                       <?php endif; ?>
                                     </p>
+                                    <h6>Keterangan</h6>
+                                    <p>
+                                      <?php if ($this->session->userdata('keterangan') == NULL): ?>
+                                        <?php echo 'Harap isi di ubah biodata'?>
+                                      <?php else: ?>
+                                        <?php echo $this->session->userdata('keterangan')?>
+                                      <?php endif; ?>
+                                    </p>
                                     <h6>Tanggal Akun Dibuat</h6>
                                     <p>
                                       <?php
@@ -132,6 +140,7 @@
                                         echo $tanggal;
                                        ?>
                                     </p>
+
                                 </div>
                             </div>
                             <!--/row-->
@@ -139,7 +148,7 @@
 
                         <div class="tab-pane" id="edit">
                             <form role="form">
-                                <?php echo form_open("index");?>
+                                <?php echo form_open("User_profile/updateProfilValidation");?>
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label form-control-label">Nama Lengkap</label>
                                     <div class="col-lg-9">
@@ -199,13 +208,13 @@
                                         placeholder="Misal: Penerima Bidikmisi, atau beasiswa lain">
                                     </div>
                                 </div>
-                                <?php echo form_error('Keterangan'); ?>
+                                <?php echo form_error('keterangan'); ?>
 
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label form-control-label"></label>
                                     <div class="col-lg-9">
                                         <input type="reset" class="btn btn-secondary" value="Cancel">
-                                        <input type="submit" id="btnSimpanProfil" class="btn btn-primary" value="Simpan">
+                                        <input type="button" id="btnSimpanProfil" class="btn btn-primary" value="Simpan">
                                     </div>
                                 </div>
                             </form>
@@ -243,6 +252,7 @@
                 $('#profil_alamat').val(mhs.alamat);
                 $('#profil_tingkatan').val(mhs.tingkatan);
                 $('#profil_nomor_hp').val(mhs.nomor_hp);
+                $('#profil_keterangan').val(mhs.keterangan);
             }
           }
         });
@@ -254,9 +264,10 @@
         var alamat = $('#profil_alamat').val();
         var tingkatan =  $('#profil_tingkatan').val();
         var nomor_hp =  $('#profil_nomor_hp').val();
+        var keterangan =  $('#profil_keterangan').val();
 
 
-        if(nama_lengkap==''||email==''||alamat==''||tingkatan==''||nomor_hp==''){
+        if(nama_lengkap==''||email==''||alamat==''||tingkatan==''||nomor_hp==''||keterangan==''){
             alert('Data harus diisi lengkap, Cek kembali isian Anda');
             return false;
           }else {
@@ -267,7 +278,9 @@
                     email:email,
                     alamat:alamat,
                     tingkatan:tingkatan,
-                    nomor_hp:nomor_hp},
+                    nomor_hp:nomor_hp,
+                    keterangan:keterangan
+                  },
               success: function(data){
               }
             });
@@ -333,8 +346,16 @@
               document.getElementById('role_prestasi_editlabel').style.display = 'none';
           }
         }
-        function changeEventHandler(event){
-            $('#filename').val(event.target.value);
-        }
+      function changeEventHandler(event){
+          $('#filename').val(event.target.value);
+          $("#upload").prop('disabled', false);
+      }
+
+      // $("#upload").on("click", function() {
+      //
+      //   $(this).prop('disabled', true);
+      //   $("#upload").val('Mengunggah..');
+      //
+      // });
 
     </script>

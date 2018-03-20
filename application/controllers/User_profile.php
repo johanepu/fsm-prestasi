@@ -136,6 +136,23 @@ class User_profile extends CI_Controller {
 				)
 		);
 
+		$this->form_validation->set_rules(
+				'keterangan', 'Keterangan',
+				'required',
+				array(
+								'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum memilih %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+								'
+				)
+		);
+
 
 
 		if ($this->form_validation->run() == true)
@@ -203,6 +220,7 @@ class User_profile extends CI_Controller {
 		$alamat=$this->input->post('alamat');
 		$tingkatan=$this->input->post('tingkatan');
 		$nomor_hp=$this->input->post('nomor_hp');
+		$keterangan=$this->input->post('keterangan');
 
 		$nim = $this->session->userdata('nim');
 		$data=array(
@@ -211,20 +229,38 @@ class User_profile extends CI_Controller {
 			'alamat'=>$this->input->post('alamat'),
 			'tingkatan'=>$this->input->post('tingkatan'),
 			'nomor_hp'=>$this->input->post('nomor_hp'),
-
+			'keterangan'=>$this->input->post('keterangan')
 		);
 
 		$where = array(
 			'nim'=> $nim
 		);
 
-		$result=$this->User_model->updateProfil($data,$where);
+		if ($this->User_model->updateProfil($data,$where)==true) {
+			$this->session->set_flashdata('profile_status',
+      '  <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Ubah Biodata Berhasil!</strong> Pastikan data profil anda valid untuk mendapat reward point
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div> ');
+			$this->session->set_userdata('namalengkap',$namalengkap);
+			$this->session->set_userdata('email',$email);
+			$this->session->set_userdata('alamat',$alamat);
+			$this->session->set_userdata('tingkatan',$tingkatan);
+			$this->session->set_userdata('nomor_hp',$nomor_hp);
+			$this->session->set_userdata('keterangan',$keterangan);
+		} else {
+			$this->session->set_flashdata('profile_status',
+			'  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Ubah Biodata Gagal!</strong> Silakan cek kembali isian anda, atau hubungi admin
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div> ');
+		}
 		//set user data
-		$this->session->set_userdata('namalengkap',$namalengkap);
-		$this->session->set_userdata('email',$email);
-		$this->session->set_userdata('alamat',$alamat);
-		$this->session->set_userdata('tingkatan',$tingkatan);
-		$this->session->set_userdata('nomor_hp',$nomor_hp);
+
 
 	}
 
@@ -266,6 +302,15 @@ class User_profile extends CI_Controller {
 				</div> ');
 				redirect('User_profile');
 			}
+		} else {
+			$this->session->set_flashdata('profile_photo_status',
+			'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+				<strong>Uppload foto gagal!</strong> Anda belum memilih foto.
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div> ');
+			redirect('User_profile');
 		}
 	}
 
