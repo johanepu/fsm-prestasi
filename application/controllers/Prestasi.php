@@ -44,7 +44,8 @@ class Prestasi extends CI_Controller {
 		$data['jml_prestasi_individu'] = $this->Prestasi_model->hitung_user_prestasi_individu($nim);
 		$data['jml_prestasi_beregu'] = $this->Prestasi_model->hitung_user_prestasi_beregu($nim);
 		//statistik end
-
+		$data['setting_reward'] = $this->Prestasi_model->getLevelValue();
+		$data['available_nim'] = $this->User_model->get_all_nim_except_me($nim);
 		$data['title'] = 'RewardMe - Data Prestasi';
 		$data['prestasi'] = $this->Prestasi_model->tampil_user_prestasi($nim);
 		$data['content'] = 'data_prestasi.php';
@@ -418,7 +419,6 @@ class Prestasi extends CI_Controller {
 	{
 			$id_prestasi = $this->Prestasi_model->getLastId();
 			$data = array(
-				// 'id_prestasi'=>$this->session->userdata('return_id'),
 				'id_prestasi'=>$id_prestasi,
 				'nim' => $this->input->post('nim'),
 				'poin' => 0
@@ -429,7 +429,33 @@ class Prestasi extends CI_Controller {
 	public function addRefThisPrestasi($id_prestasi,$nim)
 	{
 			$data = array(
-				// 'id_prestasi'=>$this->session->userdata('return_id'),
+				'id_prestasi'=>$id_prestasi,
+				'nim' => $nim,
+				'poin' => 0
+			);
+			$this->Prestasi_model->addReward($data);
+	}
+
+	public function updateRefPrestasi()
+	{
+			$id_prestasi = $this->input->post('id_prestasi');
+			$nim = $this->input->post('nim');
+			$poin = array(
+				'poin' => 0
+			);
+			$data = array(
+				'id_prestasi'=>$id_prestasi,
+				'nim' => $nim,
+				'poin' => 0
+			);
+			$this->Prestasi_model->updateRefReward($id_prestasi,$nim,$poin,$data);
+	}
+
+	public function updateRefPrestasi2()
+	{
+			$id_prestasi = $this->input->post('id_prestasi');
+			$nim = $this->input->post('nim');
+			$data = array(
 				'id_prestasi'=>$id_prestasi,
 				'nim' => $nim,
 				'poin' => 0
@@ -462,123 +488,102 @@ class Prestasi extends CI_Controller {
 
 		date_default_timezone_set('Asia/Jakarta');
 		$level_prestasi = $this->input->post('level_prestasi');
-			if ($level_prestasi == 1) {
-				$reward_point = 2;
-			} elseif ($level_prestasi == 2) {
-				$reward_point = 3;
-			} elseif ($level_prestasi == 3) {
-				$reward_point = 4;
-			} elseif ($level_prestasi == 4) {
-				$reward_point = 5;
-			}
+		$peringkat_prestasi = $this->input->post('peringkat_prestasi');
+		$reward_point = $this->Prestasi_model->getPoinPrestasi($level_prestasi,$peringkat_prestasi);
 
-		$data=array(
+		$datetime = new DateTime();
+		$tgl_prestasi = $this->input->post('tgl_prestasi_start');
+
+		$bulan_gasal = $datetime->createFromFormat('d/m/Y','15/07/Y');
+		$bulan_genap = $datetime->createFromFormat('d/m/Y','15/03/Y');
+
+		if ($tgl_prestasi >= $bulan_gasal && $tgl_prestasi < $bulan_genap) {
+			$semester = 'Gasal';
+		} else {
+			$semester = 'Genap';
+		}
+
+		$id_prestasi = $this->input->post('id_prestasi');
+
+		$data1=array(
 			'nama_prestasi'=> $this->input->post('nama_prestasi'),
-			'peringkat_prestasi'=>$this->input->post('peringkat_prestasi'),
-			'tipe_prestasi'=>$this->input->post('tipe_prestasi'),
-			'jenis_prestasi'=>$this->input->post('jenis_prestasi'),
+			'peringkat_prestasi'=> $peringkat_prestasi,
+			'tipe_prestasi'=> $this->input->post('tipe_prestasi'),
+			'referral_nim'=> $this->input->post('referral_nim'),
+			'jenis_prestasi'=> $this->input->post('jenis_prestasi'),
+			'jml_anggota'=>$this->input->post('jml_anggota'),
 			'deskripsi_prestasi'=>$this->input->post('deskripsi_prestasi'),
-			'reward_poin'    		=> 0,
+			'reward_poin'    		=> $reward_point,
 			'penyelenggara_prestasi' => $this->input->post('penyelenggara_prestasi'),
 			'tempat_prestasi' => $this->input->post('tempat_prestasi'),
 			'level_prestasi' => $level_prestasi,
-			'tgl_prestasi_start'=>$this->input->post('tgl_prestasi_start'),
+			'tgl_prestasi_start'=>$tgl_prestasi,
 			'tgl_prestasi_end'=>$this->input->post('tgl_prestasi_end'),
+			'validasi' => 0,
 			'date_modified'	=> date('Y-m-d H:i:s')
 		);
 
-		$where = array(
-			'id_prestasi'=> $this->input->post('id_prestasi')
+		$data2 = array(
+			'id_prestasi'=> $id_prestasi,
+			'periode'=>strtok($tgl_prestasi, '-'),
+			'semester'=>$semester
 		);
 
-		$result=$this->Prestasi_model->updatePrestasi($data,$where);
+		$data3 = array(
+			'poin'=>0
+		);
+
+		$where = array(
+			'id_prestasi'=> $id_prestasi
+		);
+		if($this->Prestasi_model->updatePrestasi($data1,$where)==true && $this->Prestasi_model->updatePeriode($data2,$where)==true
+		&& $this->Prestasi_model->updatePoin($data3,$where)==true)
+		{
+			$this->session->set_flashdata('status_prestasi',
+      '  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Edit prestasi berhasil!</strong> Silakan cek kembali untuk kebenaran data.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div> ');
+		} else {
+			$this->session->set_flashdata('status_prestasi',
+      '  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Edit prestasi gagal!</strong> Silakan cek kembali isian anda.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div> ');
+		}
 
 	}
 
 	function delete(){
 		$id = $this->input->post('id_prestasi');
-		$result=$this->Prestasi_model->delete($id);
-	}
-
-	function validate(){
-
-		$data1=array(
-			'validasi'=> 1
-		);
-
-		$data2=array(
-			'poin'=> $this->input->post('poin')
-		);
-
-		$where1 = array(
-			'id_prestasi'=> $this->input->post('id_prestasi')
-		);
-
-		$where2 = array(
-			'id_prestasi'=> $this->input->post('id_prestasi'),
-			'nim'=> $this->input->post('nim')
-		);
-
-		if ($this->Prestasi_model->updatePrestasi($data1,$where1)==true && $this->Prestasi_model->updatePoin($data2,$where2)==true)
+		if ($this->Prestasi_model->deletePoin($id)==true)
 		{
-			$this->session->set_flashdata('v_status',
+			$this->session->set_flashdata('status_prestasi',
 			'  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
-				<strong>Validasi prestasi berhasil!</strong> Silakan cek kembali untuk kebenaran data.
+				<strong>Prestasi berhasil dihapus!</strong> Silakan cek kembali untuk kebenaran data.
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
 			</div> ');
-			redirect('Admin_prestasi');
+			redirect('Prestasi');
 		}
 		else
 		{
-			$this->session->set_flashdata('v_status',
+			$this->session->set_flashdata('status_prestasi',
 			'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
-				<strong>Validasi prestasi gagal!</strong> Silakan cek kembali kelengkapan data.
+				<strong>Hapus prestasi gagal!</strong> Silakan cek kembali kelengkapan data.
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
 			</div> ');
-			redirect('Admin_prestasi');
+			redirect('Prestasi');
 		}
 	}
 
-	function unvalidate(){
-		$data1=array(
-			'validasi'=> 0
-		);
-
-		$data2=array(
-			'poin'=> 0
-		);
-
-		$where = array(
-			'id_prestasi'=> $this->input->post('id_prestasi')
-		);
-
-		if ($this->Prestasi_model->updatePrestasi($data1,$where)==true && $this->Prestasi_model->updatePoin($data2,$where)==true)
-		{
-			$this->session->set_flashdata('v_status',
-			'  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
-				<strong>Un-validasi prestasi berhasil!</strong> Silakan cek kembali untuk kebenaran data.
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div> ');
-			redirect('Admin_prestasi');
-		}
-		else
-		{
-			$this->session->set_flashdata('v_status',
-			'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
-				<strong>Un-validasi prestasi gagal!</strong> Silakan cek kembali kelengkapan data.
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div> ');
-			redirect('Admin_prestasi');
-		}
-	}
 
 	public function getNim(){
 		$keyword=$this->input->post('keyword');

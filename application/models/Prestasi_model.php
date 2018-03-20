@@ -32,6 +32,24 @@ class Prestasi_model extends CI_Model {
 		return (isset($id_reward)) ? $id_reward : FALSE;
 	}
 
+	public function updateRefReward($id_prestasi,$nim,$poin,$data)
+	{
+		$this->db->where('id_prestasi',$id_prestasi);
+		$q = $this->db->get('reward_prestasi');
+
+		if ( $q->num_rows() > 0 )
+   	{
+			$this->db->query("DELETE FROM reward_prestasi WHERE id_prestasi='$id_prestasi'");
+			$this->db->insert('reward_prestasi', $data);
+	 		$id_reward = $this->db->insert_id();
+	 		return (isset($id_reward)) ? $id_reward : FALSE;
+   	} else {
+		 $this->db->insert('reward_prestasi', $data);
+		 $id_reward = $this->db->insert_id();
+		 return (isset($id_reward)) ? $id_reward : FALSE;
+   	}
+	}
+
 	public function getLastId()
 	{
 		$this->db->select_max('id_prestasi');
@@ -148,10 +166,31 @@ class Prestasi_model extends CI_Model {
 		}
 	}
 
+	function getAllData($id_prestasi){
+		$this->db->select('*');
+		$this->db->from('reward_prestasi');
+		$this->db->join('user_prestasi' ,
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->where('user_prestasi.id_prestasi', $id_prestasi);
+		$hasil = $this->db->get();
+		if($hasil->num_rows()>0){
+			return $hasil->result();
+		}else{
+			return false;
+		}
+	}
+
 	function updatePrestasi($data,$where){
 
 			$this->db->where($where);
 			$this->db->update('user_prestasi',$data);
+			return true;
+	}
+
+	function updatePeriode($data,$where){
+
+			$this->db->where($where);
+			$this->db->update('periode_prestasi',$data);
 			return true;
 	}
 
@@ -163,7 +202,18 @@ class Prestasi_model extends CI_Model {
 	}
 
 	function delete($id){
-		return $this->db->query("DELETE FROM user_prestasi WHERE id_prestasi='$id'");
+		$this->db->query("DELETE FROM user_prestasi WHERE id_prestasi='$id'");
+		return true;
+	}
+
+	function deletePoin($id){
+		$this->db->query("DELETE FROM reward_prestasi WHERE id_prestasi='$id'");
+		return true;
+	}
+
+	function deletePeriode($id){
+		$this->db->query("DELETE FROM periode_prestasi WHERE id_prestasi='$id'");
+		return true;
 	}
 
 	// fungsi dashboard
