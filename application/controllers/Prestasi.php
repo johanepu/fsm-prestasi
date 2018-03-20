@@ -501,25 +501,83 @@ class Prestasi extends CI_Controller {
 	}
 
 	function validate(){
-		$data=array(
-			'validasi'=> 1,
-			'reward_poin'=> $this->input->post('reward_point')
+
+		$data1=array(
+			'validasi'=> 1
 		);
-		$where = array(
+
+		$data2=array(
+			'poin'=> $this->input->post('poin')
+		);
+
+		$where1 = array(
 			'id_prestasi'=> $this->input->post('id_prestasi')
 		);
-		$result=$this->Prestasi_model->updatePrestasi($data,$where);
+
+		$where2 = array(
+			'id_prestasi'=> $this->input->post('id_prestasi'),
+			'nim'=> $this->input->post('nim')
+		);
+
+		if ($this->Prestasi_model->updatePrestasi($data1,$where1)==true && $this->Prestasi_model->updatePoin($data2,$where2)==true)
+		{
+			$this->session->set_flashdata('v_status',
+			'  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
+				<strong>Validasi prestasi berhasil!</strong> Silakan cek kembali untuk kebenaran data.
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div> ');
+			redirect('Admin_prestasi');
+		}
+		else
+		{
+			$this->session->set_flashdata('v_status',
+			'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+				<strong>Validasi prestasi gagal!</strong> Silakan cek kembali kelengkapan data.
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div> ');
+			redirect('Admin_prestasi');
+		}
 	}
 
 	function unvalidate(){
-		$data=array(
-			'validasi'=> 0,
-			'reward_poin'=> 0
+		$data1=array(
+			'validasi'=> 0
 		);
+
+		$data2=array(
+			'poin'=> 0
+		);
+
 		$where = array(
 			'id_prestasi'=> $this->input->post('id_prestasi')
 		);
-		$result=$this->Prestasi_model->updatePrestasi($data,$where);
+
+		if ($this->Prestasi_model->updatePrestasi($data1,$where)==true && $this->Prestasi_model->updatePoin($data2,$where)==true)
+		{
+			$this->session->set_flashdata('v_status',
+			'  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
+				<strong>Un-validasi prestasi berhasil!</strong> Silakan cek kembali untuk kebenaran data.
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div> ');
+			redirect('Admin_prestasi');
+		}
+		else
+		{
+			$this->session->set_flashdata('v_status',
+			'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+				<strong>Un-validasi prestasi gagal!</strong> Silakan cek kembali kelengkapan data.
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div> ');
+			redirect('Admin_prestasi');
+		}
 	}
 
 	public function getNim(){
@@ -576,7 +634,7 @@ class Prestasi extends CI_Controller {
 				}
     }
 
-	public function getPeringkat($level) { 
+	public function getPeringkat($level) {
 		$result = $this->db->where("level",$level)->get("setting_rewarding")->result();
 		echo json_encode($result);
 	}

@@ -24,6 +24,10 @@
                   echo $this->session->flashdata('status_prestasi');
                   }
                 ?>
+                <?php if($this->session->flashdata('v_status')){
+                  echo $this->session->flashdata('v_status');
+                  }
+                ?>
                 <div class="row mt">
                   <div class="form-group col-lg-2">
                       <select id="periode_select" name="select_waktu" class="form-control select_waktu">
@@ -340,15 +344,15 @@
           </div>
           <div class="modal-body" >
             <input hidden id="hiddenIdValidasi">
-            <p><b>Isikan Reward Point untuk validasi prestasi ini ?</b></p>
-            <p style="text-align:center" id="nama_prestasi_reward"><strong>"Nama Orangnya"</strong></p>
-            <div style="text-align:center">
-              <input style="text-align:center" align="center" type="number" class="form-control-lg col-md-4" id="reward_point" placeholder="0" required>
-            </div>
+            <p><b>Reward Point untuk validasi prestasi ini ?</b></p>
+            <p style="text-align:center" id="nama_prestasi_reward"><strong>"Nama Prestasi"</strong></p>
+            <p style="text-align:center" id="poin_prestasi_reward"><strong>"Poin Prestasi"</strong></p>
+            <span id="info_anggota"></span>
           </div>
           <div class="modal-footer">
                 <button style="width:100px" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                 <button style="width:100px" class="btn btn-success" id="btn_simpan_reward">Validasi</button>
+                <button style="width:100px" class="btn btn-danger" id="btn_unreward">Un-Validasi</button>
           </div>
         </div>
       </div>
@@ -494,10 +498,6 @@ $(document).ready(function(){
     var tgl_prestasi_end =  $('#date_end_edit').val();
     var id_prestasi = $('#hiddenId').val();
 
-    // if(tgl_prestasi_start==''){
-    //    tgl_prestasi_start =  $('#tgl_prestasi_start_edit').val();
-    // }
-
     var penyelenggara_prestasi =  $('#penyelenggara_prestasi_edit').val();
     var tempat_prestasi =  $('#tempat_prestasi_edit').val();
     var level_prestasi =  $('#level_prestasi_edit').val();
@@ -570,8 +570,10 @@ $(document).ready(function(){
     });
 
     $(document).on('click', 'button.btn-validate', function() {
-      $('#modalReward').modal('show');
       var id_prestasi = $(this).val();
+      $('#modalReward').modal('show');
+      $('#btn_unreward').toggle(false);
+      $('#btn_simpan_reward').toggle(true);
       $('#hiddenIdValidasi').val(id_prestasi);
       $.ajax({
         type: "POST",
@@ -581,7 +583,34 @@ $(document).ready(function(){
         success: function(data){
           if(data){
               var prestasi = data[0];
+              var poin_mhs = prestasi.reward_poin / prestasi.jml_anggota;
               $('#nama_prestasi_reward').html('"'+prestasi.nama_prestasi+'"');
+              $('#poin_prestasi_reward').html('Poin Prestasi : '+prestasi.reward_poin+'');
+              $.each(data, function (i) {
+                if (i == 0) {
+                  $('#info_anggota').html(
+                    '<div class="row">'
+                    +'<div class="form-group col-md-9"><input style="margin-top : 10px" type="text" class="form-control anggota_input" id="anggota_team'+i
+                    +'" name="anggota_team" placeholder="Anggota" readonly></div>'
+                    +'<div class="form-group col-md-3"><input style="margin-top : 10px" type="text" class="form-control poin_input" id="anggota_poin'+i
+                    +'" name="anggota_poin" placeholder="Poin"></div>'
+                    +'</div>'
+                  )
+                  $('#anggota_team'+i).val(data[i].nim);
+                  $('#anggota_poin'+i).val(poin_mhs);
+                } else if (i >= 1) {
+                  $('#info_anggota').append(
+                    '<div class="row">'
+                    +'<div class="form-group col-md-9"><input style="margin-top : 10px" type="text" class="form-control anggota_input" id="anggota_team'+i
+                    +'" name="anggota_team" placeholder="Anggota" readonly></div>'
+                    +'<div class="form-group col-md-3"><input style="margin-top : 10px" type="text" class="form-control poin_input" id="anggota_poin'+i
+                    +'" name="anggota_poin" placeholder="Poin"></div>'
+                    +'</div>'
+                  )
+                  $('#anggota_team'+i).val(data[i].nim);
+                  $('#anggota_poin'+i).val(poin_mhs);
+                }
+              });
               $('#btn_simpan_reward').prop("disabled",false);
             }
           }
@@ -591,30 +620,88 @@ $(document).ready(function(){
     $('#btn_simpan_reward').click(function(){
       var id = $('#hiddenIdValidasi').val();
       var id_prestasi = $(this).val();
-      var reward_point = $('#reward_point').val();
-      if(reward_point==''){
-        alert('Validasi gagal, reward point harus diisi');
-        return false;
-      }else if (reward_point<0) {
-        alert('Validasi gagal, reward point tidak boleh negatif');
-        return false;
-      }
-      $.ajax({
-        type: "POST",
-        url: '<?=base_url()?>Prestasi/validate',
-        data: {
-          id_prestasi:id,
-          reward_point:reward_point
-        },
-        dataType:'json',
-        success: function(data){
-        }
-      });
+      var poin_ele = document.getElementsByClassName('poin_input');
+      var nim_ele = document.getElementsByClassName('anggota_input');
+      for (var i = 0; i < poin_ele.length; ++i) {
+          var po_item = poin_ele[i];
+          var n_item = nim_ele[i];
+          var poin = $(po_item).val();
+          var nim = $(n_item).val();
+          if(poin==''){
+            alert('Validasi gagal, reward point harus diisi');
+            return false;
+          }else if (poin<0) {
+            alert('Validasi gagal, reward point tidak boleh negatif');
+            return false;
+          } else {
+            $.ajax({
+              type: "POST",
+              url: '<?=base_url()?>Prestasi/validate',
+              data: {
+                id_prestasi:id,
+                nim:nim,
+                poin:poin
+              },
+              dataType:'json',
+              success: function(data){
+              }
+            });
+          }
         location.reload();
+      }
+      location.reload();
     });
 
     $(document).on('click', 'button.btn-unvalidate', function() {
       var id_prestasi = $(this).val();
+      $('#modalReward').modal('show');
+      $('#btn_unreward').toggle(true);
+      $('#btn_simpan_reward').toggle(false);
+      $('#hiddenIdValidasi').val(id_prestasi);
+      $.ajax({
+        type: "POST",
+        url: '<?=base_url()?>Prestasi/fetchData',
+        data: {id_prestasi:id_prestasi},
+        dataType:'json',
+        success: function(data){
+          if(data){
+              var prestasi = data[0];
+              var poin_mhs = prestasi.reward_poin / prestasi.jml_anggota;
+              $('#nama_prestasi_reward').html('"'+prestasi.nama_prestasi+'"');
+              $('#poin_prestasi_reward').html('Poin Prestasi : '+prestasi.reward_poin+'');
+              $.each(data, function (i) {
+                if (i == 0) {
+                  $('#info_anggota').html(
+                    '<div class="row">'
+                    +'<div class="form-group col-md-9"><input style="margin-top : 10px" type="text" class="form-control anggota_input" id="anggota_team'+i
+                    +'" name="anggota_team" placeholder="Anggota" readonly></div>'
+                    +'<div class="form-group col-md-3"><input style="margin-top : 10px" type="text" class="form-control poin_input" id="anggota_poin'+i
+                    +'" name="anggota_poin" placeholder="Poin" readonly></div>'
+                    +'</div>'
+                  )
+                  $('#anggota_team'+i).val(data[i].nim);
+                  $('#anggota_poin'+i).val(poin_mhs);
+                } else if (i >= 1) {
+                  $('#info_anggota').append(
+                    '<div class="row">'
+                    +'<div class="form-group col-md-9"><input style="margin-top : 10px" type="text" class="form-control anggota_input" id="anggota_team'+i
+                    +'" name="anggota_team" placeholder="Anggota" readonly></div>'
+                    +'<div class="form-group col-md-3"><input style="margin-top : 10px" type="text" class="form-control poin_input" id="anggota_poin'+i
+                    +'" name="anggota_poin" placeholder="Poin" readonly></div>'
+                    +'</div>'
+                  )
+                  $('#anggota_team'+i).val(data[i].nim);
+                  $('#anggota_poin'+i).val(poin_mhs);
+                }
+              });
+              $('#btn_unreward').prop("disabled",false);
+            }
+          }
+      });
+    });
+
+    $('#btn_unreward').click(function(){
+      var id_prestasi = $('#hiddenIdValidasi').val();
       $.ajax({
         type: "POST",
         url: '<?=base_url()?>Prestasi/unvalidate',
@@ -625,22 +712,6 @@ $(document).ready(function(){
       });
         location.reload();
     });
-
-    // $('#cariPrestasi').keyup(function(){
-    //   var query = $(this).val();
-    //     $.ajax({
-    //       url:"<?php echo base_url();?>Prestasi/view",
-    //       method:"post",
-    //       data:{query:query},
-    //       success:function(data){
-    //         // alert('dasdf');
-    //         $('#tabel-prestasi').remove();
-    //         $('#hasilCari').html(data);
-    //       }
-    //     });
-    // });
-
-
 
   })
   function TipeCheck() {

@@ -134,7 +134,8 @@ class Prestasi_model extends CI_Model {
 	}
 
 	function getPrestasi($id_prestasi){
-		$this->db->select('*');
+		$this->db->select('reward_prestasi.nim, user_prestasi.nama_prestasi, user_prestasi.reward_poin,
+		user_prestasi.jml_anggota');
 		$this->db->from('reward_prestasi');
 		$this->db->join('user_prestasi' ,
 		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
@@ -151,6 +152,14 @@ class Prestasi_model extends CI_Model {
 
 			$this->db->where($where);
 			$this->db->update('user_prestasi',$data);
+			return true;
+	}
+
+	function updatePoin($data,$where){
+
+			$this->db->where($where);
+			$this->db->update('reward_prestasi',$data);
+			return true;
 	}
 
 	function delete($id){
