@@ -582,10 +582,12 @@ $(document).ready(function(){
       break;
       }
     }
-    if (tipe_prestasi == 'Individu') {
+    if (tipe_prestasi == 1) {
       var jml_anggota = 1;
+      var referral_nim =  '';
     } else {
       var jml_anggota = $('#jml_anggota_edit').val();
+      var referral_nim =  $('#referral_prestasi_edit').val();
     }
     var radiojenis = document.getElementsByName('jenis_prestasi_update');
     for (var i = 0, length = radiojenis.length; i < length; i++)
@@ -628,45 +630,47 @@ $(document).ready(function(){
           success: function(data){
           }
         });
-        if (document.getElementById('tipe_prestasi_update_regu').checked) {
-          var head_nim = $('#hidden_nim').val();
-          var array = $('#referral_prestasi_edit').val().split(",");
-          var sorted_arr = array.slice().sort();
-          for(i=0;i<sorted_arr.length;i++)
-          {
-              sorted_arr[i] = sorted_arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-          }
-          var results = [];
-            for (var i = 0; i < sorted_arr.length; i++) {
-                if (sorted_arr[i + 1] != sorted_arr[i] && sorted_arr[i].length == 14) {
-                    results.push(sorted_arr[i]);
-                }
+        $.ajax({
+          type: "POST",
+          url: '<?=base_url()?>Prestasi/deleteRefPrestasi',
+          data: {
+            id_prestasi:id_prestasi
+          },
+          success: function(data){
+            var head_nim = $('#hidden_nim').val();
+            var array = referral_nim.split(",");
+            var sorted_arr = array.slice().sort();
+            for(i=0;i<sorted_arr.length;i++)
+            {
+                sorted_arr[i] = sorted_arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
             }
-          results.push(head_nim);
-          console.log(sorted_arr);
-          console.log(results);
-          for (i=0;i<results.length;i++){
-              var nim = results[i];
-              var cont ='';
-              if (i == 0) {
-                cont = '<?=base_url()?>Prestasi/updateRefPrestasi';
-              } else if(i >= 1){
-                cont = '<?=base_url()?>Prestasi/updateRefPrestasi2';
+            var results = [];
+              for (var i = 0; i < sorted_arr.length; i++) {
+                  if (sorted_arr[i + 1] != sorted_arr[i] && sorted_arr[i].length == 14) {
+                      results.push(sorted_arr[i]);
+                  }
               }
-              $.ajax({
-                type: "POST",
-                url: cont,
-                data: {
-                  nim:nim,
-                  id_prestasi:id_prestasi
-                },
-                success: function(data){
-                }
-              });
+            results.push(head_nim);
+            console.log(sorted_arr);
+            console.log(results);
+            for (i=0;i<results.length;i++){
+                var nim = results[i];
+                $.ajax({
+                  type: "POST",
+                  url: '<?=base_url()?>Prestasi/updateRefPrestasi2',
+                  data: {
+                    nim:nim,
+                    id_prestasi:id_prestasi
+                  },
+                  success: function(data){
+                  }
+                });
+                location.reload();
+            }
           }
-        }
-        location.reload();
+        });
       }
+      location.reload();
     });
 
     $(document).on('click', 'button.btn-delete,button.btn-delete2', function(){

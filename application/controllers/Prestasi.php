@@ -463,6 +463,12 @@ class Prestasi extends CI_Controller {
 			$this->Prestasi_model->addReward($data);
 	}
 
+	public function deleteRefPrestasi()
+	{
+			$id_prestasi = $this->input->post('id_prestasi');
+			$this->Prestasi_model->deletePoin($id_prestasi);
+	}
+
 
 
 	function success()
@@ -480,6 +486,14 @@ class Prestasi extends CI_Controller {
 		$nim = $this->session->userdata('nim');
 		$id_prestasi= $this->input->post('id_prestasi');
 		$result=$this->Prestasi_model->getPrestasi($id_prestasi);
+
+		echo json_encode($result);
+	}
+
+	function fetchPrestasi(){
+		$nim = $this->session->userdata('nim');
+		$id_prestasi= $this->input->post('id_prestasi');
+		$result=$this->Prestasi_model->getAllData($id_prestasi);
 
 		echo json_encode($result);
 	}

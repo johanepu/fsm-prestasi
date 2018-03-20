@@ -34,10 +34,12 @@
                     <tr>
                       <th>Nama Prestasi</th>
                       <th>Peringkat</th>
+                      <th>Jml Anggota</th>
                       <th>Jenis</th>
                       <th>Tipe Prestasi</th>
                       <th>Level</th>
                       <th>Tanggal Kegiatan</th>
+                      <th>Status</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -48,6 +50,7 @@
                     <tr id="<?php echo $p->id_prestasi?>">
                       <td ><?php echo $p->nama_prestasi; ?></td>
                       <td ><?php echo $p->peringkat_prestasi; ?></td>
+                      <td ><?php echo $p->jml_anggota; ?></td>
                       <td title="Jenis Prestasi" name="jenis_prestasi" id="jenis_prestasi">
                       <?php
                       if ($p->jenis_prestasi == "1") {
@@ -77,6 +80,14 @@
                       }
                       ?></td>
                       <td ><?php echo $p->tgl_prestasi_start; ?></td>
+                      <td title="Status Prestasi" name="status_prestasi" id="status_prestasi">
+                      <?php
+                      if ($p->validasi == "1") {
+                          echo '<span class="badge badge-success">Tervalidasi</span>';
+                      }elseif ($p->validasi == "0") {
+                          echo '<span class="badge badge-danger">Belum Valid</span>';
+                      }
+                      ?></td>
                       <td>
                           <div class="btn-group" >
                               <button class="btn btn-primary btn-edit" name="btn-edit" title="Edit Prestasi" value="<?=$p->id_prestasi?>" type="button">
@@ -133,35 +144,45 @@
                         <input type="text" class="form-control" id="nama_prestasi_edit" name="nama_prestasi_edit" placeholder="Nama Prestasi" required>
                       </div>
                       <div class="form-group text-left">
+                        <label for="" class="">Skala Kegiatan</label>
+                        <div styclass="col-md-9 col-form-label">
+                          <select id="level_prestasi_edit" name="level_prestasi_edit" class="form-control">
+                            <option value="">Pilih Level Prestasi</option>
+                            <?php
+                            foreach ($setting_reward as $sr => $value) {
+                              echo "<option value='".$value->level."'>".$value->nama_level."</option>";
+                            }
+                            ?>
+                          </select>
+                          </div>
+                      </div>
+                      <div class="form-group text-left">
                         <label for="" class="">Peringkat Prestasi</label>
-                        <input type="text" class="form-control" id="peringkat_prestasi_edit" name="peringkat_prestasi_edit" placeholder="Peringkat yang diraih" required>
+                          <select  id="peringkat_prestasi_edit" name="peringkat_prestasi_edit" class="form-control">
+                            <option value="">Pilih level prestasi terlebih dulu</option>
+                          </select>
                       </div>
                       <div class="form-group text-left">
                         <label for="" class="">Jenis Prestasi</label>
                         <div class="form-group row" style="margin-left:0px">
-                          <!-- <input type="text" class="col-md-3 form-control" id="jenis_prestasi_edit" name="jenis_prestasi_edit" placeholder="Nama Perusahaan" disabled> -->
-                          <input hidden id="jenis_prestasi_raw" >
-                        <div class="col-md-9 col-form-label">
-                          <div class="form-check form-check-inline mr-1">
-                            <input class="form-check-input" type="radio" id="jenis_prestasi_update1" value="1" name="jenis_prestasi_update">
-                            <label class="form-check-label" for="inline-radio1">Akademik</label>
-                          </div>
-                          <div class="form-check form-check-inline mr-1">
-                            <input class="form-check-input" type="radio" id="jenis_prestasi_update2" value="2" name="jenis_prestasi_update">
-                            <label class="form-check-label" for="inline-radio2">Non-Akademik</label>
+                          <div class="col-md-9 col-form-label">
+                            <div class="form-check form-check-inline mr-1">
+                              <input class="form-check-input" type="radio" id="jenis_prestasi_update1" value="1" name="jenis_prestasi_update">
+                              <label class="form-check-label" for="inline-radio1">Akademik</label>
+                            </div>
+                            <div class="form-check form-check-inline mr-1">
+                              <input class="form-check-input" type="radio" id="jenis_prestasi_update2" value="2" name="jenis_prestasi_update">
+                              <label class="form-check-label" for="inline-radio2">Non-Akademik</label>
+                            </div>
                           </div>
                         </div>
                       </div>
-                      </div>
-
                     </div>
-                    <div class="tab-pane" id="edit2" role="tabpanel">
 
+                    <div class="tab-pane" id="edit2" role="tabpanel">
                       <div class="form-group text-left">
                         <label for="" class="">Tipe Prestasi</label>
                         <div class="form-group row" style="margin-left:0px">
-                          <!-- <input type="text" class="col-md-3 form-control" id="tipe_prestasi_edit" name="tipe_prestasi_edit" placeholder="Tipe Prestasi" disabled> -->
-                          <input hidden id="tipe_prestasi_raw" >
                         <div class="col-md-9 col-form-label">
                           <div class="form-check form-check-inline mr-1">
                             <input class="form-check-input" type="radio" onclick="javascript:TipeCheck();" id="tipe_prestasi_update_individu" value="1" name="tipe_prestasi_update">
@@ -172,26 +193,27 @@
                             <label class="form-check-label" for="inline-radio2">Beregu/Kelompok</label>
                           </div>
                         </div>
-                      </div>
+                        </div>
                       </div>
                       <div class="form-group text-left">
-                        <label for="" class="">Skala Kegiatan</label>
-                        <div styclass="col-md-9 col-form-label">
-                            <select id="level_prestasi_edit" name="level_prestasi_edit" class="form-control">
-                              <option value="0">Pilih Skala Kegiatan</option>
-                              <option value="1">Lokal</option>
-                              <option value="2">Nasional</option>
-                              <option value="3">Regional</option>
-                              <option value="4">Internasional</option>
-                            </select>
-                          </div>
+                        <label class="" id="referral_editlabel" style="display:none" for="text-input">NIM Anggota
+                          <a href="#" data-toggle="referral_tooltip" title="Pisahkan NIM dengan koma ',' untuk masukan lebih dari satu, tidak termasuk NIM sendiri"><h7>info</h7></a>
+                        </label>
+                        <input type="text" id="referral_prestasi_edit" name="referral_prestasi"  class="form-control" value=""
+                        placeholder="Pisahkan NIM dengan koma ',' untuk masukan lebih dari satu (Misal : 2402XXXXXXXX, 2401XXXXXXXXX)" onfocusout="hitungAnggota()">
+                      </div>
+                      <div class="form-group text-left">
+                        <label class="" id="jml_anggota_editlabel" style="display:none" for="text-input">Jumlah Anggota
+                          <a href="#" data-toggle="jml_tooltip" title="Anggota dihitung dari NIM anggota VALID ditambah user "><h7>info</h7></a>
+                        <input type="number" id="jml_anggota_edit" name="jml_anggota_edit"  class="form-control" value=""
+                        placeholder="Jumlah mahasiswa yang terdaftar prestasi">
                       </div>
                       <div class="form-group text-left">
                         <label for="" class="">Nama Penyelenggara</label>
                         <input type="text" class="form-control" id="penyelenggara_prestasi_edit" name="penyelenggara_prestasi_edit" placeholder="Nama penyelenggara kegiatan" required>
                       </div>
-
                     </div>
+
                     <div class="tab-pane" id="edit3" role="tabpanel">
                       <div class="form-group text-left">
                         <label for="" class="">Tempat Kegiatan</label>
@@ -213,29 +235,34 @@
                             <input id="date_start_edit" name="date_start_edit" class="form-control"  type="date">
                           </div>
                           </div>
+                        </div>
+                        </div>
+                      <div class="form-group text-left">
+                        <label for="" class="">Tanggal Kegiatan Selesai</label>
+                        <div class="form-group row">
+                          <!-- <input type="text" class="form-control col-md-3" id="tgl_prestasi_start_edit" name="tgl_prestasi_start_edit" placeholder="Kota" disabled> -->
+                          <div class="col-md-9">
+                            <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
+                            </div>
+                            <input id="date_end_edit" name="date_end_edit" class="form-control"  type="date">
+                          </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="form-group text-left">
-                      <label for="" class="">Tanggal Kegiatan Selesai</label>
-                      <div class="form-group row">
-                        <!-- <input type="text" class="form-control col-md-3" id="tgl_prestasi_start_edit" name="tgl_prestasi_start_edit" placeholder="Kota" disabled> -->
-                        <div class="col-md-9">
-                          <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
-                          </div>
-                          <input id="date_end_edit" name="date_end_edit" class="form-control"  type="date">
-                        </div>
-                        </div>
-                    </div>
-                  </div>
-                    </div>
+
                   </div>
                 </div>
 
 
               <input hidden id="hiddenId" >
+              <input hidden id="hidden_nim" value="<?php echo $this->session->userdata('nim')?>" >
               <div class="modal-footer">
+                <div class="row mt" style="margin-right:10px">
+                  <h6> *Memperbarui data akan menghilangkan status validasi, prestasi perlu di validasi ulang </h6>
+                </div>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" id="btnSimpanPrestasi" name="btnSimpanPrestasi" class="btn btn-primary">Save changes</button>
               </div>
@@ -271,17 +298,79 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+  $('[data-toggle="referral_tooltip"]').tooltip();
+  $('[data-toggle="jml_tooltip"]').tooltip();
 
+  $('select[name="level_prestasi_edit"]').on('change', function() {
+      var level = $(this).val();
+      if(level) {
+          $.ajax({
+              url: '<?= base_url();?>Prestasi/getPeringkat/'+level,
+              type: "GET",
+              dataType: "json",
+              success:function(data) {
+                  $('select[name="peringkat_prestasi_edit"]').empty();
+                  $.each(data, function(key, value) {
+                      $('select[name="peringkat_prestasi_edit"]').append('<option value="'+ value.peringkat +'">'+ value.peringkat +'</option>');
+                  });
+              }
+          });
+      }else{
+          $('select[name="peringkat_prestasi_edit"]').empty();
+      }
+  });
 
-    // tabel data prestasi datatable
-      tabel_prestasi =  $('#tabel_prestasi').DataTable( {
-          "dom": 'lrtip',
-          "bPaginate": false,
-          "info":     false
-        } )
-        $('#cariPrestasi').keyup(function(){
-              tabel_prestasi.search($(this).val()).draw() ;
-        })
+  $( function() {
+  var available_nim = <?= json_encode($available_nim) ?>;
+  function split( val ) {
+    return val.split( /,\s*/ );
+  }
+  function extractLast( term ) {
+    return split( term ).pop();
+  }
+
+  $( "#referral_prestasi_edit" )
+    // don't navigate away from the field on tab when selecting an item
+    .on( "keydown", function( event ) {
+      if ( event.keyCode === $.ui.keyCode.TAB &&
+          $( this ).autocomplete( "instance" ).menu.active ) {
+        event.preventDefault();
+      }
+    })
+    .autocomplete({
+      minLength: 0,
+      source: function( request, response ) {
+        // delegate back to autocomplete, but extract the last term
+        response( $.ui.autocomplete.filter(
+          available_nim, extractLast( request.term ) ) );
+      },
+      focus: function() {
+        // prevent value inserted on focus
+        return false;
+      },
+      select: function( event, ui ) {
+        var terms = split( this.value );
+        // remove the current input
+        terms.pop();
+        // add the selected item
+        terms.push( ui.item.value );
+        // add placeholder to get the comma-and-space at the end
+        terms.push( "" );
+        this.value = terms.join( ", " );
+        return false;
+      }
+    });
+  } );
+
+  // tabel data prestasi datatable
+    tabel_prestasi =  $('#tabel_prestasi').DataTable( {
+        "dom": 'lrtip',
+        "bPaginate": false,
+        "info":     false
+      } )
+      $('#cariPrestasi').keyup(function(){
+            tabel_prestasi.search($(this).val()).draw() ;
+      })
 
 
   $(document).on('click', 'button.btn-edit,button.btn-edit2', function() {
@@ -291,7 +380,7 @@ $(document).ready(function(){
     $('#editPrestasiModal').modal('show');
     $.ajax({
       type: "POST",
-      url: '<?=base_url()?>Prestasi/fetchData',
+      url: '<?=base_url()?>Prestasi/fetchPrestasi',
       data: {id_prestasi:id_prestasi},
       dataType:'json',
       success: function(data){
@@ -308,21 +397,47 @@ $(document).ready(function(){
             }
             if (prestasi.tipe_prestasi == 1) {
               tipePrestasi = 'Individu';
-              document.getElementById('role_prestasi_edit').style.display = 'none';
-              document.getElementById('role_prestasi_editlabel').style.display = 'none';
+              document.getElementById('jml_anggota_edit').style.display = 'none';
+              document.getElementById('jml_anggota_editlabel').style.display = 'none';
+              document.getElementById('referral_prestasi_edit').style.display = 'none';
+              document.getElementById('referral_editlabel').style.display = 'none';
               document.getElementById("tipe_prestasi_update_individu").checked = true;
             } else {
               tipePrestasi = 'Kelompok';
+              document.getElementById('jml_anggota_edit').style.display = 'block';
+              document.getElementById('jml_anggota_editlabel').style.display = 'block';
+              document.getElementById('referral_prestasi_edit').style.display = 'block';
+              document.getElementById('referral_editlabel').style.display = 'block';
               document.getElementById("tipe_prestasi_update_regu").checked = true;
+              $('#referral_prestasi_edit').val(prestasi.referral_nim);
             }
 
             $('#nama_prestasi_edit').val(prestasi.nama_prestasi);
-            $('#peringkat_prestasi_edit').val(prestasi.peringkat_prestasi);
             $('#tipe_prestasi_edit').val(tipePrestasi);
-            $('#tipe_prestasi_raw').val(prestasi.tipe_prestasi);
+            $('#jml_anggota_edit').val(prestasi.jml_anggota);
             $('#jenis_prestasi_edit').val(jenisPrestasi);
-            $('#jenis_prestasi_raw').val(prestasi.jenis_prestasi);
             $('#level_prestasi_edit option[value="'+prestasi.level_prestasi+'"]').prop('selected', true);
+            var level = $('#level_prestasi_edit').val();
+            var peringkat = prestasi.peringkat_prestasi;
+            if(level) {
+                $.ajax({
+                    url: '<?= base_url();?>Prestasi/getPeringkat/'+level,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data) {
+                        $('#peringkat_prestasi_edit').empty();
+                        $.each(data, function(key, value) {
+                          if (peringkat == value.peringkat) {
+                            $('#peringkat_prestasi_edit').append('<option selected="selected" value="'+ value.peringkat +'">'+ value.peringkat +'</option>');
+                          }else {
+                            $('#peringkat_prestasi_edit').append('<option value="'+ value.peringkat +'">'+ value.peringkat +'</option>');
+                          }
+                        });
+                    }
+                });
+            }else{
+                $('#peringkat_prestasi_edit').empty();
+            }
             $('#penyelenggara_prestasi_edit').val(prestasi.penyelenggara_prestasi);
             $('#tempat_prestasi_edit').val(prestasi.tempat_prestasi);
             $('#deskripsi_prestasi_edit').val(prestasi.deskripsi_prestasi);
@@ -336,6 +451,7 @@ $(document).ready(function(){
 
   $('#btnSimpanPrestasi').click(function(){
 
+    var id_prestasi = $('#hiddenId').val();
     var nama_prestasi = $('#nama_prestasi_edit').val();
     var peringkat_prestasi = $('#peringkat_prestasi_edit').val();
     var deskripsi_prestasi =  $('#deskripsi_prestasi_edit').val();
@@ -346,9 +462,14 @@ $(document).ready(function(){
      {
       var tipe_prestasi = radiotipe[i].value;
       break;
-      } else {
-        tipe_prestasi = $('#tipe_prestasi_raw').val();
       }
+    }
+    if (tipe_prestasi == 1) {
+      var jml_anggota = 1;
+      var referral_nim =  '';
+    } else {
+      var jml_anggota = $('#jml_anggota_edit').val();
+      var referral_nim =  $('#referral_prestasi_edit').val();
     }
     var radiojenis = document.getElementsByName('jenis_prestasi_update');
     for (var i = 0, length = radiojenis.length; i < length; i++)
@@ -357,41 +478,28 @@ $(document).ready(function(){
      {
       var jenis_prestasi = radiojenis[i].value;
       break;
-      } else {
-        jenis_prestasi = $('#jenis_prestasi_raw').val();
       }
     }
     var tgl_prestasi_start =  $('#date_start_edit').val();
     var tgl_prestasi_end =  $('#date_end_edit').val();
-    var id_prestasi = $('#hiddenId').val();
-
-    // if(tgl_prestasi_start==''){
-    //    tgl_prestasi_start =  $('#tgl_prestasi_start_edit').val();
-    // }
-
     var penyelenggara_prestasi =  $('#penyelenggara_prestasi_edit').val();
     var tempat_prestasi =  $('#tempat_prestasi_edit').val();
     var level_prestasi =  $('#level_prestasi_edit').val();
 
-    if(nama_prestasi==''||peringkat_prestasi==''||deskripsi_prestasi==''||penyelenggara_prestasi==''||tempat_prestasi==''||level_prestasi==0){
+    if(nama_prestasi==''||peringkat_prestasi==''||deskripsi_prestasi==''||penyelenggara_prestasi==''||tempat_prestasi==''||level_prestasi==0)
+    {
         console.log('gagal edit');
         alert('Edit Data Gagal, Cek kembali isian Anda');
         return false;
       }else {
-         nama_prestasi =   $('#nama_prestasi_edit').val();
-         peringkat_prestasi = $('#peringkat_prestasi_edit').val();
-         deskripsi_prestasi =  $('#deskripsi_prestasi_edit').val();
-         penyelenggara_prestasi =  $('#penyelenggara_prestasi_edit').val();
-         tempat_prestasi =  $('#tempat_prestasi_edit').val();
-         level_prestasi =  $('#level_prestasi_edit').val();
-         id_prestasi =$('#hiddenId').val();
-    }
         $.ajax({
           type: "POST",
           url: '<?=base_url()?>Prestasi/updatePrestasi',
           data: {nama_prestasi:nama_prestasi,
                 peringkat_prestasi:peringkat_prestasi,
                 tipe_prestasi:tipe_prestasi,
+                referral_nim:referral_nim,
+                jml_anggota:jml_anggota,
                 jenis_prestasi:jenis_prestasi,
                 deskripsi_prestasi:deskripsi_prestasi,
                 penyelenggara_prestasi:penyelenggara_prestasi,
@@ -403,7 +511,47 @@ $(document).ready(function(){
           success: function(data){
           }
         });
-        location.reload();
+        $.ajax({
+          type: "POST",
+          url: '<?=base_url()?>Prestasi/deleteRefPrestasi',
+          data: {
+            id_prestasi:id_prestasi
+          },
+          success: function(data){
+            var head_nim = $('#hidden_nim').val();
+            var array = referral_nim.split(",");
+            var sorted_arr = array.slice().sort();
+            for(i=0;i<sorted_arr.length;i++)
+            {
+                sorted_arr[i] = sorted_arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+            }
+            var results = [];
+              for (var i = 0; i < sorted_arr.length; i++) {
+                  if (sorted_arr[i + 1] != sorted_arr[i] && sorted_arr[i].length == 14) {
+                      results.push(sorted_arr[i]);
+                  }
+              }
+            results.push(head_nim);
+            console.log(sorted_arr);
+            console.log(results);
+            for (i=0;i<results.length;i++){
+                var nim = results[i];
+                $.ajax({
+                  type: "POST",
+                  url: '<?=base_url()?>Prestasi/updateRefPrestasi2',
+                  data: {
+                    nim:nim,
+                    id_prestasi:id_prestasi
+                  },
+                  success: function(data){
+                  }
+                });
+                location.reload();
+            }
+          }
+        });
+      }
+      location.reload();
     });
 
     $(document).on('click', 'button.btn-delete,button.btn-delete2', function(){
@@ -438,30 +586,43 @@ $(document).ready(function(){
         location.reload();
     });
 
-    $('#cariPrestasi').keyup(function(){
-      var query = $(this).val();
-        $.ajax({
-          url:"<?php echo base_url();?>Prestasi/view",
-          method:"post",
-          data:{query:query},
-          success:function(data){
-            // alert('dasdf');
-            $('#tabel-prestasi').remove();
-            $('#hasilCari').html(data);
-          }
-        });
-    });
-
 
 
   })
+
+  function hitungAnggota() {
+    if (document.getElementById('tipe_prestasi_update_regu').checked) {
+      var array = $('#referral_prestasi_edit').val().split(",");
+      var sorted_arr = array.slice().sort();
+      for(i=0;i<sorted_arr.length;i++)
+      {
+          sorted_arr[i] = sorted_arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+      }
+      var results = [];
+        for (var i = 0; i < sorted_arr.length; i++) {
+            if (sorted_arr[i + 1] != sorted_arr[i] && sorted_arr[i].length == 14) {
+                results.push(sorted_arr[i]);
+            }
+        }
+      var ref_length = results.length + 1;
+    }
+      var x = document.getElementById("jml_anggota_edit");
+      if (ref_length >= 1) {
+          x.value = ref_length;
+      }
+  }
+
   function TipeCheck() {
       if (document.getElementById('tipe_prestasi_update_regu').checked) {
-          document.getElementById('role_prestasi_edit').style.display = 'block';
-          document.getElementById('role_prestasi_editlabel').style.display = 'block';
+          document.getElementById('jml_anggota_edit').style.display = 'block';
+          document.getElementById('jml_anggota_editlabel').style.display = 'block';
+          document.getElementById('referral_prestasi_edit').style.display = 'block';
+          document.getElementById('referral_editlabel').style.display = 'block';
       } else {
-          document.getElementById('role_prestasi_edit').style.display = 'none';
-          document.getElementById('role_prestasi_editlabel').style.display = 'none';
+          document.getElementById('jml_anggota_edit').style.display = 'none';
+          document.getElementById('jml_anggota_editlabel').style.display = 'none';
+          document.getElementById('referral_prestasi_edit').style.display = 'none';
+          document.getElementById('referral_editlabel').style.display = 'none';
       }
     }
 
