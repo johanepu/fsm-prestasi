@@ -24,7 +24,10 @@
               <div class="card-body">
 
 
-                  <?php echo form_open("Admin_prestasi/addPrestasi_admin");?>
+                  <?php
+                  $attributes = array('id' => 'addPrestasi');
+                  echo form_open("Admin_prestasi/addPrestasi_admin");
+                  ?>
 
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="text-input">NIM</label>
@@ -70,6 +73,8 @@
                     </div>
                   </div>
                   <?php echo form_error('jml_anggota'); ?>
+
+                  <input id="array_nim" name="array_nim" class="form-control" value="<?php echo set_value('array_nim'); ?>" type="text" hidden>
 
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="text-input">Nama Kegiatan</label>
@@ -209,6 +214,30 @@
           }else{
               $('select[name="peringkat_prestasi"]').empty();
           }
+
+          var head_nim = $('#nim').val();
+          var array = $('#referral_prestasi').val().split(",");
+          var sorted_arr = array.slice().sort();
+          for(i=0;i<sorted_arr.length;i++)
+          {
+              sorted_arr[i] = sorted_arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+          }
+          var results = [];
+            for (var i = 0; i < sorted_arr.length; i++) {
+                if (sorted_arr[i + 1] != sorted_arr[i] && sorted_arr[i].length == 14) {
+                    results.push(sorted_arr[i]);
+                }
+            }
+          var ref_length = results.length + 1;
+          var x = document.getElementById("jml_anggota");
+          if (ref_length >= 1) {
+              x.value = ref_length;
+          }
+
+          results.push(head_nim);
+          var y = document.getElementById("array_nim");
+          y.value = results;
+          console.log(y.value);
       });
     });
 
@@ -256,8 +285,7 @@
         });
     } );
 
-    $('#submit').click(function(){
-      if (document.getElementById('beregu').checked) {
+    function hitungAnggota() {
         var head_nim = $('#nim').val();
         var array = $('#referral_prestasi').val().split(",");
         var sorted_arr = array.slice().sort();
@@ -271,46 +299,16 @@
                   results.push(sorted_arr[i]);
               }
           }
-
-        console.log(sorted_arr);
-        console.log(results);
-
-        for (i=0;i<results.length;i++){
-
-            var nim = results[i];
-            $.ajax({
-              type: "POST",
-              url: '<?=base_url()?>Admin_prestasi/addRefPrestasi',
-              data: {
-                nim:nim
-              },
-              success: function(data){
-              }
-            });
-        }
-      }
-    });
-
-    function hitungAnggota() {
-      if (document.getElementById('beregu').checked) {
-        var array = $('#referral_prestasi').val().split(",");
-        var sorted_arr = array.slice().sort();
-        for(i=0;i<sorted_arr.length;i++)
-        {
-            sorted_arr[i] = sorted_arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-        }
-        var results = [];
-          for (var i = 0; i < sorted_arr.length; i++) {
-              if (sorted_arr[i + 1] != sorted_arr[i] && sorted_arr[i].length == 14) {
-                  results.push(sorted_arr[i]);
-              }
-          }
         var ref_length = results.length + 1;
-      }
         var x = document.getElementById("jml_anggota");
         if (ref_length >= 1) {
             x.value = ref_length;
         }
+
+        results.push(head_nim);
+        var y = document.getElementById("array_nim");
+        y.value = results;
+        console.log(y.value);
     }
 
     function TipeCheck() {

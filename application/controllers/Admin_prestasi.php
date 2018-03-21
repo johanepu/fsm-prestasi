@@ -349,8 +349,8 @@ class Admin_prestasi extends CI_Controller {
       date_default_timezone_set('Asia/Jakarta');
 			$nim = $this->input->post('nim');
 			$level_prestasi = $this->input->post('level_prestasi');
-			$level_prestasi = $this->input->post('level_prestasi');
 			$peringkat_prestasi = $this->input->post('peringkat_prestasi');
+			$tipe_prestasi = $this->input->post('tipe_prestasi');
 			$reward_point = $this->Prestasi_model->getPoinPrestasi($level_prestasi,$peringkat_prestasi);
 
 			$datetime = new DateTime();
@@ -366,11 +366,12 @@ class Admin_prestasi extends CI_Controller {
 				$semester = 'Genap';
 			}
 
-			$jml_anggota_input = $this->input->post('jml_anggota');
-			if ($jml_anggota_input == '') {
+			if ($tipe_prestasi == 1) {
+				$referral_prestasi = '';
 				$jml_anggota = 1;
-			} else {
-				$jml_anggota = $jml_anggota_input;
+			} elseif ($tipe_prestasi == 2) {
+				$referral_prestasi = $this->input->post('referral_prestasi');
+				$jml_anggota = $this->input->post('jml_anggota');
 			}
 
 			$data = array(
@@ -392,12 +393,32 @@ class Admin_prestasi extends CI_Controller {
 			);
 
 			$return_id = $this->Prestasi_model->add_prestasi($data);
-			$this->addRefThisPrestasi($return_id,$nim);
 			$data_periode = array(
 				'id_prestasi'=>$return_id,
 				'periode'=>strtok($tgl_prestasi, '-'),
 				'semester'=>$semester
 			);
+
+			$arraynim = $this->input->post('array_nim');
+			$arr = explode(',',$arraynim);
+
+			if ($tipe_prestasi == 1) {
+				$data = array(
+					'id_prestasi'=>$return_id,
+					'nim' => $nim,
+					'poin' => 0
+				);
+				$this->Prestasi_model->addReward($data);
+			} elseif ($tipe_prestasi == 2) {
+				foreach ($arr as $n) {
+					$data = array(
+						'id_prestasi'=>$return_id,
+						'nim' => $n,
+						'poin' => 0
+					);
+					$this->Prestasi_model->addReward($data);
+				}
+			}
 		}
 		if ($this->form_validation->run() == true && $this->Prestasi_model->addPrestasiPeriode($data_periode))
 		{
@@ -416,27 +437,6 @@ class Admin_prestasi extends CI_Controller {
 			$data['content'] = 'kucing/add_prestasi_admin.php';
 			$this->load->view("kucing/admin_template.php",$data,$this->data);
 		}
-	}
-
-	public function addRefPrestasi()
-	{
-			$id_prestasi = $this->Prestasi_model->getLastAI();
-			$data = array(
-				'id_prestasi'=>$id_prestasi,
-				'nim' => $this->input->post('nim'),
-				'poin' => 0
-			);
-			$this->Prestasi_model->addReward($data);
-	}
-
-	public function addRefThisPrestasi($id_prestasi,$nim)
-	{
-			$data = array(
-				'id_prestasi'=>$id_prestasi,
-				'nim' => $nim,
-				'poin' => 0
-			);
-			$this->Prestasi_model->addReward($data);
 	}
 
 	function success()

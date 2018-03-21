@@ -346,6 +346,7 @@ class Prestasi extends CI_Controller {
 			$nim = $this->session->userdata('nim');
 			$level_prestasi = $this->input->post('level_prestasi');
 			$peringkat_prestasi = $this->input->post('peringkat_prestasi');
+			$tipe_prestasi = $this->input->post('tipe_prestasi');
 			$reward_point = $this->Prestasi_model->getPoinPrestasi($level_prestasi,$peringkat_prestasi);
 
 			$datetime = new DateTime();
@@ -361,21 +362,21 @@ class Prestasi extends CI_Controller {
 				$semester = 'Genap';
 			}
 
-			$jml_anggota_input = $this->input->post('jml_anggota');
-			if ($jml_anggota_input == '') {
+			if ($tipe_prestasi == 1) {
+				$referral_prestasi = '';
 				$jml_anggota = 1;
-			} else {
-				$jml_anggota = $jml_anggota_input;
+			} elseif ($tipe_prestasi == 2) {
+				$referral_prestasi = $this->input->post('referral_prestasi');
+				$jml_anggota = $this->input->post('jml_anggota');
 			}
-
 
 			$data = array(
 				'nim' => $nim,
-				'referral_nim' => $this->input->post('referral_prestasi'),
+				'referral_nim' => $referral_prestasi,
 				'jml_anggota' => $jml_anggota,
 				'nama_prestasi' 	=> $this->input->post('nama_prestasi'),
 				'peringkat_prestasi'  	=> $peringkat_prestasi,
-        'tipe_prestasi'    	=> $this->input->post('tipe_prestasi'),
+        'tipe_prestasi'    	=> $tipe_prestasi,
 				'jenis_prestasi'    		=> $this->input->post('jenis_prestasi'),
 				'level_prestasi'    		=> $level_prestasi,
 				'deskripsi_prestasi'    		=> $this->input->post('deskripsi_prestasi'),
@@ -388,12 +389,32 @@ class Prestasi extends CI_Controller {
 			);
 
 			$return_id = $this->Prestasi_model->add_prestasi($data);
-			$this->addRefThisPrestasi($return_id,$nim);
 			$data_periode = array(
 				'id_prestasi'=>$return_id,
 				'periode'=>strtok($tgl_prestasi, '-'),
 				'semester'=>$semester
 			);
+
+			$arraynim = $this->input->post('array_nim');
+			$arr = explode(',',$arraynim);
+
+			if ($tipe_prestasi == 1) {
+				$data = array(
+					'id_prestasi'=>$return_id,
+					'nim' => $nim,
+					'poin' => 0
+				);
+				$this->Prestasi_model->addReward($data);
+			} elseif ($tipe_prestasi == 2) {
+				foreach ($arr as $n) {
+					$data = array(
+						'id_prestasi'=>$return_id,
+						'nim' => $n,
+						'poin' => 0
+					);
+					$this->Prestasi_model->addReward($data);
+				}
+			}
 		}
 		if ($this->form_validation->run() == true && $this->Prestasi_model->addPrestasiPeriode($data_periode))
 		{
@@ -408,33 +429,12 @@ class Prestasi extends CI_Controller {
 		}
 		else
 		{
-
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->session->flashdata('message')));
 			$data['content'] = 'add_prestasi.php';
 			$this->load->view("user_template.php",$data,$this->data);
 		}
 	}
 
-	public function addRefPrestasi()
-	{
-			$id_prestasi = $this->Prestasi_model->getLastId();
-			$data = array(
-				'id_prestasi'=>$id_prestasi,
-				'nim' => $this->input->post('nim'),
-				'poin' => 0
-			);
-			$this->Prestasi_model->addReward($data);
-	}
-
-	public function addRefThisPrestasi($id_prestasi,$nim)
-	{
-			$data = array(
-				'id_prestasi'=>$id_prestasi,
-				'nim' => $nim,
-				'poin' => 0
-			);
-			$this->Prestasi_model->addReward($data);
-	}
 
 	public function updateRefPrestasi()
 	{
@@ -574,7 +574,7 @@ class Prestasi extends CI_Controller {
 
 	function delete(){
 		$id = $this->input->post('id_prestasi');
-		if ($this->Prestasi_model->deletePoin($id)==true)
+		if ($this->Prestasi_model->delete($id)==true && $this->Prestasi_model->deletePoin($id)==true && $this->Prestasi_model->deletePeriode($id)==true)
 		{
 			$this->session->set_flashdata('status_prestasi',
 			'  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">

@@ -30,7 +30,10 @@
               <div class="card-body">
 
 
-                  <?php echo form_open("addPrestasi");?>
+                  <?php
+                  $attributes = array('id' => 'addPrestasi');
+                  echo form_open('addPrestasi', $attributes);
+                  ?>
 
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label">Tipe Prestasi</label>
@@ -69,6 +72,8 @@
                   </div>
                   <?php echo form_error('jml_anggota'); ?>
 
+                  <input id="array_nim" name="array_nim" class="form-control" value="<?php echo set_value('array_nim'); ?>" type="text" hidden>
+
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="text-input">Nama Kegiatan</label>
                     <div class="col-md-9">
@@ -81,9 +86,9 @@
                     <label class="col-md-2 col-form-label" for="select1">Level Prestasi
                       <a href="#" data-toggle="skala_tooltip"
                       title="1. Lokal ⇒ Untuk prestasi di ruang lingkup daerah lokal atau lingkup universitas.
-                      2. Regional ⇒ Untuk prestasi yang di lingkup daerah/provinsi.
-                      3. Nasional ⇒ Untuk prestasi di lingkup nasional (dalam negeri) saja.
-                      4. Internasional ⇒ Untuk prestasi di tingkat luar negara."><h7>info</h7></a>
+2. Regional ⇒ Untuk prestasi yang di lingkup daerah/provinsi.
+3. Nasional ⇒ Untuk prestasi di lingkup nasional (dalam negeri) saja.
+4. Internasional ⇒ Untuk prestasi di tingkat luar negara."><h7>info</h7></a>
                     </label>
                     <div class="col-md-3">
                       <select id="level_prestasi" name="level_prestasi" class="form-control">
@@ -171,7 +176,7 @@
                   <input id="hidden_nim" name="hidden_nim" class="form-control" value="<?php echo $this->session->userdata('nim')?>" type="text" hidden>
               </div>
               <div class="card-footer" >
-                <input type="submit" id="submit" value="Submit" style="float: right;" class="btn btn-sm btn-primary">
+                <input type="submit" id="submit" value="Submit" name="submit" style="float: right;" class="btn btn-sm btn-primary">
                 <button type="reset" style="float: right; margin-right: 10px" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
               </div>
             </div>
@@ -207,6 +212,30 @@
             }else{
                 $('select[name="peringkat_prestasi"]').empty();
             }
+
+            var head_nim = $('#hidden_nim').val();
+            var array = $('#referral_prestasi').val().split(",");
+            var sorted_arr = array.slice().sort();
+            for(i=0;i<sorted_arr.length;i++)
+            {
+                sorted_arr[i] = sorted_arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+            }
+            var results = [];
+              for (var i = 0; i < sorted_arr.length; i++) {
+                  if (sorted_arr[i + 1] != sorted_arr[i] && sorted_arr[i].length == 14) {
+                      results.push(sorted_arr[i]);
+                  }
+              }
+            var ref_length = results.length + 1;
+            var x = document.getElementById("jml_anggota");
+            if (ref_length >= 1) {
+                x.value = ref_length;
+            }
+
+            results.push(head_nim);
+            var y = document.getElementById("array_nim");
+            y.value = results;
+            console.log(y.value);
         });
     });
 
@@ -252,43 +281,8 @@
         });
       } );
 
-      $('#submit').click(function(){
-        if (document.getElementById('beregu').checked) {
-          var head_nim = $('#hidden_nim').val();
-          var array = $('#referral_prestasi').val().split(",");
-          var sorted_arr = array.slice().sort();
-          for(i=0;i<sorted_arr.length;i++)
-          {
-              sorted_arr[i] = sorted_arr[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-          }
-          var results = [];
-            for (var i = 0; i < sorted_arr.length; i++) {
-                if (sorted_arr[i + 1] != sorted_arr[i] && sorted_arr[i].length == 14) {
-                    results.push(sorted_arr[i]);
-                }
-            }
-
-          console.log(sorted_arr);
-          console.log(results);
-
-          for (i=0;i<results.length;i++){
-
-              var nim = results[i];
-              $.ajax({
-                type: "POST",
-                url: '<?=base_url()?>Prestasi/addRefPrestasi',
-                data: {
-                  nim:nim
-                },
-                success: function(data){
-                }
-              });
-          }
-        }
-      });
-
     function hitungAnggota() {
-      if (document.getElementById('beregu').checked) {
+        var head_nim = $('#hidden_nim').val();
         var array = $('#referral_prestasi').val().split(",");
         var sorted_arr = array.slice().sort();
         for(i=0;i<sorted_arr.length;i++)
@@ -302,11 +296,15 @@
               }
           }
         var ref_length = results.length + 1;
-      }
         var x = document.getElementById("jml_anggota");
         if (ref_length >= 1) {
             x.value = ref_length;
         }
+
+        results.push(head_nim);
+        var y = document.getElementById("array_nim");
+        y.value = results;
+        console.log(y.value);
     }
 
     function TipeCheck() {
