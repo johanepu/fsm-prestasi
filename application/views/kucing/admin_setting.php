@@ -31,7 +31,11 @@
                       <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="tab" href="#list-profile" role="tab" aria-controls="list-profile">Data Prestasi</a>
                       <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="tab" href="#list-messages" role="tab" aria-controls="list-messages">Pesan Admin</a>
                       <div style="margin-top:20px">
-                        <button type="submit" id="simpan_pengaturan" class="col-md-12 col-sm-4 btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Simpan Pengaturan</button>
+                        <h6> *Untuk menerapkan ubahan yang telah dibuat, klik Simpan Pengaturan</h6>
+                      </div>
+                      <div style="margin-top:5px">
+                        <button type="submit" id="simpan_pengaturan" class="col-md-12 col-sm-4 btn btn-sm btn-primary">
+                          <i class="fa fa-dot-circle-o"></i> Simpan Pengaturan</button>
                       </div>
                     </div>
                   </div>
@@ -46,6 +50,12 @@
                           <div class="form-group col-lg-9">
                             <input type="text" class="form-control" id="cariPrestasi" placeholder="Cari Set Reward" >
                           </div>
+                        </div>
+                        <div class="row mt">
+                          <?php if($this->session->flashdata('alrt1')){
+                            echo $this->session->flashdata('alrt1');
+                            }
+                          ?>
                         </div>
                         <table id="tabel_set_rewarding" class="table table-responsive-sm table-striped">
                           <thead>
@@ -173,7 +183,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row" id="preview_setting" style="display:none;">
           <div class="col-sm-12 col-xl-12">
             <div class="card">
               <div class="card-header">
@@ -190,8 +200,7 @@
             </div>
           </div>
         </div>
-
-    </div>
+      </div>
     <!-- /.conainer-fluid -->
 
     <div class="modal fade" id="modal_reset_poin" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" >
@@ -344,7 +353,7 @@
       <div class="modal-dialog modal-primary">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="edit_set_label">Tambah Setting Rewarding</h5>
+            <h5 class="modal-title" id="edit_set_label">Ubah Setting Rewarding</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -378,7 +387,7 @@
           <input hidden id="hidden_id_setting_edit" >
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" id="btn_update_reward" name="btn_simpan_reward" class="btn btn-primary">Simpan Setting</button>
+            <button type="button" id="btn_update_reward" name="btn_update_reward" class="btn btn-primary">Simpan Setting</button>
           </div>
         </div>
       </div>
@@ -426,22 +435,25 @@
               tabel_set_rewarding.search($(this).val()).draw() ;
         })
 
-    $.ajax({
-      type: "POST",
-      url: '<?=base_url()?>Admin_setting/fetchSetting',
-      dataType:'json',
-      success: function(data){
-        console.log(data);
-        if(data)
-        {
-          var stg = data[0];
-            $('#preview_judul').html(stg.judul_pengumuman);
-            $('#preview_pengumuman').html(stg.pesan_admin);
-            $('#input_judul').val(stg.judul_pengumuman);
-            $('#input_isi').val(stg.pesan_admin);
-        }
-      }
-    });
+      $('#list-messages-list').click(function(){
+        document.getElementById("preview_setting").style.display = "block";
+        $.ajax({
+          type: "POST",
+          url: '<?=base_url()?>Admin_setting/fetchSetting',
+          dataType:'json',
+          success: function(data){
+            console.log(data);
+            if(data)
+            {
+              var stg = data[0];
+                $('#preview_judul').html(stg.judul_pengumuman);
+                $('#preview_pengumuman').html(stg.pesan_admin);
+                $('#input_judul').val(stg.judul_pengumuman);
+                $('#input_isi').val(stg.pesan_admin);
+            }
+          }
+        });
+      });
 
     $('#btn_reset_poin_modal').click(function(){
       $('#modal_reset_poin').modal('show');
@@ -478,6 +490,7 @@
             $('#level_edit_reward option[value="'+setting.level+'"]').prop('selected', true);
             $('#peringkat_edit_reward').val(setting.peringkat);
             $('#poin_edit_reward').val(setting.poin);
+            $('#hidden_id_setting_edit').val(setting.id_setting);
           }
         }
       });
@@ -490,9 +503,10 @@
       var poin =  $('#poin_edit_reward').val();
       var id_setting =$('#hidden_id_setting_edit').val();
 
+
       if(peringkat==''||level==0||poin==''||poin<=0){
           console.log('gagal edit');
-          alert('Tambah Set gagal, Cek kembali isian Anda');
+          alert('Ubah Set gagal, Cek kembali isian Anda');
           return false;
         }
         $.ajax({

@@ -39,6 +39,35 @@ class Admin_model extends CI_Model {
 	function updateSetReward($data,$where){
 			$this->db->where($where);
 			$this->db->update('setting_rewarding',$data);
+			return true;
+	}
+
+	function updateSetPrestasi($data,$where){
+			$validasi=$data['validasi'];
+			$poin=$data['poin'];
+			$reward_point=$data['reward_poin'];
+			$level=$data['level'];
+			$peringkat=$data['peringkat'];
+
+			$periode=$where['periode'];
+			$semester=$where['semester'];
+
+			// $this->db->set('user_prestasi.validasi',$validasi);
+			// $this->db->set('user_prestasi.reward_poin',$reward_point);
+			// $this->db->set('reward_prestasi.poin',$poin);
+			// $this->db->where('periode_prestasi.periode',$periode);
+			// $this->db->where('periode_prestasi.semester',$semester);
+			// $this->db->where('user_prestasi.level_prestasi',$level);
+			// $this->db->where('user_prestasi.peringkat_prestasi',$peringkat);
+			// $this->db->update('reward_prestasi JOIN user_prestasi ON
+			// reward_prestasi.id_prestasi = user_prestasi.id_prestasi JOIN
+			// periode_prestasi ON reward_prestasi.prestasi_id = periode_prestasi.id_prestasi');
+			$this->db->query("UPDATE reward_prestasi a
+    JOIN user_prestasi b ON a.id_prestasi = b.id_prestasi
+    JOIN periode_prestasi c ON a.id_prestasi = c.id_prestasi
+		SET a.poin = '$poin',b.validasi = '$validasi', b.reward_poin = '$reward_point'
+		WHERE c.periode = '$periode' AND c.semester = '$semester'");
+			return true;
 	}
 
   function getPeriode(){

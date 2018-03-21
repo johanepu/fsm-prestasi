@@ -82,6 +82,31 @@ class Admin_setting extends CI_Controller {
 	}
 
 	function updateSetReward(){
+		date_default_timezone_set('Asia/Jakarta');
+		$date_now = date("Y/m/d");
+		$thn = strtok($date_now, '/');
+
+		$datetime = new DateTime();
+		$bulan_gasal = $datetime->createFromFormat('d/m/Y','15/07/Y');
+		$bulan_genap = $datetime->createFromFormat('d/m/Y','15/03/Y');
+		if ($date_now >= $bulan_gasal && $date_now < $bulan_genap) {
+			$semester = 'Gasal';
+		} else {
+			$semester = 'Genap';
+		}
+
+		$data1=array(
+			'validasi'=> 0,
+			'poin'=> 0,
+			'reward_poin'=>$this->input->post('poin'),
+			'level'=> $this->input->post('level'),
+			'peringkat'=>$this->input->post('peringkat')
+		);
+
+		$where1 = array(
+			'periode'=> $thn,
+			'semester'=> $semester
+		);
 
 		$data=array(
 			'level'=> $this->input->post('level'),
@@ -93,8 +118,25 @@ class Admin_setting extends CI_Controller {
 			'id_setting'=> $this->input->post('id_setting')
 		);
 
-		$this->Admin_model->updateSetReward($data,$where);
-
+		if ($this->Admin_model->updateSetReward($data,$where) == true && $this->Admin_model->updateSetPrestasi($data1,$where1) == true){
+			$this->session->set_flashdata('alrt1',
+			'<div class="col-md-12 alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Perubahan set berhasil.Pembaruan Poin Diperlukan!</strong>  <br>
+				Data untuk periode tahun <strong>'.$thn.'</strong> semester <strong>'.$semester.'</strong>
+				perlu di validasi ulang!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>');
+		}else {
+			$this->session->set_flashdata('alrt1',
+			'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+				<strong>Update set reward gagal!</strong> Silakan cek kembali untuk kebenaran data.
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div> ');
+		}
 	}
 
 	function simpanSetReward(){
@@ -104,7 +146,25 @@ class Admin_setting extends CI_Controller {
 			'level'=>$this->input->post('level'),
 			'poin'=>$this->input->post('poin')
 		);
-		$this->Admin_model->simpanSetReward($data);
+		if ($this->Admin_model->simpanSetReward($data)) {
+			$this->session->set_flashdata('alrt1',
+			'  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
+				<strong>Tambah set berhasil!</strong> Silakan cek kembali untuk kebenaran data.
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div> ');
+			redirect('Admin_setting', 'refresh');
+		}else {
+			$this->session->set_flashdata('alrt1',
+			'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+				<strong>Tambah set gagal!</strong> Silakan cek kembali untuk kebenaran data.
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div> ');
+			redirect('Admin_setting', 'refresh');
+		}
 
 	}
 
