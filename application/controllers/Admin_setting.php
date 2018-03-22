@@ -95,21 +95,34 @@ class Admin_setting extends CI_Controller {
 			$semester = 'Genap';
 		}
 
+		$level = $this->input->post('level');
+		if ($level == 1) {
+			$nama_level = 'Lokal';
+		} elseif ($level == 2) {
+			$nama_level = 'Regional';
+		} elseif ($level == 3) {
+			$nama_level = 'Nasional';
+		} elseif ($level == 4) {
+			$nama_level = 'Internasional';
+		}
+
 		$data1=array(
 			'validasi'=> 0,
 			'poin'=> 0,
 			'reward_poin'=>$this->input->post('poin'),
-			'level'=> $this->input->post('level'),
+			'level'=> $level,
 			'peringkat'=>$this->input->post('peringkat')
 		);
 
 		$where1 = array(
 			'periode'=> $thn,
-			'semester'=> $semester
+			'semester'=> $semester,
+			'id_setting'=> $this->input->post('id_setting')
 		);
 
 		$data=array(
-			'level'=> $this->input->post('level'),
+			'level'=> $level,
+			'nama_level'=> $nama_level,
 			'peringkat'=>$this->input->post('peringkat'),
 			'poin'=>$this->input->post('poin')
 		);
@@ -141,10 +154,22 @@ class Admin_setting extends CI_Controller {
 
 	function simpanSetReward(){
 
+		$level = $this->input->post('level');
+		if ($level == 1) {
+			$nama_level = 'Lokal';
+		} elseif ($level == 2) {
+			$nama_level = 'Regional';
+		} elseif ($level == 3) {
+			$nama_level = 'Nasional';
+		} elseif ($level == 4) {
+			$nama_level = 'Internasional';
+		}
+
 		$data=array(
 			'peringkat'=> $this->input->post('peringkat'),
-			'level'=>$this->input->post('level'),
-			'poin'=>$this->input->post('poin')
+			'level'=> $level,
+			'nama_level'=> $nama_level,
+			'poin'=> $this->input->post('poin')
 		);
 		if ($this->Admin_model->simpanSetReward($data)) {
 			$this->session->set_flashdata('alrt1',

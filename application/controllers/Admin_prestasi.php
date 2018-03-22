@@ -352,6 +352,7 @@ class Admin_prestasi extends CI_Controller {
 			$peringkat_prestasi = $this->input->post('peringkat_prestasi');
 			$tipe_prestasi = $this->input->post('tipe_prestasi');
 			$reward_point = $this->Prestasi_model->getPoinPrestasi($level_prestasi,$peringkat_prestasi);
+			$id_setting = $this->Prestasi_model->getIdSetting($level_prestasi,$peringkat_prestasi);
 
 			$datetime = new DateTime();
 			$tgl_prestasi = $this->input->post('date_start');
@@ -383,6 +384,7 @@ class Admin_prestasi extends CI_Controller {
         'tipe_prestasi'    	=> $this->input->post('tipe_prestasi'),
 				'jenis_prestasi'    		=> $this->input->post('jenis_prestasi'),
 				'level_prestasi'    		=> $level_prestasi,
+				'id_setting'	=> $id_setting,
 				'deskripsi_prestasi'    		=> $this->input->post('deskripsi_prestasi'),
 				'reward_poin'    		=> $reward_point,
 				'penyelenggara_prestasi'    		=> $this->input->post('penyelenggara_prestasi'),
@@ -464,44 +466,6 @@ class Admin_prestasi extends CI_Controller {
 		$result=$this->Prestasi_model->getAllData($id_prestasi);
 
 		echo json_encode($result);
-	}
-
-	function updatePrestasi(){
-
-		date_default_timezone_set('Asia/Jakarta');
-		$level_prestasi = $this->input->post('level_prestasi');
-			if ($level_prestasi == 1) {
-				$reward_point = 2;
-			} elseif ($level_prestasi == 2) {
-				$reward_point = 3;
-			} elseif ($level_prestasi == 3) {
-				$reward_point = 4;
-			} elseif ($level_prestasi == 4) {
-				$reward_point = 5;
-			}
-
-		$data=array(
-			'nama_prestasi'=> $this->input->post('nama_prestasi'),
-			'peringkat_prestasi'=>$this->input->post('peringkat_prestasi'),
-			'tipe_prestasi'=>$this->input->post('tipe_prestasi'),
-			'role_prestasi'=>$this->input->post('role_prestasi'),
-			'jenis_prestasi'=>$this->input->post('jenis_prestasi'),
-			'deskripsi_prestasi'=>$this->input->post('deskripsi_prestasi'),
-			'reward_poin'    		=> $reward_point,
-			'penyelenggara_prestasi' => $this->input->post('penyelenggara_prestasi'),
-			'tempat_prestasi' => $this->input->post('tempat_prestasi'),
-			'level_prestasi' => $level_prestasi,
-			'tgl_prestasi_start'=>$this->input->post('tgl_prestasi_start'),
-			'tgl_prestasi_end'=>$this->input->post('tgl_prestasi_end'),
-			'date_modified'	=> date('Y-m-d H:i:s')
-		);
-
-		$where = array(
-			'id_prestasi'=> $this->input->post('id_prestasi')
-		);
-
-		$result=$this->Prestasi_model->updatePrestasi($data,$where);
-
 	}
 
 	function delete(){

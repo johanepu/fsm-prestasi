@@ -521,7 +521,7 @@
             success: function(data){
             }
           });
-          location.reload();
+          // location.reload();
       });
 
     $('#btn_simpan_reward').click(function(){

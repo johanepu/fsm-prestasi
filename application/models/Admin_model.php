@@ -51,6 +51,7 @@ class Admin_model extends CI_Model {
 
 			$periode=$where['periode'];
 			$semester=$where['semester'];
+			$id_setting=$where['id_setting'];
 
 			// $this->db->set('user_prestasi.validasi',$validasi);
 			// $this->db->set('user_prestasi.reward_poin',$reward_point);
@@ -65,8 +66,10 @@ class Admin_model extends CI_Model {
 			$this->db->query("UPDATE reward_prestasi a
     JOIN user_prestasi b ON a.id_prestasi = b.id_prestasi
     JOIN periode_prestasi c ON a.id_prestasi = c.id_prestasi
-		SET a.poin = '$poin',b.validasi = '$validasi', b.reward_poin = '$reward_point'
-		WHERE c.periode = '$periode' AND c.semester = '$semester'");
+		SET a.poin = '$poin',b.validasi = '$validasi', b.reward_poin = '$reward_point',
+		b.level_prestasi = '$level', b.peringkat_prestasi = '$peringkat'
+		WHERE c.periode = '$periode' AND c.semester = '$semester'
+		AND b.id_setting = '$id_setting'");
 			return true;
 	}
 

@@ -538,6 +538,19 @@ AND   TABLE_NAME   = 'user_prestasi'");
     }
 	}
 
+	public function getIdSetting($level_prestasi,$peringkat_prestasi){
+		$this->db->select('id_setting');
+		$this->db->from('setting_rewarding');
+		$this->db->where('level',$level_prestasi);
+		$this->db->where('peringkat',$peringkat_prestasi);
+		$hasil = $this->db->get();
+		$row = $hasil->row();
+		if (isset($row))
+		{
+				return $row->id_setting;
+		}
+	}
+
 	public function getLevelValue(){
 		$this->db->select('level, nama_level');
 		$this->db->from('setting_rewarding');

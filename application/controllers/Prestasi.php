@@ -348,6 +348,8 @@ class Prestasi extends CI_Controller {
 			$peringkat_prestasi = $this->input->post('peringkat_prestasi');
 			$tipe_prestasi = $this->input->post('tipe_prestasi');
 			$reward_point = $this->Prestasi_model->getPoinPrestasi($level_prestasi,$peringkat_prestasi);
+			$id_setting = $this->Prestasi_model->getIdSetting($level_prestasi,$peringkat_prestasi);
+
 
 			$datetime = new DateTime();
 			$tgl_prestasi = $this->input->post('date_start');
@@ -370,6 +372,8 @@ class Prestasi extends CI_Controller {
 				$jml_anggota = $this->input->post('jml_anggota');
 			}
 
+
+
 			$data = array(
 				'nim' => $nim,
 				'referral_nim' => $referral_prestasi,
@@ -379,6 +383,7 @@ class Prestasi extends CI_Controller {
         'tipe_prestasi'    	=> $tipe_prestasi,
 				'jenis_prestasi'    		=> $this->input->post('jenis_prestasi'),
 				'level_prestasi'    		=> $level_prestasi,
+				'id_setting'	=> $id_setting,
 				'deskripsi_prestasi'    		=> $this->input->post('deskripsi_prestasi'),
 				'reward_poin'    		=> $reward_point,
 				'penyelenggara_prestasi'    		=> $this->input->post('penyelenggara_prestasi'),
@@ -504,6 +509,7 @@ class Prestasi extends CI_Controller {
 		$level_prestasi = $this->input->post('level_prestasi');
 		$peringkat_prestasi = $this->input->post('peringkat_prestasi');
 		$reward_point = $this->Prestasi_model->getPoinPrestasi($level_prestasi,$peringkat_prestasi);
+		$id_setting = $this->Prestasi_model->getIdSetting($level_prestasi,$peringkat_prestasi);
 
 		$datetime = new DateTime();
 		$tgl_prestasi = $this->input->post('tgl_prestasi_start');
@@ -531,6 +537,7 @@ class Prestasi extends CI_Controller {
 			'penyelenggara_prestasi' => $this->input->post('penyelenggara_prestasi'),
 			'tempat_prestasi' => $this->input->post('tempat_prestasi'),
 			'level_prestasi' => $level_prestasi,
+			'id_setting'	=> $id_setting,
 			'tgl_prestasi_start'=>$tgl_prestasi,
 			'tgl_prestasi_end'=>$this->input->post('tgl_prestasi_end'),
 			'validasi' => 0,
