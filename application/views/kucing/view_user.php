@@ -124,7 +124,8 @@
                                         <th>Tipe Prestasi</th>
                                         <th>Level</th>
                                         <th>Tanggal Kegiatan</th>
-                                        <th>Aksi</th>
+                                        <th>Poin</th>
+                                        <!-- <th>Aksi</th> -->
                                       </tr>
                                     </thead>
                                     <tbody id="tabel-prestasi">
@@ -163,14 +164,22 @@
                                         }
                                         ?></td>
                                         <td ><?php echo $p->tgl_prestasi_start; ?></td>
-                                        <td>
+                                        <td title="Status Prestasi" name="status_prestasi" id="status_prestasi">
+                                        <?php
+                                        if ($p->validasi == "1") {
+                                            echo '<span class="badge badge-success">Poin Valid : '.$p->poin.'</span>';
+                                        }elseif ($p->validasi == "0") {
+                                            echo '<span class="badge badge-danger">Belum Valid</span>';
+                                        }
+                                        ?></td>
+                                        <!-- <td>
                                             <div class="btn-group" >
                                                 <button class="btn btn-primary btn-edit" name="btn-edit" title="Edit Prestasi" value="<?=$p->id_prestasi?>" type="button">
                                                     <i class="fa fa-fw s fa-pencil"></i></button>
                                                 <button class="btn btn-danger btn-delete" name="btn-delete" title="Hapus Prestasi" value="<?=$p->id_prestasi?>" type="button">
                                                     <i class="fa fa-fw fa-remove"></i></button>
                                             </div>
-                                        </td>
+                                        </td> -->
                                       </tr>
                                       <?php }?>
                                     </tbody>
