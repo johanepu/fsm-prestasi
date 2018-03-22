@@ -179,7 +179,6 @@ class Admin_setting extends CI_Controller {
 					<span aria-hidden="true">×</span>
 				</button>
 			</div> ');
-			redirect('Admin_setting', 'refresh');
 		}else {
 			$this->session->set_flashdata('alrt1',
 			'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
@@ -188,7 +187,6 @@ class Admin_setting extends CI_Controller {
 					<span aria-hidden="true">×</span>
 				</button>
 			</div> ');
-			redirect('Admin_setting', 'refresh');
 		}
 
 	}
