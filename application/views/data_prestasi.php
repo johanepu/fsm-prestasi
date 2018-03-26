@@ -264,7 +264,7 @@
                   <h6> *Memperbarui data akan menghilangkan status validasi, prestasi perlu di validasi ulang </h6>
                 </div>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" id="btnSimpanPrestasi" name="btnSimpanPrestasi" class="btn btn-primary">Save changes</button>
+                <button type="button" id="btnSimpanPrestasi" name="btnSimpanPrestasi" class="btn btn-primary">Simpan ubahan</button>
               </div>
             </div>
           </div>
@@ -365,7 +365,9 @@ $(document).ready(function(){
   // tabel data prestasi datatable
     tabel_prestasi =  $('#tabel_prestasi').DataTable( {
         "dom": 'lrtip',
-        "bPaginate": false,
+        "sScrollY": "500px",
+        responsive: true,
+        "bPaginate": true,
         "info":     false
       } )
       $('#cariPrestasi').keyup(function(){
@@ -402,6 +404,7 @@ $(document).ready(function(){
               document.getElementById('referral_prestasi_edit').style.display = 'none';
               document.getElementById('referral_editlabel').style.display = 'none';
               document.getElementById("tipe_prestasi_update_individu").checked = true;
+              $('#referral_prestasi_edit').val('');
             } else {
               tipePrestasi = 'Kelompok';
               document.getElementById('jml_anggota_edit').style.display = 'block';

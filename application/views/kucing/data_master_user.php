@@ -157,7 +157,7 @@ $(document).ready(function(){
     tabel_user =  $('#tabel_user').DataTable( {
         "dom": 'lrtipB',
         "sScrollY": "500px",
-        "bPaginate": false,
+        "bPaginate": true,
         "info":     false,
         responsive: true,
         buttons: [

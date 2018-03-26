@@ -444,7 +444,7 @@ $(document).ready(function(){
         "dom": 'lrtipB',
         "sScrollY": "500px",
         responsive: true,
-        "bPaginate": false,
+        "bPaginate": true,
         "info":     false,
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'

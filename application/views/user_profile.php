@@ -250,7 +250,11 @@
                 $('#profil_nama').val(mhs.namalengkap);
                 $('#profil_email').val(mhs.email);
                 $('#profil_alamat').val(mhs.alamat);
-                $('#profil_tingkatan').val(mhs.tingkatan);
+                if (mhs.tingkatan == 0) {
+                  $('#profil_tingkatan').val('');
+                } else {
+                  $('#profil_tingkatan option[value="'+mhs.tingkatan+'"]').prop('selected', true);
+                }
                 $('#profil_nomor_hp').val(mhs.nomor_hp);
                 $('#profil_keterangan').val(mhs.keterangan);
             }
