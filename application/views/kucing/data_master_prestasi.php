@@ -115,7 +115,10 @@
                           echo '<span class="label label-warning label-mini">Internasional</span>';
                       }
                       ?></td>
-                      <td ><?php echo $pres->tgl_prestasi_start; ?></td>
+                      <td ><?php
+                      $date=date_create($pres->tgl_prestasi_start);
+                      echo date_format($date,"d-M-Y");
+                      ?></td>
                       <td title="Status Prestasi" name="status_prestasi" id="status_prestasi">
                       <?php
                       if ($pres->validasi == "1") {
@@ -151,11 +154,8 @@
                     </tr>
                     <?php }?>
                   </tbody>
-                  <tbody id="hasilCari"></tbody>
                 </table>
 
-
-                <?php echo $this->pagination->create_links(); ?>
               </div>
             </div>
           </div>
@@ -445,7 +445,7 @@ $(document).ready(function(){
         "sScrollY": "500px",
         responsive: true,
         "bPaginate": true,
-        "info":     false,
+        "info":     true,
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]

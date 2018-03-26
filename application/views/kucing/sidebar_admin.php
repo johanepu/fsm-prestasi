@@ -15,6 +15,10 @@
         </li>
 
         <li class="nav-item">
+          <a href="<?php echo site_url('Admin_reward'); ?>" class="nav-link"><i class="icon-book-open"></i> Data Reward</a>
+        </li>
+
+        <li class="nav-item">
           <a href="<?php echo site_url('Admin_setting'); ?>" class="nav-link"><i class="icon-settings"></i> Pengaturan Akademik</a>
         </li>
 

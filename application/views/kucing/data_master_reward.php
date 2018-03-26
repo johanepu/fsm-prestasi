@@ -1,17 +1,10 @@
-<!-- <style>
-    .table tr {
-        cursor: pointer;
-    }
+<style>
+div.dataTables_wrapper {
+  margin: 0 auto;
+  width: 97%;
+}
+</style>
 
-    .action-table {
-        z-index: 3;
-    }
-
-    .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
-      background-color: #4eb2fc;
-      color:#ffffff;
-    }
-</style> -->
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
   <!-- Main content -->
   <main class="main">
@@ -30,16 +23,23 @@
           <div class="col-lg-12">
             <div class="card">
               <div class="card-header">
-                <i class="fa fa-align-justify"></i> Data Mahasiswa
-                <!-- <a  type="button" class="btn btn-primary" href="<?php echo site_url('Prestasi/addPrestasi'); ?>" style="float: right;"><i class="fa fa-plus"></i>&nbsp; Tambah Prestasi</a> -->
+                <i class="fa fa-align-justify"></i> Data Reward Mahasiswa FSM
               </div>
               <div class="card-body">
                 <div class="row mt">
+                  <div class="form-group col-lg-2">
+                      <select id="status_select" name="select_status" class="form-control select_status">
+                        <option id="reset_status" value="2">Pilih Status</option>
+                        <option value="1">Valid</option>
+                        <option value="0">Belum Valid</option>
+                      </select>
+                  </div>
                   <div class="btn-group col-lg-2">
                     <div class="dropdown">
                       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Cetak Data Sebagai
                       </button>
+
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" id="exportCopy" href="#">Kopi sebagai teks</a>
                         <a class="dropdown-item" id="exportCSV" href="#">CSV</a>
@@ -49,71 +49,75 @@
                       </div>
                     </div>
                   </div>
-                  <div class="form-group col-lg-10">
-                    <input type="text" class="form-control" id="cariUser" placeholder="Cari nama mahasiswa atau atribut mahasiswa">
+                  <div class="form-group col-lg-8">
+                    <input type="text" class="form-control" id="cariReward" placeholder="Cari nama mahasiswa atau atribut mahasiswa">
                 </div>
-                <table id="tabel_user" class="table table-responsive-sm table-striped table-hover">
+                <table id="tabel_reward" style="width: 100%" class="table table-responsive-sm table-bordered table-striped table-sm">
                   <thead>
                     <tr>
                       <th>NIM</th>
-                      <th>Nama Lengkap</th>
-                      <th>Departemen</th>
-                      <th>Email</th>
-                      <th>Nomor HP</th>
-                      <th>Tingkatan</th>
-                      <th>Reward Poin</th>
-                      <th>Aksi</th>
+                      <th>Nama Prestasi</th>
+                      <th>Nama</th>
+                      <th>Tipe Prestasi</th>
+                      <th>Level</th>
+                      <th>Tanggal Kegiatan</th>
+                      <th>Poin</th>
+                      <!-- <th>Aksi</th> -->
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                    foreach($user as $p => $mhs){
+                    foreach($prestasi as $p){
                     ?>
-                    <tr id="<?php echo $mhs->nim?>">
-                      <td ><?php echo $mhs->nim; ?></td>
-                      <td ><?php echo $mhs->namalengkap; ?></td>
-                      <td title="Departemen" name="departemen" id="departemen">
+                    <tr id="<?php echo $p->id_prestasi?>">
+                      <td ><?php echo $p->nim; ?></td>
+                      <td ><?php echo $p->nama_prestasi; ?></td>
+                      <td ><?php echo $p->namalengkap; ?></td>
+                      <td title="Tipe Prestasi" name="tipe_prestasi" id="tipe_prestasi">
                       <?php
-                      if ($mhs->jurusan == "1") {
-                          echo '<span class="label label-success label-mini">Matematika</span>';
-                      }elseif ($mhs->jurusan == "2") {
-                          echo '<span class="label label-warning label-mini">Kimia</span>';
-                      }elseif ($mhs->jurusan == "3") {
-                          echo '<span class="label label-warning label-mini">Biologi</span>';
-                      }elseif ($mhs->jurusan == "4") {
-                          echo '<span class="label label-warning label-mini">Fisika</span>';
-                      }elseif ($mhs->jurusan == "5") {
-                          echo '<span class="label label-warning label-mini">Statistika</span>';
-                      }elseif ($mhs->jurusan == "6") {
-                          echo '<span class="label label-warning label-mini">Informatika</span>';
+                      if ($p->tipe_prestasi == "1") {
+                          echo '<span class="label label-success label-mini">Individu</span>';
+                      }elseif ($p->tipe_prestasi == "2") {
+                          echo '<span class="label label-warning label-mini">Beregu</span>';
                       }
                       ?></td>
-                      <td ><?php echo $mhs->email; ?></td>
-                      <td ><?php echo $mhs->nomor_hp; ?></td>
-                      <td ><?php echo $mhs->tingkatan; ?></td>
-                      <!-- <td ><?php echo $reward_poin[$p]; ?></td> -->
-                      <td >
-                        <?php
-                        if ($reward_poin[$p] <= "0") {
-                          echo '<h5><span class="badge badge-danger">'.$reward_poin[$p].'</span></h5>';
-                        }else {
-                          echo '<h5><span class="badge badge-success">'.$reward_poin[$p].'</span></h5>';
-                        }
-                        ?>
-
-                      <td>
-                          <div class="btn-group action-table" >
-                              <a class="btn btn-success" href="<?php echo site_url('Admin_user/user/'.$mhs->nim);?>"
-                                title="Lihat User">
-                                <i class="fa fa-fw s fa-eye"></i></a>
-                              <button class="btn btn-danger btn-delete" name="delete_user" id="delete_user" title="Hapus User" value="<?=$mhs->nim?>">
-                                <i class="fa fa-fw fa-remove"></i></button>
+                      <td title="Level Prestasi" name="level_prestasi" id="level_prestasi">
+                      <?php
+                      if ($p->level_prestasi == "1") {
+                          echo '<span class="label label-success label-mini">Lokal</span>';
+                      }elseif ($p->level_prestasi == "2") {
+                          echo '<span class="label label-warning label-mini">Nasional</span>';
+                      }elseif ($p->level_prestasi == "3") {
+                          echo '<span class="label label-warning label-mini">Regional</span>';
+                      }elseif ($p->level_prestasi == "4") {
+                          echo '<span class="label label-warning label-mini">Internasional</span>';
+                      }
+                      ?></td>
+                      <td ><?php
+                      $date=date_create($p->tgl_prestasi_start);
+                      echo date_format($date,"d-M-Y");
+                      ?></td>
+                      <td title="Status Prestasi" name="status_prestasi" id="status_prestasi">
+                      <?php
+                      if ($p->validasi == "1") {
+                          echo '<span class="badge badge-success">Poin : '.$p->poin.'</span>';
+                      }elseif ($p->validasi == "0") {
+                          echo '<span class="badge badge-danger">Belum Valid</span>';
+                      }
+                      ?></td>
+                      <!-- <td>
+                          <div class="btn-group" >
+                              <button class="btn btn-primary btn-edit" name="btn-edit" title="Edit Prestasi" value="<?=$p->id_prestasi?>" type="button">
+                                  <i class="fa fa-fw s fa-pencil"></i></button>
+                              <button class="btn btn-danger btn-delete" name="btn-delete" title="Hapus Prestasi" value="<?=$p->id_prestasi?>" type="button">
+                                  <i class="fa fa-fw fa-remove"></i></button>
                           </div>
-                      </td>
+                      </td> -->
                     </tr>
                     <?php }?>
                   </tbody>
                 </table>
+
               </div>
             </div>
           </div>
@@ -150,18 +154,19 @@
 $(document).ready(function(){
 
   // tabel data prestasi datatable
-    tabel_user =  $('#tabel_user').DataTable( {
+    tabel_reward =  $('#tabel_reward').DataTable( {
         "dom": 'lrtipB',
         "sScrollY": "500px",
+        scrollCollapse: true,
+        responsive: true,
         "bPaginate": true,
         "info":     true,
-        responsive: true,
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
       } );
-      $('#cariUser').keyup(function(){
-            tabel_user.search($(this).val()).draw() ;
+      $('#cariReward').keyup(function(){
+            tabel_reward.search($(this).val()).draw() ;
       });
 
       $( 'button.dt-button,button.button-html5' ).hide();
@@ -184,6 +189,15 @@ $(document).ready(function(){
 
       $('#exportPrint').on('click', function() {
         $('.buttons-print').click()
+      });
+
+      if(<?php echo $status_select?>!=2){
+        $('#status_select').val(<?php echo $status_select?>);
+        $('#reset_status').html('Reset Status');
+      }
+      $( '.select_status' ).change(function() {
+        var status_select = $('#status_select').val();
+        document.location = "<?= base_url();?>Admin_reward/tabel/"+status_select;
       });
 
     $(document).on('click', '#delete_user', function(){

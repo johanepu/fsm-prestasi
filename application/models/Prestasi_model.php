@@ -154,6 +154,29 @@ AND   TABLE_NAME   = 'user_prestasi'");
 		return $hasil->result();
 	}
 
+	public function tampil_all_reward(){
+		$this->db->select('*');
+		$this->db->from('reward_prestasi');
+		$this->db->join('user_prestasi' ,
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->join('users' ,
+		'reward_prestasi.nim = users.nim');
+		$hasil = $this->db->get();
+		return $hasil->result();;
+	}
+
+	public function tampil_reward_status($status_select){
+		$this->db->select('*');
+		$this->db->from('reward_prestasi');
+		$this->db->join('user_prestasi' ,
+		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->join('users' ,
+		'reward_prestasi.nim = users.nim');
+		$this->db->where('user_prestasi.validasi',$status_select);
+		$hasil = $this->db->get();
+		return $hasil->result();;
+	}
+
 	function prestasi_per_page($number,$offset, $nim, $query){
 			 $this->db->select('*');
 			 $this->db->from('user_prestasi');

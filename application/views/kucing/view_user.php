@@ -106,8 +106,8 @@
                                     <h6>Tanggal Akun Dibuat</h6>
                                     <p>
                                       <?php
-                                        $tanggal = $data_user[0]->date_created;
-                                        echo $tanggal;
+                                        $date=date_create($data_user[0]->date_created);
+                                        echo date_format($date,"d-M-Y H:i:s");
                                        ?>
                                     </p>
                                 </div>
@@ -163,7 +163,10 @@
                                             echo '<span class="label label-warning label-mini">Internasional</span>';
                                         }
                                         ?></td>
-                                        <td ><?php echo $p->tgl_prestasi_start; ?></td>
+                                        <td ><?php
+                                        $date=date_create($p->tgl_prestasi_start);
+                                        echo date_format($date,"d-M-Y");
+                                        ?></td>
                                         <td title="Status Prestasi" name="status_prestasi" id="status_prestasi">
                                         <?php
                                         if ($p->validasi == "1") {

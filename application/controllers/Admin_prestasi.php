@@ -66,7 +66,7 @@ class Admin_prestasi extends CI_Controller {
 		$data['periode'] = $periode_select;
 		$data['semester'] = $semester_select;
 		$data['setting_reward'] = $this->Prestasi_model->getLevelValue();
-
+		$data['available_nim'] = $this->User_model->get_all_nim();
 		$data['prestasi'] = $data_prestasi;
 		$data['title'] = 'RewardMe - Data Prestasi';
 		$data['content'] = 'kucing/data_master_prestasi.php';
