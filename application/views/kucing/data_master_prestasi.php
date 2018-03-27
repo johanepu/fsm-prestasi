@@ -676,14 +676,13 @@ $(document).ready(function(){
                     id_prestasi:id_prestasi
                   },
                   success: function(data){
+                    location.reload();
                   }
                 });
-                location.reload();
             }
           }
         });
       }
-      location.reload();
     });
 
     $(document).on('click', 'button.btn-delete,button.btn-delete2', function(){

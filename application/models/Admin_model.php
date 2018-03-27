@@ -118,7 +118,8 @@ class Admin_model extends CI_Model {
 
 	function resetPrestasi(){
 			$this->db->empty_table('user_prestasi');
-
+			$this->db->empty_table('periode_prestasi');
+			$this->db->empty_table('reward_prestasi');
 			return true;
 	}
 

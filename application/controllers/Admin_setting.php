@@ -136,7 +136,7 @@ class Admin_setting extends CI_Controller {
 			'<div class="col-md-12 alert alert-warning alert-dismissible fade show" role="alert">
         <strong>Perubahan set berhasil.Pembaruan Poin Diperlukan!</strong>  <br>
 				Data untuk periode tahun <strong>'.$thn.'</strong> semester <strong>'.$semester.'</strong>
-				perlu di validasi ulang!
+				perlu divalidasi ulang!
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>

@@ -492,6 +492,24 @@ class Prestasi extends CI_Controller {
 				'poin' => 0
 			);
 			$this->Prestasi_model->addReward($data);
+			if($this->Prestasi_model->addReward($data))
+			{
+				$this->session->set_flashdata('status_prestasi',
+				'  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
+					<strong>Edit prestasi berhasil!</strong> Silakan cek kembali untuk kebenaran data atau refresh halaman jika ada data yang belum diperbarui.
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div> ');
+			} else {
+				$this->session->set_flashdata('status_prestasi',
+				'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
+					<strong>Edit prestasi gagal!</strong> Silakan cek kembali isian anda.
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div> ');
+			}
 	}
 
 	public function deleteRefPrestasi()
@@ -547,7 +565,7 @@ class Prestasi extends CI_Controller {
 		$semester_input = $this->input->post('smt_prestasi');
 		if ($semester_input==1) {
 			$semester = 'Gasal';
-		} else {
+		} elseif ($semester_input==2) {
 			$semester = 'Genap';
 		}
 
@@ -598,7 +616,7 @@ class Prestasi extends CI_Controller {
 		{
 			$this->session->set_flashdata('status_prestasi',
       '  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Edit prestasi berhasil!</strong> Silakan cek kembali untuk kebenaran data.
+        <strong>Edit prestasi berhasil!</strong> Silakan cek kembali untuk kebenaran data atau refresh halaman jika ada data yang belum diperbarui.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
