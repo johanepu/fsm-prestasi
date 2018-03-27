@@ -220,36 +220,37 @@
                         <input type="text" class="form-control" id="tempat_prestasi_edit" name="tempat_prestasi_edit" placeholder="Tempat kegiatan" required>
                       </div>
                       <div class="form-group text-left">
-                        <label for="" class="">Deskripsi</label>
-                        <textarea class="form-control" id="deskripsi_prestasi_edit" name="deskripsi_prestasi_edit" required></textarea>
-                      </div>
-                      <div class="form-group text-left">
-                        <label for="" class="">Tanggal Kegiatan Dimulai</label>
+                        <label for="" class="">Tanggal Kegiatan</label>
                         <div class="form-group row">
-                          <!-- <input type="text" class="form-control col-md-3" id="tgl_prestasi_start_edit" name="tgl_prestasi_start_edit" placeholder="Kota" disabled> -->
-                          <div class="col-md-9">
+                          <div class="col-md-6">
                             <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-calendar-check-o"></i></span>
                             </div>
-                            <input id="date_start_edit" name="date_start_edit" class="form-control"  type="date">
+                              <input id="date_start_edit" name="date_start_edit" class="form-control" value="<?php echo set_value('date_start'); ?>" type="date" placeholder="Tanggal Mulai" required>
                           </div>
                           </div>
-                        </div>
-                        </div>
-                      <div class="form-group text-left">
-                        <label for="" class="">Tanggal Kegiatan Selesai</label>
-                        <div class="form-group row">
-                          <!-- <input type="text" class="form-control col-md-3" id="tgl_prestasi_start_edit" name="tgl_prestasi_start_edit" placeholder="Kota" disabled> -->
-                          <div class="col-md-9">
+                          <div class="col-md-6">
                             <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
                             </div>
-                            <input id="date_end_edit" name="date_end_edit" class="form-control"  type="date">
-                          </div>
+                              <input id="date_end_edit" name="date_end_edit" class="form-control" value="<?php echo set_value('date_end'); ?>" type="date" placeholder="Tanggal Selesai">
+                            </div>
                           </div>
                         </div>
+                        <div class="form-group text-left">
+                          <label for="" class="">Semester</label>
+                          <select id="smt_prestasi_edit" name="smt_prestasi_edit" class="form-control" value="<?php echo set_value('smt_prestasi'); ?>" required>
+                            <option value="">Pilih Semester</option>
+                            <option value="1">Gasal</option>
+                            <option value="2">Genap</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group text-left">
+                        <label for="" class="">Deskripsi</label>
+                        <textarea class="form-control" id="deskripsi_prestasi_edit" name="deskripsi_prestasi_edit" required></textarea>
                       </div>
                     </div>
 
@@ -441,6 +442,12 @@ $(document).ready(function(){
             }else{
                 $('#peringkat_prestasi_edit').empty();
             }
+            if (prestasi.semester == "Gasal") {
+              var smt_prestasi = 1;
+            } else {
+              var smt_prestasi = 2;
+            }
+            $('#smt_prestasi_edit option[value="'+smt_prestasi+'"]').prop('selected', true);
             $('#penyelenggara_prestasi_edit').val(prestasi.penyelenggara_prestasi);
             $('#tempat_prestasi_edit').val(prestasi.tempat_prestasi);
             $('#deskripsi_prestasi_edit').val(prestasi.deskripsi_prestasi);
@@ -488,8 +495,10 @@ $(document).ready(function(){
     var penyelenggara_prestasi =  $('#penyelenggara_prestasi_edit').val();
     var tempat_prestasi =  $('#tempat_prestasi_edit').val();
     var level_prestasi =  $('#level_prestasi_edit').val();
+    var smt_prestasi =  $('#smt_prestasi_edit').val();
 
-    if(nama_prestasi==''||peringkat_prestasi==''||deskripsi_prestasi==''||penyelenggara_prestasi==''||tempat_prestasi==''||level_prestasi==0)
+    if(nama_prestasi==''||peringkat_prestasi==''||deskripsi_prestasi==''
+    ||penyelenggara_prestasi==''||tempat_prestasi==''||level_prestasi==0||smt_prestasi=='')
     {
         console.log('gagal edit');
         alert('Edit Data Gagal, Cek kembali isian Anda');
@@ -510,6 +519,7 @@ $(document).ready(function(){
                 level_prestasi:level_prestasi,
                 tgl_prestasi_start:tgl_prestasi_start,
                 tgl_prestasi_end:tgl_prestasi_end,
+                smt_prestasi:smt_prestasi,
                 id_prestasi:id_prestasi },
           success: function(data){
           }

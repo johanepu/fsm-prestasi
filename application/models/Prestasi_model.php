@@ -208,6 +208,8 @@ AND   TABLE_NAME   = 'user_prestasi'");
 		$this->db->from('reward_prestasi');
 		$this->db->join('user_prestasi' ,
 		'reward_prestasi.id_prestasi = user_prestasi.id_prestasi');
+		$this->db->join('periode_prestasi' ,
+		'reward_prestasi.id_prestasi = periode_prestasi.id_prestasi');
 		$this->db->where('user_prestasi.id_prestasi', $id_prestasi);
 		$hasil = $this->db->get();
 		if($hasil->num_rows()>0){

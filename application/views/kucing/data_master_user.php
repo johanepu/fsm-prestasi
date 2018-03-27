@@ -52,7 +52,7 @@
                   <div class="form-group col-lg-10">
                     <input type="text" class="form-control" id="cariUser" placeholder="Cari nama mahasiswa atau atribut mahasiswa">
                 </div>
-                <table id="tabel_user" class="table table-responsive-sm table-striped table-hover">
+                <table id="tabel_user" class="table table-responsive-sm table-bordered table-striped table-sm">
                   <thead>
                     <tr>
                       <th>NIM</th>
@@ -152,7 +152,7 @@ $(document).ready(function(){
   // tabel data prestasi datatable
     tabel_user =  $('#tabel_user').DataTable( {
         "dom": 'lrtipB',
-        "sScrollY": "500px",
+        "sScrollY": "550px",
         "bPaginate": true,
         "info":     true,
         responsive: true,

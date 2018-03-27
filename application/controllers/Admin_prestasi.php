@@ -328,6 +328,23 @@ class Admin_prestasi extends CI_Controller {
 		);
 
 		$this->form_validation->set_rules(
+				'smt_prestasi', 'Semester',
+				'required',
+				array(
+								'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+								'
+				)
+		);
+
+		$this->form_validation->set_rules(
 				'deskripsi_prestasi', 'Deskripsi pencapaian',
 				'required',
 				array(
@@ -355,13 +372,22 @@ class Admin_prestasi extends CI_Controller {
 			$id_setting = $this->Prestasi_model->getIdSetting($level_prestasi,$peringkat_prestasi);
 
 			$datetime = new DateTime();
-			$tgl_prestasi = $this->input->post('date_start');
-			// $tgl_prestasi = date('d/m/Y', $date_input);
+			$date_input = strtotime($this->input->post('date_start'));
+			$date_end_input = strtotime($this->input->post('date_end'));
+			// $date_con = date('d-m-y',$date_input);
+			$tgl_prestasi = date('Y-m-d', $date_input);
+			$date_end = date('Y-m-d', $date_end_input);
 
-			$bulan_gasal = $datetime->createFromFormat('d/m/Y','15/07/Y');
-			$bulan_genap = $datetime->createFromFormat('d/m/Y','15/03/Y');
-
-			if ($tgl_prestasi >= $bulan_gasal && $tgl_prestasi < $bulan_genap) {
+			// $bulan_gasal = $datetime->createFromFormat('d/m/Y','15/07/Y');
+			// $bulan_genap = $datetime->createFromFormat('d/m/Y','15/03/Y');
+			//
+			// if ($tgl_prestasi >= $bulan_gasal && $tgl_prestasi < $bulan_genap) {
+			// 	$semester = 'Gasal';
+			// } else {
+			// 	$semester = 'Genap';
+			// }
+			$semester_input = $this->input->post('smt_prestasi');
+			if ($semester_input==1) {
 				$semester = 'Gasal';
 			} else {
 				$semester = 'Genap';
@@ -378,7 +404,7 @@ class Admin_prestasi extends CI_Controller {
 			$data = array(
 				'nim' => $nim,
 				'nama_prestasi' 	=> $this->input->post('nama_prestasi'),
-				'referral_nim' => $this->input->post('referral_prestasi'),
+				'referral_nim' => $referral_prestasi,
 				'jml_anggota' => $jml_anggota,
 				'peringkat_prestasi'  	=> $this->input->post('peringkat_prestasi'),
         'tipe_prestasi'    	=> $this->input->post('tipe_prestasi'),
@@ -390,7 +416,7 @@ class Admin_prestasi extends CI_Controller {
 				'penyelenggara_prestasi'    		=> $this->input->post('penyelenggara_prestasi'),
 				'tempat_prestasi'    		=> $this->input->post('tempat_prestasi'),
 				'tgl_prestasi_start'	=> $tgl_prestasi,
-				'tgl_prestasi_end'	=> $this->input->post('date_end'),
+				'tgl_prestasi_end'	=> $date_end,
 				'date_modified'	=> date('Y-m-d H:i:s')
 			);
 

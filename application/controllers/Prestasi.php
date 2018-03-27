@@ -324,6 +324,23 @@ class Prestasi extends CI_Controller {
 		);
 
 		$this->form_validation->set_rules(
+				'smt_prestasi', 'Semester',
+				'required',
+				array(
+								'required'      => '
+								<div class="form-group row">
+								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+								'
+				)
+		);
+
+		$this->form_validation->set_rules(
 				'deskripsi_prestasi', 'Deskripsi pencapaian',
 				'required',
 				array(
@@ -352,13 +369,22 @@ class Prestasi extends CI_Controller {
 
 
 			$datetime = new DateTime();
-			$tgl_prestasi = $this->input->post('date_start');
-			// $tgl_prestasi = date('d/m/Y', $date_input);
+			$date_input = $this->input->post('date_start');
+			$date_end_input = strtotime($this->input->post('date_end'));
+			// $date_con = date('d-m-y',$date_input);
+			$tgl_prestasi = date('Y-m-d', $date_input);
+			$date_end = date('Y-m-d', $date_end_input);
 
-			$bulan_gasal = $datetime->createFromFormat('d/m/Y','15/07/Y');
-			$bulan_genap = $datetime->createFromFormat('d/m/Y','15/03/Y');
-
-			if ($tgl_prestasi >= $bulan_gasal && $tgl_prestasi < $bulan_genap) {
+			// $bulan_gasal = $datetime->createFromFormat('d/m/Y','15/07/Y');
+			// $bulan_genap = $datetime->createFromFormat('d/m/Y','15/03/Y');
+			//
+			// if ($tgl_prestasi >= $bulan_gasal && $tgl_prestasi < $bulan_genap) {
+			// 	$semester = 'Gasal';
+			// } else {
+			// 	$semester = 'Genap';
+			// }
+			$semester_input = $this->input->post('smt_prestasi');
+			if ($semester_input==1) {
 				$semester = 'Gasal';
 			} else {
 				$semester = 'Genap';
@@ -389,7 +415,7 @@ class Prestasi extends CI_Controller {
 				'penyelenggara_prestasi'    		=> $this->input->post('penyelenggara_prestasi'),
 				'tempat_prestasi'    		=> $this->input->post('tempat_prestasi'),
 				'tgl_prestasi_start'	=> $tgl_prestasi,
-				'tgl_prestasi_end'	=> $this->input->post('date_end'),
+				'tgl_prestasi_end'	=> $date_end,
 				'date_modified'	=> date('Y-m-d H:i:s')
 			);
 
@@ -508,19 +534,29 @@ class Prestasi extends CI_Controller {
 		date_default_timezone_set('Asia/Jakarta');
 		$level_prestasi = $this->input->post('level_prestasi');
 		$peringkat_prestasi = $this->input->post('peringkat_prestasi');
+		$tipe_prestasi = $this->input->post('tipe_prestasi');
 		$reward_point = $this->Prestasi_model->getPoinPrestasi($level_prestasi,$peringkat_prestasi);
 		$id_setting = $this->Prestasi_model->getIdSetting($level_prestasi,$peringkat_prestasi);
 
 		$datetime = new DateTime();
-		$tgl_prestasi = $this->input->post('tgl_prestasi_start');
+		$date_input = strtotime($this->input->post('tgl_prestasi_start'));
+		$date_end_input = strtotime($this->input->post('tgl_prestasi_end'));
+		$tgl_prestasi = date('Y-m-d', $date_input);
+		$date_end = date('Y-m-d', $date_end_input);
 
-		$bulan_gasal = $datetime->createFromFormat('d/m/Y','15/07/Y');
-		$bulan_genap = $datetime->createFromFormat('d/m/Y','15/03/Y');
-
-		if ($tgl_prestasi >= $bulan_gasal && $tgl_prestasi < $bulan_genap) {
+		$semester_input = $this->input->post('smt_prestasi');
+		if ($semester_input==1) {
 			$semester = 'Gasal';
 		} else {
 			$semester = 'Genap';
+		}
+
+		if ($tipe_prestasi == 1) {
+			$referral_prestasi = '';
+			$jml_anggota = 1;
+		} elseif ($tipe_prestasi == 2) {
+			$referral_prestasi = $this->input->post('referral_nim');
+			$jml_anggota = $this->input->post('jml_anggota');
 		}
 
 		$id_prestasi = $this->input->post('id_prestasi');
@@ -529,9 +565,9 @@ class Prestasi extends CI_Controller {
 			'nama_prestasi'=> $this->input->post('nama_prestasi'),
 			'peringkat_prestasi'=> $peringkat_prestasi,
 			'tipe_prestasi'=> $this->input->post('tipe_prestasi'),
-			'referral_nim'=> $this->input->post('referral_nim'),
+			'referral_nim'=> $referral_prestasi,
 			'jenis_prestasi'=> $this->input->post('jenis_prestasi'),
-			'jml_anggota'=>$this->input->post('jml_anggota'),
+			'jml_anggota'=>$jml_anggota,
 			'deskripsi_prestasi'=>$this->input->post('deskripsi_prestasi'),
 			'reward_poin'    		=> $reward_point,
 			'penyelenggara_prestasi' => $this->input->post('penyelenggara_prestasi'),
@@ -539,7 +575,7 @@ class Prestasi extends CI_Controller {
 			'level_prestasi' => $level_prestasi,
 			'id_setting'	=> $id_setting,
 			'tgl_prestasi_start'=>$tgl_prestasi,
-			'tgl_prestasi_end'=>$this->input->post('tgl_prestasi_end'),
+			'tgl_prestasi_end'=>$date_end,
 			'validasi' => 0,
 			'date_modified'	=> date('Y-m-d H:i:s')
 		);

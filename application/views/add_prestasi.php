@@ -151,19 +151,27 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text"><i class="fa fa-calendar-check-o"></i></span>
                         </div>
-                        <input id="date_start" name="date_start" class="form-control" value="<?php echo set_value('date_start'); ?>" type="date">
+                          <input id="date_start" name="date_start" class="form-control" value="<?php echo set_value('date_start'); ?>" type="text" placeholder="Tanggal Mulai" required>
                       </div>
                       </div>
-                    <label class="col-md-2 col-form-label" for="textarea-input">Tanggal Selesai</label>
                       <div class="col-md-3">
                         <div class="input-group">
                         <div class="input-group-prepend">
                           <span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
                         </div>
-                        <input id="date_end" name="date_end" class="form-control" value="<?php echo set_value('date_end'); ?>" type="date">
+                          <input id="date_end" name="date_end" class="form-control" value="<?php echo set_value('date_end'); ?>" type="text" placeholder="Tanggal Selesai">
+                        </div>
                       </div>
-                    </div>
+                      <div class="col-md-3">
+                        <select id="smt_prestasi" name="smt_prestasi" class="form-control" value="<?php echo set_value('smt_prestasi'); ?>" required>
+                          <option value="">Pilih Semester</option>
+                          <option value="1">Gasal</option>
+                          <option value="2">Genap</option>
+                        </select>
                   </div>
+                </div>
+                <?php echo form_error('smt_prestasi'); ?>
+                <?php echo form_error('date_start'); ?>
 
                   <div class="form-group row">
                     <label class="col-md-2 col-form-label" for="textarea-input">Deskripsi Pencapaian</label>
@@ -194,6 +202,9 @@
     $(document).ready(function(){
         $('[data-toggle="referral_tooltip"]').tooltip();
         $('[data-toggle="jml_tooltip"]').tooltip();
+        $("#date_start,#date_end").datepicker({
+          dateFormat: "dd-M-yy"
+        });
 
         $('select[name="level_prestasi"]').on('change', function() {
             var level = $(this).val();
