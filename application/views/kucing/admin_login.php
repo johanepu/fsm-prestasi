@@ -38,7 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
         ?>
         <div class="card-group">
-          <div class="card p-4">
+          <div class="card p-4" style="background-color:rgba(255, 255, 255, 0.7);">
             <div class="card-body">
               <h1>Login Admin</h1>
               <p class="text-muted">Masuk menggunakan akun</p>
@@ -82,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <input type="submit" name="submit"  value="Login" class="btn btn-primary px-4"></button>
                 </div>
                 <div class="col-6 text-right">
-                  <button type="button" class="btn btn-link px-0">Lupa Password?</button>
+                  <!-- <button type="button" class="btn btn-link px-0">Lupa Password?</button> -->
                 </div>
               </div>
               <?php echo form_close(); ?>

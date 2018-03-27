@@ -48,6 +48,7 @@
                                   <?php endif; ?>
                                 </div>
                               </div>
+                              <div class="card-group col-lg-8">
                                 <div class="col-md-6">
                                     <h6>Nama</h6>
                                     <p>
@@ -60,6 +61,18 @@
                                     <h6>Email</h6>
                                     <p>
                                       <?php echo $data_user[0]->email?>
+                                    </p>
+                                    <h6>Jenis Kelamin</h6>
+                                    <p>
+                                      <?php
+                                        $gender = $data_user[0]->gender;
+                                      if ($gender == 'L') {
+                                        echo 'Laki-laki';
+                                      }if ($gender == 'P') {
+                                        echo 'Perempuan';
+                                      }if ($gender == NULL) {
+                                        echo 'User belum mengisi data jenis kelamin';
+                                      }?>
                                     </p>
                                     <h6>Departemen/Jurusan</h6>
                                     <p>
@@ -87,6 +100,9 @@
                                         <?php echo $data_user[0]->tingkatan?>
                                       <?php endif; ?>
                                     </p>
+                                  </div>
+
+                                  <div class="col-md-6">
                                     <h6>Alamat</h6>
                                     <p>
                                       <?php if ($data_user[0]->alamat == NULL): ?>
@@ -110,6 +126,7 @@
                                         echo date_format($date,"d-M-Y H:i:s");
                                        ?>
                                     </p>
+                                  </div>
                                 </div>
                                 <div class="col-md-12">
                                   <br>
@@ -221,6 +238,18 @@
                                 <?php echo form_error('alamat'); ?>
 
                                 <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label form-control-label">Jenis Kelamin</label>
+                                    <div class="col-lg-9">
+                                      <select id="jenis_kelamin" value="" class="form-control" required>
+                                        <option value="">-Pilih-</option>
+                                        <option value="L">Laki-laki</option>
+                                        <option value="P">Perempuan</option>
+                                      </select>
+                                    </div>
+                                </div>
+                                <?php echo form_error('jenis_kelamin'); ?>
+
+                                <div class="form-group row">
                                     <label class="col-lg-3 col-form-label form-control-label">Tingkatan/Tahun Masuk</label>
                                     <div class="col-lg-9">
                                       <select id="profil_tingkatan" value="" placeholder="Tingkatan misal : '2014'" class="form-control">
@@ -247,6 +276,15 @@
                                     </div>
                                 </div>
                                 <?php echo form_error('nomor_hp'); ?>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label form-control-label">Keterangan</label>
+                                    <div class="col-lg-9">
+                                        <input class="form-control" type="text" id="profil_keterangan" value=""
+                                        placeholder="Misal: Penerima Bidikmisi, atau beasiswa lain">
+                                    </div>
+                                </div>
+                                <?php echo form_error('keterangan'); ?>
 
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label form-control-label"></label>
@@ -297,6 +335,7 @@
                 $('#profil_nama').val(mhs.namalengkap);
                 $('#profil_email').val(mhs.email);
                 $('#profil_alamat').val(mhs.alamat);
+                $('#jenis_kelamin option[value="'+mhs.gender+'"]').prop('selected', true);
                 if (mhs.tingkatan == 0) {
                   $('#profil_tingkatan').val('');
                 } else {
@@ -316,9 +355,11 @@
         var tingkatan =  $('#profil_tingkatan').val();
         var nomor_hp =  $('#profil_nomor_hp').val();
         var nim = $('#hidden_nim').val();
+        var keterangan =  $('#profil_keterangan').val();
+        var gender =  $('#jenis_kelamin').val();
 
 
-        if(nama_lengkap==''||email==''||alamat==''||tingkatan==''||nomor_hp==''||nim==''){
+        if(nama_lengkap==''||email==''||alamat==''||tingkatan==''||nomor_hp==''||nim==''||jenis_kelamin==''){
             alert('Data harus diisi lengkap, Cek kembali isian Anda');
             return false;
           }else {
@@ -329,8 +370,10 @@
                     email:email,
                     alamat:alamat,
                     tingkatan:tingkatan,
+                    gender:gender,
                     nomor_hp:nomor_hp,
-                    nim:nim
+                    nim:nim,
+                    keterangan:keterangan
                   },
               success: function(data){
               }

@@ -38,7 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
         ?>
         <div class="card-group">
-          <div class="card p-4">
+          <div class="card p-4" style="background-color:rgba(255, 255, 255, 0.7);">
             <div class="card-body">
               <h1>Login</h1>
               <p class="text-muted">Masuk menggunakan akun</p>
@@ -82,7 +82,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <input type="submit" name="submit"  value="Login" class="btn btn-primary px-4"></button>
                 </div>
                 <div class="col-6 text-right">
-                  <button type="button" class="btn btn-link px-0">Lupa Password?</button>
+                  <button type="button" class="btn btn-link px-0" data-container="body" data-toggle="popover" data-placement="bottom"
+                  data-content="Silakan menghubungi bagian administrasi samping Dekanat FSM.">Lupa Password?</button>
                 </div>
               </div>
               <?php echo form_close(); ?>
@@ -112,6 +113,7 @@ Universitas Diponegoro</h6>
   <script src="<?php echo base_url(); ?>assets/node_modules/jquery/dist/jquery.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/node_modules/popper.js/dist/umd/popper.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/src/js/views/popovers.js"></script>
 
   <script type="text/javascript" src="<?php echo base_url(); ?>assets/src/js/jquery.backstretch.min.js"></script>
   <script>

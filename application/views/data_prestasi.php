@@ -221,13 +221,14 @@
                       </div>
                       <div class="form-group text-left">
                         <label for="" class="">Tanggal Kegiatan</label>
+                        <?php $max = new DateTime();  ?>
                         <div class="form-group row">
                           <div class="col-md-6">
                             <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-calendar-check-o"></i></span>
                             </div>
-                              <input id="date_start_edit" name="date_start_edit" class="form-control" value="<?php echo set_value('date_start'); ?>" type="date" placeholder="Tanggal Mulai" required>
+                              <input id="date_start_edit" name="date_start_edit" class="form-control" value="<?php echo set_value('date_start'); ?>" type="date" max=<?=$max->format("Y-m-d")?> placeholder="Tanggal Mulai" required>
                           </div>
                           </div>
                           <div class="col-md-6">
@@ -235,7 +236,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
                             </div>
-                              <input id="date_end_edit" name="date_end_edit" class="form-control" value="<?php echo set_value('date_end'); ?>" type="date" placeholder="Tanggal Selesai">
+                              <input id="date_end_edit" name="date_end_edit" class="form-control" value="<?php echo set_value('date_end'); ?>" type="date" max=<?=$max->format("Y-m-d")?> placeholder="Tanggal Selesai">
                             </div>
                           </div>
                         </div>
@@ -249,7 +250,7 @@
                         </div>
                       </div>
                       <div class="form-group text-left">
-                        <label for="" class="">Deskripsi</label>
+                        <label for="" class="">Informasi Tambahan</label>
                         <textarea class="form-control" id="deskripsi_prestasi_edit" name="deskripsi_prestasi_edit" required></textarea>
                       </div>
                     </div>

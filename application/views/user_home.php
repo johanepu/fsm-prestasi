@@ -25,11 +25,11 @@
                 <div class="card-body">
                   <div class="jumbotron">
                     <h1 class="display-3">Selamat Datang !</h1>
-                    <p class="lead">RewardMe merupakan sistem pendataan mahasiswa berprestasi FSM, sistem ini juga menghitung <u>Reward Point</u>
+                    <p class="lead">RewardMe merupakan sistem pendataan mahasiswa berprestasi FSM, sistem ini juga menghitung <strong>Reward Point</strong>
                       yang nantinya menjadi bahan pertimbangan keperluan akademis dan penilaian mahasiswa.</p>
                     <hr class="my-4">
-                    <p>Anda belum memiliki prestasi di sistem. Silakan klik tombol "Tambah Prestasi" untuk mulai menambah prestasi atau "Edit Profil" untuk melengkapi profil anda.</p>
-                    <p>Kelengkapan profil/biodata anda akan menjadi pertimbangan validasi prestasi anda.</p>
+                    <p>Anda belum memiliki prestasi di sistem. Silakan klik tombol "Tambah Prestasi" untuk mulai menambah prestasi atau "Edit Profil" untuk melengkapi profil Anda.</p>
+                    <p>Kelengkapan profil/biodata akan menjadi pertimbangan validasi prestasi.</p>
                     <p class="lead">
                       <a class="btn btn-primary btn-lg" href="<?php echo site_url('Prestasi/addPrestasi'); ?>" role="button">Tambah Prestasi</a>
                       <a class="btn btn-danger btn-lg" href="<?php echo site_url('User_profile'); ?>" role="button">Lengkapi Profil</a>

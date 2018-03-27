@@ -88,8 +88,8 @@
                       <a href="#" data-toggle="skala_tooltip"
                       title="1. Lokal ⇒ Untuk prestasi di ruang lingkup daerah lokal atau lingkup universitas.
 2. Regional ⇒ Untuk prestasi yang di lingkup daerah/provinsi.
-3. Nasional ⇒ Untuk prestasi di lingkup nasional (dalam negeri) saja.
-4. Internasional ⇒ Untuk prestasi di tingkat luar negara."><h7>info</h7></a>
+3. Nasional ⇒ Untuk prestasi di lingkup nasional (dalam negeri).
+4. Internasional ⇒ Untuk prestasi di tingkat luar negeri."><h7>info</h7></a>
                     </label>
                     <div class="col-md-3">
                       <select id="level_prestasi" name="level_prestasi" class="form-control">
@@ -174,9 +174,9 @@
                 <?php echo form_error('date_start'); ?>
 
                   <div class="form-group row">
-                    <label class="col-md-2 col-form-label" for="textarea-input">Deskripsi Pencapaian</label>
+                    <label class="col-md-2 col-form-label" for="textarea-input">Informasi Tambahan</label>
                     <div class="col-md-9">
-                      <textarea id="deskripsi_prestasi" name="deskripsi_prestasi" rows="9" class="form-control" value="<?php echo set_value('deskripsi_prestasi'); ?>" placeholder="Ceritakan lebih lanjut mengenai pencapaian Anda.."></textarea>
+                      <textarea id="deskripsi_prestasi" name="deskripsi_prestasi" rows="9" class="form-control" value="<?php echo set_value('deskripsi_prestasi'); ?>" placeholder="Berikan informasi lain mengenai prestasi misal: nama pembimbing, jumlah dana delegasi dll.."></textarea>
                     </div>
                   </div>
                   <?php echo form_error('deskripsi_prestasi'); ?>
@@ -204,6 +204,9 @@
       $('[data-toggle="referral_tooltip"]').tooltip();
       $('[data-toggle="jml_tooltip"]').tooltip();
       $("#date_start,#date_end").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        maxDate: "-0D",
         dateFormat: "dd-M-yy"
       });
 

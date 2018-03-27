@@ -301,7 +301,7 @@
                         </div>
                       </div>
                       <div class="form-group text-left">
-                        <label for="" class="">Deskripsi</label>
+                        <label for="" class="">Informasi Tambahan</label>
                         <textarea class="form-control" id="deskripsi_prestasi_edit" name="deskripsi_prestasi_edit" required></textarea>
                       </div>
                     </div>

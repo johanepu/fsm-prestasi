@@ -339,23 +339,22 @@ class Prestasi extends CI_Controller {
 								'
 				)
 		);
-
-		$this->form_validation->set_rules(
-				'deskripsi_prestasi', 'Deskripsi pencapaian',
-				'required',
-				array(
-								'required'      => '
-								<div class="form-group row">
-								<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
-									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
-									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-										<span aria-hidden="true">×</span>
-									</button>
-								</div>
-								</div>
-								'
-				)
-		);
+		// $this->form_validation->set_rules(
+		// 		'deskripsi_prestasi', 'Deskripsi pencapaian',
+		// 		'required',
+		// 		array(
+		// 						'required'      => '
+		// 						<div class="form-group row">
+		// 						<div style="margin-left: 180px" class="alert alert-danger alert-dismissible fade show col-md-8" role="alert">
+		// 							<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+		// 							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		// 								<span aria-hidden="true">×</span>
+		// 							</button>
+		// 						</div>
+		// 						</div>
+		// 						'
+		// 		)
+		// );
 
 		if ($this->form_validation->run() == true)
 		{
@@ -369,7 +368,7 @@ class Prestasi extends CI_Controller {
 
 
 			$datetime = new DateTime();
-			$date_input = $this->input->post('date_start');
+			$date_input = strtotime($this->input->post('date_start'));
 			$date_end_input = strtotime($this->input->post('date_end'));
 			// $date_con = date('d-m-y',$date_input);
 			$tgl_prestasi = date('Y-m-d', $date_input);
@@ -491,7 +490,6 @@ class Prestasi extends CI_Controller {
 				'nim' => $nim,
 				'poin' => 0
 			);
-			$this->Prestasi_model->addReward($data);
 			if($this->Prestasi_model->addReward($data))
 			{
 				$this->session->set_flashdata('status_prestasi',

@@ -218,18 +218,20 @@ class User_profile extends CI_Controller {
 		$namalengkap= $this->input->post('namalengkap');
 		$email=$this->input->post('email');
 		$alamat=$this->input->post('alamat');
+		$gender=$this->input->post('gender');
 		$tingkatan=$this->input->post('tingkatan');
 		$nomor_hp=$this->input->post('nomor_hp');
 		$keterangan=$this->input->post('keterangan');
 
 		$nim = $this->session->userdata('nim');
 		$data=array(
-			'namalengkap'=> $this->input->post('namalengkap'),
-			'email'=>$this->input->post('email'),
-			'alamat'=>$this->input->post('alamat'),
-			'tingkatan'=>$this->input->post('tingkatan'),
-			'nomor_hp'=>$this->input->post('nomor_hp'),
-			'keterangan'=>$this->input->post('keterangan')
+			'namalengkap'=> $namalengkap,
+			'email'=>$email,
+			'alamat'=>$alamat,
+			'gender'=>$gender,
+			'tingkatan'=>$tingkatan,
+			'nomor_hp'=>$nomor_hp,
+			'keterangan'=>$keterangan
 		);
 
 		$where = array(
@@ -247,6 +249,7 @@ class User_profile extends CI_Controller {
 			$this->session->set_userdata('namalengkap',$namalengkap);
 			$this->session->set_userdata('email',$email);
 			$this->session->set_userdata('alamat',$alamat);
+			$this->session->set_userdata('gender',$gender);
 			$this->session->set_userdata('tingkatan',$tingkatan);
 			$this->session->set_userdata('nomor_hp',$nomor_hp);
 			$this->session->set_userdata('keterangan',$keterangan);
@@ -268,7 +271,7 @@ class User_profile extends CI_Controller {
 
 		$config['upload_path']          = './image-upload/';
 		$config['allowed_types']        = 'gif|jpg|png';
-		$config['max_size']             = 2000;
+		$config['max_size']             = 2048;
 		$config['max_width']            = 3000;
 		$config['max_height']           = 3000;
 
@@ -286,7 +289,7 @@ class User_profile extends CI_Controller {
 				$this->session->set_userdata('foto',$photo);
 				$this->session->set_flashdata('profile_photo_status',
 				'  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
-					<strong>Uppload foto berhasil!</strong> Silakan cek kembali untuk kebenaran data.
+					<strong>Upload foto berhasil!</strong> Silakan cek kembali untuk kebenaran data.
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
@@ -295,7 +298,7 @@ class User_profile extends CI_Controller {
 			} else {
 				$this->session->set_flashdata('profile_photo_status',
 				'  <div class="col-md-12 alert alert-danger alert-dismissible fade show" role="alert">
-					<strong>Uppload foto gagal!</strong> Silakan upload foto dengan resolusi lebih kecil dari 3000x3000 px.
+					<strong>Upload foto gagal!</strong> Silakan upload foto dengan resolusi lebih kecil dari 3000x3000 px.
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>

@@ -63,13 +63,18 @@
                                           <input type="file" id="photo_file" name="profile_photo" class="custom-file-input btn-primary"
                                            onchange='changeEventHandler(event);' accept="image/x-png,image/gif,image/jpeg,image/jpg" required hidden>
                                           <span class="btn btn-primary">Pilih file</span>
-                                          <input type="submit" id="upload" class="btn btn-success"style="margin-left:2px" value="Upload" disabled>
-                                          <!-- <span class="btn btn-success">Upload</span> -->
+                                          <input type="submit" id="upload" class="btn btn-success" style="margin-left:2px" value="Upload" disabled>
                                         </div>
                                       </label>
+                                      <?php if ($this->session->userdata('foto')==NULL): ?>
+                                      <div class="text-left">
+                                        <p>*File gambar berukuran max 2MB</p>
+                                      </div>
+                                      <?php endif; ?>
                                     </div>
                                 </div>
                               </div>
+                              <div class="card-group col-lg-8">
                                 <div class="col-md-6">
                                     <h6>Nama</h6>
                                     <p>
@@ -82,6 +87,18 @@
                                     <h6>Email</h6>
                                     <p>
                                       <?php echo $this->session->userdata('email')?>
+                                    </p>
+                                    <h6>Jenis Kelamin</h6>
+                                    <p>
+                                      <?php
+                                        $gender = $this->session->userdata('gender');
+                                      if ($gender == 'L') {
+                                        echo 'Laki-laki';
+                                      }if ($gender == 'P') {
+                                        echo 'Perempuan';
+                                      }if ($gender == NULL) {
+                                        echo 'Harap isi di Ubah biodata';
+                                      }?>
                                     </p>
                                     <h6>Departemen/Jurusan</h6>
                                     <p>
@@ -104,15 +121,18 @@
                                     <h6>Angkatan</h6>
                                     <p>
                                       <?php if ($this->session->userdata('tingkatan') == 0): ?>
-                                        <?php echo 'Harap isi di ubah biodata'?>
+                                        <?php echo 'Harap isi di Ubah biodata'?>
                                       <?php else: ?>
                                         <?php echo $this->session->userdata('tingkatan')?>
                                       <?php endif; ?>
                                     </p>
+                                  </div>
+
+                                  <div class="col-md-6">
                                     <h6>Alamat</h6>
                                     <p>
                                       <?php if ($this->session->userdata('alamat') == NULL): ?>
-                                        <?php echo 'Harap isi di ubah biodata'?>
+                                        <?php echo 'Harap isi di Ubah biodata'?>
                                       <?php else: ?>
                                         <?php echo $this->session->userdata('alamat')?>
                                       <?php endif; ?>
@@ -120,7 +140,7 @@
                                     <h6>Kontak</h6>
                                     <p>
                                       <?php if ($this->session->userdata('nomor_hp') == NULL): ?>
-                                        <?php echo 'Harap isi di ubah biodata'?>
+                                        <?php echo 'Harap isi di Ubah biodata'?>
                                       <?php else: ?>
                                         <?php echo $this->session->userdata('nomor_hp')?>
                                       <?php endif; ?>
@@ -128,7 +148,7 @@
                                     <h6>Keterangan</h6>
                                     <p>
                                       <?php if ($this->session->userdata('keterangan') == NULL): ?>
-                                        <?php echo 'Harap isi di ubah biodata'?>
+                                        <?php echo 'Harap isi di Ubah biodata'?>
                                       <?php else: ?>
                                         <?php echo $this->session->userdata('keterangan')?>
                                       <?php endif; ?>
@@ -136,14 +156,14 @@
                                     <h6>Tanggal Akun Dibuat</h6>
                                     <p>
                                       <?php
-                                        $tanggal = $this->session->userdata('date_created');
-                                        echo $tanggal;
+                                        $tanggal = date_create($this->session->userdata('date_created'));
+                                        echo  date_format($tanggal,"d-M-Y H:i:s");
                                        ?>
                                     </p>
-
                                 </div>
                             </div>
-                            <!--/row-->
+                          </div>
+                        <!--/row-->
                         </div>
 
                         <div class="tab-pane" id="edit">
@@ -174,9 +194,21 @@
                                 <?php echo form_error('alamat'); ?>
 
                                 <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label form-control-label">Jenis Kelamin</label>
+                                    <div class="col-lg-9">
+                                      <select id="jenis_kelamin" value="" class="form-control" required>
+                                        <option value="">-Pilih-</option>
+                                        <option value="L">Laki-laki</option>
+                                        <option value="P">Perempuan</option>
+                                      </select>
+                                    </div>
+                                </div>
+                                <?php echo form_error('jenis_kelamin'); ?>
+
+                                <div class="form-group row">
                                     <label class="col-lg-3 col-form-label form-control-label">Tingkatan/Tahun Masuk</label>
                                     <div class="col-lg-9">
-                                      <select id="profil_tingkatan" value="" placeholder="Tingkatan misal : '2014'" class="form-control">
+                                      <select id="profil_tingkatan" value="" placeholder="Tingkatan misal : '2014'" class="form-control" required>
                                         <option value="">Tahun Tingkatan</option>
                                         <option value="2011">2011</option>
                                         <option value="2012">2012</option>
@@ -250,6 +282,7 @@
                 $('#profil_nama').val(mhs.namalengkap);
                 $('#profil_email').val(mhs.email);
                 $('#profil_alamat').val(mhs.alamat);
+                $('#jenis_kelamin option[value="'+mhs.gender+'"]').prop('selected', true);
                 if (mhs.tingkatan == 0) {
                   $('#profil_tingkatan').val('');
                 } else {
@@ -269,9 +302,9 @@
         var tingkatan =  $('#profil_tingkatan').val();
         var nomor_hp =  $('#profil_nomor_hp').val();
         var keterangan =  $('#profil_keterangan').val();
+        var gender =  $('#jenis_kelamin').val();
 
-
-        if(nama_lengkap==''||email==''||alamat==''||tingkatan==''||nomor_hp==''||keterangan==''){
+        if(nama_lengkap==''||email==''||alamat==''||tingkatan==''||nomor_hp==''||jenis_kelamin==''){
             alert('Data harus diisi lengkap, Cek kembali isian Anda');
             return false;
           }else {
@@ -281,6 +314,7 @@
               data: {namalengkap:nama_lengkap,
                     email:email,
                     alamat:alamat,
+                    gender:gender,
                     tingkatan:tingkatan,
                     nomor_hp:nomor_hp,
                     keterangan:keterangan
@@ -331,7 +365,6 @@
               method:"post",
               data:{query:query},
               success:function(data){
-                // alert('dasdf');
                 $('#tabel-prestasi').remove();
                 $('#hasilCari').html(data);
               }
