@@ -25,6 +25,10 @@
 
 </head>
 
+<style>
+  .icon-refresh { line-height:30px;}
+</style>
+
 <body class="app flex-row align-items-center">
   <div class="container">
     <div class="row justify-content-center">
@@ -33,6 +37,10 @@
           <div class="card-body p-4">
             <h1>Register</h1>
             <p class="text-muted">Buat Akun Baru</p>
+            <?php if($this->session->flashdata('info2')){
+              echo $this->session->flashdata('info2');
+            }
+            ?>
             <?php echo form_open("register");?>
 
             <?php echo form_error('namalengkap'); ?>
@@ -91,6 +99,16 @@
               <input type="password" class="form-control" name="passwordconf" value="<?php echo set_value('passwordconf'); ?>" placeholder="Ulangi Password" size="50" />
             </div>
 
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <a href="javascript:void(0);" class="btn btn-primary refreshCaptcha" ><i class="icon-refresh"></i></a>
+                  <span class="input-group-text" id="captImg"><?php echo $captchaImg; ?></span>
+                </div>
+                <input type="text" class="form-control" name="captcha" value=""  placeholder="Tulis captcha"/>
+              </div>
+
+
             <div><input type="submit" value="Submit" class="btn btn-block btn-success"></div>
           </div>
           <div class="card-footer p-4">
@@ -113,6 +131,13 @@
   <script type="text/javascript" src="<?php echo base_url(); ?>assets/src/js/jquery.backstretch.min.js"></script>
   <script>
       $.backstretch("<?php echo base_url(); ?>assets/src/img/dekanat.jpg", {speed: 500});
+      $(document).ready(function(){
+        $('.refreshCaptcha').on('click', function(){
+            $.get('<?php echo base_url().'register/refresh'; ?>', function(data){
+                $('#captImg').html(data);
+            });
+        });
+    });
   </script>
 
 </body>

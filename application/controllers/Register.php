@@ -5,7 +5,7 @@ class Register extends CI_Controller
     public function __construct() {
         parent:: __construct();
 
-        $this->load->helper(array('form', 'url'));
+        $this->load->helper(array('form', 'url', 'captcha'));
         $this->load->library(array('session', 'form_validation', 'email'));
         $this->load->model('Register_model');
     }
@@ -24,33 +24,27 @@ class Register extends CI_Controller
         'required|trim|alpha_numeric_spaces|is_unique[users.namalengkap]',
         array(
                 'required'      => '
-                <div style="margin-bottom: -20px"class="form-group row">
-								<div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+								<div class="alert alert-danger alert-dismissible fade show " role="alert">
 									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
 									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 										<span aria-hidden="true">×</span>
 									</button>
 								</div>
-								</div>
                 ',
                 'alpha_numeric_spaces'      => '
-                <div style="margin-bottom: -20px" class="form-group row">
-                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show " role="alert">
                   <strong>Data belum benar!</strong> %s tidak boleh berisi karakter lain
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
                 </div>
-                </div>
                 ',
                 'is_unique'     => '
-                <div style="margin-bottom: -20px" class="form-group row">
-                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show " role="alert">
                   <strong>Data redundan!</strong> Nama sudah digunakan
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
-                </div>
                 </div>
                 ',
         )
@@ -60,23 +54,19 @@ class Register extends CI_Controller
         'required|callback_check_default',
         array(
                 'required'      => '
-                <div style="margin-bottom: -20px"class="form-group row">
-								<div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+								<div class="alert alert-danger alert-dismissible fade show " role="alert">
 									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
 									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 										<span aria-hidden="true">×</span>
 									</button>
 								</div>
-								</div>
                 ',
                 'check_default'      => '
-                <div style="margin-bottom: -20px"class="form-group row">
-                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show " role="alert">
                   <strong>Data belum lengkap!</strong> Anda belum mengisi %s.
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
-                </div>
                 </div>
                 '
         )
@@ -86,53 +76,43 @@ class Register extends CI_Controller
         'required|min_length[14]|max_length[14]|callback_nim_validation|numeric|is_unique[users.nim]',
         array(
                 'required'      => '
-                <div style="margin-bottom: -20px"class="form-group row">
-								<div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+								<div class="alert alert-danger alert-dismissible fade show " role="alert">
 									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
 									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 										<span aria-hidden="true">×</span>
 									</button>
 								</div>
-								</div>
                 ',
                 'numeric'      => '
-                <div style="margin-bottom: -20px" class="form-group row">
-                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show " role="alert">
                   <strong>Data belum benar!</strong> NIM hanya diisi angka
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
                 </div>
-                </div>
                 ',
                 'is_unique'     => '
-                <div style="margin-bottom: -20px" class="form-group row">
-                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show " role="alert">
                   <strong>Data redundan!</strong> NIM sudah digunakan
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
                 </div>
-                </div>
                 ',
                 'min_length'     => '
-                <div style="margin-bottom: -20px" class="form-group row">
-                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show " role="alert">
                   <strong>NIM 14 digit!</strong> Jumlah digit NIM kurang dari format
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
                 </div>
-                </div>
                 ',
                 'max_length'     => '
-                <div style="margin-bottom: -20px" class="form-group row">
-                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show " role="alert">
                   <strong>NIM 14 digit!</strong> Jumlah digit NIM lebih dari format
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
-                </div>
                 </div>
                 ',
         )
@@ -142,33 +122,27 @@ class Register extends CI_Controller
         'required|valid_email|is_unique[users.email]',
         array(
                 'required'      => '
-                <div style="margin-bottom: -20px"class="form-group row">
-								<div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+								<div class="alert alert-danger alert-dismissible fade show" role="alert">
 									<strong>Data belum lengkap!</strong> Anda belum mengisi %s
 									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 										<span aria-hidden="true">×</span>
 									</button>
 								</div>
-								</div>
                 ',
                 'is_unique'     => '
-                <div style="margin-bottom: -20px" class="form-group row">
-                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
                   <strong>Data redundan!</strong> Email sudah digunakan
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
                 </div>
-                </div>
                 ',
                 'valid_email'     => '
-                <div style="margin-bottom: -20px" class="form-group row">
-                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
                   <strong>Data belum benar!</strong> Format email tidak valid
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
-                </div>
                 </div>
                 ',
         )
@@ -178,33 +152,26 @@ class Register extends CI_Controller
         'required|matches[passwordconf]|min_length[5]',
         array(
                 'required'      => '
-                <div style="margin-bottom: -20px"class="form-group row">
-                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
                   <strong>Data belum lengkap!</strong>   %s perlu diisi untuk login.
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
                 </div>
-                </div>
                 ',
                 'matches'     => '
-                <div style="margin-bottom: -20px"class="form-group row">
-                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
                   <strong>Data belum benar!</strong>   %s tidak cocok
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
-                </div>
-                </div>
                 ',
                 'min_length'     => '
-                <div style="margin-bottom: -20px"class="form-group row">
-                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
                   <strong>Data belum lengkap!</strong>  %s tidak boleh kurang dari 5 karakter
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
-                </div>
                 </div>
                 ',
         )
@@ -214,21 +181,21 @@ class Register extends CI_Controller
         'required',
         array(
                 'required'      => '
-                <div style="margin-bottom: -20px"class="form-group row">
 								<div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
 									<strong>Data belum lengkap!</strong>   %s perlu diisi untuk konfirmasi
 									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 										<span aria-hidden="true">×</span>
 									</button>
 								</div>
-								</div>
                 ',
         )
     );
-
+    $inputCaptcha = $this->input->post('captcha');
+    $sessCaptcha = $this->session->userdata('captchaCode');
 		if ($this->form_validation->run() == true)
 		{
       date_default_timezone_set('Asia/Jakarta');
+
 			$data = array(
 				'namalengkap' 	=> ucwords($this->input->post('namalengkap')),
 				'jurusan'  	=> $this->input->post('jurusan'),
@@ -238,27 +205,95 @@ class Register extends CI_Controller
 				'date_created'	=> date('Y-m-d H:i:s'),
 			);
 		}
-		if ($this->form_validation->run() == true && $this->Register_model->register($data))
-		{
-			//check to see if we are creating the user
-			//redirect them to checkout page
-      $this->session->set_flashdata('info',
-      '  <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Registrasi Berhasil!</strong> Silakan gunakan NIM dan password anda untuk login.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div> ');
-			redirect('success');
-		}
+    if ($inputCaptcha === $sessCaptcha) {
+      if ($this->form_validation->run() == true && $this->Register_model->register($data))
+      {
+        //check to see if we are creating the user
+        //redirect them to checkout page
+        $this->session->set_flashdata('info',
+        '  <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Registrasi Berhasil!</strong> Silakan gunakan NIM dan password anda untuk login.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div> ');
+        redirect('success');
+      }
+    }
 		else
 		{
+      if ($this->session->userdata('captchaCode') != 0) {
+        $this->session->set_flashdata('info2',
+        '  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Captcha tidak sesuai!</strong> Silakan coba kembali
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div> ');
+      }
+      $config = array(
+          'img_path'	 => './captcha/',
+          'img_url'	 => base_url().'captcha/',
+          'img_width'	 => '200',
+          'font_path'     => './captcha/fonts/PlayfairDisplay-Regular.otf',
+          'img_height' => 30,
+          'word_length'   => 5,
+          'font_size'     => 20,
+          'pool'   => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+          'expiration' => 7200,
+          // White background and border, black text and red grid
+          'colors'    => array(
+          'background' => array(255, 255, 255),
+          'border' => array(255, 255, 255),
+          'text' => array(70, 70, 70),
+          'grid' => array(104, 210, 231)
+          )
+      );
+      $this->load->helper('captcha');
+      $captcha = create_captcha($config);
+      // Unset previous captcha and store new captcha word
+      $this->session->unset_userdata('captchaCode');
+      $this->session->set_userdata('captchaCode',$captcha['word']);
+
+      // Send captcha image to view
+      $data['captchaImg'] = $captcha['image'];
+
 			//display the create user form
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->session->flashdata('message')));
-			$this->load->view('user_register', $this->data);
+			$this->load->view('user_register', $data);
 		}
 	}
+
+  public function refresh(){
+        // Captcha configuration
+        $config = array(
+            'img_path'	 => './captcha/',
+            'img_url'	 => base_url().'captcha/',
+            'img_width'	 => '200',
+            'font_path'     => './captcha/fonts/PlayfairDisplay-Regular.otf',
+            'img_height' => 30,
+            'word_length'   => 5,
+            'font_size'     => 20,
+            'pool'   => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            'expiration' => 7200,
+            // White background and border, black text and red grid
+            'colors'    => array(
+            'background' => array(255, 255, 255),
+            'border' => array(255, 255, 255),
+            'text' => array(70, 70, 70),
+            'grid' => array(104, 210, 231)
+            )
+        );
+        $captcha = create_captcha($config);
+
+        // Unset previous captcha and store new captcha word
+        $this->session->unset_userdata('captchaCode');
+        $this->session->set_userdata('captchaCode',$captcha['word']);
+
+        // Display captcha image
+        echo $captcha['image'];
+    }
 
 	function success()
 	{
