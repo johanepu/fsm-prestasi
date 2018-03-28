@@ -29,7 +29,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <div class="card mx-4">
+        <div class="card mx-4" style="background-color:rgba(255, 255, 255, 0.7);">
           <div class="card-body p-4">
             <h1>Register</h1>
             <p class="text-muted">Buat Akun Baru</p>
@@ -48,10 +48,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-graduation"></i></span>
               </div>
-              <!-- <select id="jurusan" name="jurusan" class="form-control">
-                <option <?php echo form_dropdown('jurusan', $jurusan, set_value('jurusan'));?>
-              </select> -->
-              <select id="jurusan" name="jurusan" class="form-control">
+              <select id="jurusan" name="jurusan" class="form-control" required>
                 <option value="">Departemen/Jurusan</option>
                 <option value="1">Matematika</option>
                 <option value="2">Biologi</option>
@@ -94,24 +91,11 @@
               <input type="password" class="form-control" name="passwordconf" value="<?php echo set_value('passwordconf'); ?>" placeholder="Ulangi Password" size="50" />
             </div>
 
-            <!-- <?php echo form_error('agree'); ?>
-            <div class="input-group mb-3">
-              <div class="form-check checkbox">
-                <input class="form-check-input" type="checkbox" name="agree" value="<?php echo set_value('agree'); ?>">
-
-                 <label class="form-check-label" for="check1">
-                   Saya menyetujui segala <a href="">ketentuan terkait keaslian</a>  pengisian data
-                 </label>
-              </div>
-            </div> -->
-
-
-
             <div><input type="submit" value="Submit" class="btn btn-block btn-success"></div>
           </div>
           <div class="card-footer p-4">
             <div class="row">
-              <td align="left">Sudah Punya akun? <a href="<?php echo site_url('User_login'); ?>">Login disini</a></td>
+              <td align="left">Sudah punya akun? &nbsp;<a href="<?php echo site_url('User_login'); ?>">Login disini</a></td>
             </div>
           </div>
 

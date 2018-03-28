@@ -28,7 +28,6 @@
   <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet">
   <link type="text/css" href="<?php echo base_url(); ?>assets/src/css/style.css" rel="stylesheet">
   <!-- Styles required by this views -->
-  <!-- <link type="text/css" href="<?php echo base_url(); ?>assets/autocomplete/content/jquery.autocomplete.css" rel="stylesheet"> -->
   <link type="text/css" href="<?php echo base_url(); ?>assets/node_modules/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet">
   <!-- Include Date Range Picker -->
   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/bootstrap-daterangepicker-master/daterangepicker.css" rel="stylesheet">
@@ -48,14 +47,10 @@
   <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <!-- <a class="navbar-brand" href="#"></a> -->
-  <!-- <a href="<?php echo site_url('User_home'); ?>" class="logo-fsm">
-            <img src="<?php echo base_url(); ?>assets/src/img/logo fsm.png" alt="Logo" class="logo-fsm">
-        </a> -->
-  <a href="<?php echo site_url('User_home'); ?>" style="margin-left:20px; margin-right:45px"class="logo pointbtn">
+  <a href="<?php echo site_url('User_home'); ?>" style="margin-left:20px" class="logo pointbtn">
     <img width="100" src="<?php echo base_url(); ?>assets/src/img/logo_fsm.png">
   </a>
-  <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
+  <button class="navbar-toggler sidebar-toggler d-md-down-none" style="margin-left:40px" type="button">
     <span class="navbar-toggler-icon"></span>
   </button>
 

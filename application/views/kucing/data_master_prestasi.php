@@ -1,3 +1,8 @@
+<style>
+  ul.ui-autocomplete {
+      z-index: 1100;
+  }
+</style>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
   <!-- Main content -->
   <main class="main">
@@ -404,45 +409,45 @@ $(document).ready(function(){
     });
 
     $( function() {
-    var available_nim = <?= json_encode($available_nim) ?>;
-    function split( val ) {
-      return val.split( /,\s*/ );
-    }
-    function extractLast( term ) {
-      return split( term ).pop();
-    }
+      var available_nim = <?= json_encode($available_nim) ?>;
+      function split( val ) {
+        return val.split( /,\s*/ );
+      }
+      function extractLast( term ) {
+        return split( term ).pop();
+      }
 
-    $( "#referral_prestasi_edit" )
-      // don't navigate away from the field on tab when selecting an item
-      .on( "keydown", function( event ) {
-        if ( event.keyCode === $.ui.keyCode.TAB &&
-            $( this ).autocomplete( "instance" ).menu.active ) {
-          event.preventDefault();
-        }
-      })
-      .autocomplete({
-        minLength: 0,
-        source: function( request, response ) {
-          // delegate back to autocomplete, but extract the last term
-          response( $.ui.autocomplete.filter(
-            available_nim, extractLast( request.term ) ) );
-        },
-        focus: function() {
-          // prevent value inserted on focus
-          return false;
-        },
-        select: function( event, ui ) {
-          var terms = split( this.value );
-          // remove the current input
-          terms.pop();
-          // add the selected item
-          terms.push( ui.item.value );
-          // add placeholder to get the comma-and-space at the end
-          terms.push( "" );
-          this.value = terms.join( ", " );
-          return false;
-        }
-      });
+      $( "#referral_prestasi_edit" )
+        // don't navigate away from the field on tab when selecting an item
+        .on( "keydown", function( event ) {
+          if ( event.keyCode === $.ui.keyCode.TAB &&
+              $( this ).autocomplete( "instance" ).menu.active ) {
+            event.preventDefault();
+          }
+        })
+        .autocomplete({
+          minLength: 0,
+          source: function( request, response ) {
+            // delegate back to autocomplete, but extract the last term
+            response( $.ui.autocomplete.filter(
+              available_nim, extractLast( request.term ) ) );
+          },
+          focus: function() {
+            // prevent value inserted on focus
+            return false;
+          },
+          select: function( event, ui ) {
+            var terms = split( this.value );
+            // remove the current input
+            terms.pop();
+            // add the selected item
+            terms.push( ui.item.value );
+            // add placeholder to get the comma-and-space at the end
+            terms.push( "" );
+            this.value = terms.join( ", " );
+            return false;
+          }
+        });
     } );
   // tabel data prestasi datatable
     tabel_prestasi =  $('#tabel_prestasi').DataTable( {
@@ -584,6 +589,8 @@ $(document).ready(function(){
     var nama_prestasi = $('#nama_prestasi_edit').val();
     var peringkat_prestasi = $('#peringkat_prestasi_edit').val();
     var deskripsi_prestasi =  $('#deskripsi_prestasi_edit').val();
+    var jml_anggota = $('#jml_anggota_edit').val();
+    var referral_nim =  $('#referral_prestasi_edit').val();
     var radiotipe = document.getElementsByName('tipe_prestasi_update');
     for (var i = 0, length = radiotipe.length; i < length; i++)
     {
@@ -594,11 +601,14 @@ $(document).ready(function(){
       }
     }
     if (tipe_prestasi == 1) {
-      var jml_anggota = 1;
-      var referral_nim =  '';
+      jml_anggota = 1;
+      referral_nim =  '';
     } else {
-      var jml_anggota = $('#jml_anggota_edit').val();
-      var referral_nim =  $('#referral_prestasi_edit').val();
+      jml_anggota = $('#jml_anggota_edit').val();
+      referral_nim =  $('#referral_prestasi_edit').val();
+    }
+    if (tipe_prestasi == 2 && jml_anggota =='1') {
+      tipe_prestasi = 1;
     }
     var radiojenis = document.getElementsByName('jenis_prestasi_update');
     for (var i = 0, length = radiojenis.length; i < length; i++)

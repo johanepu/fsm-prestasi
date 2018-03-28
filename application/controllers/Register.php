@@ -23,64 +23,208 @@ class Register extends CI_Controller
         'namalengkap', 'Nama Lengkap',
         'required|trim|alpha_numeric_spaces|is_unique[users.namalengkap]',
         array(
-                'required'      => 'Anda belum mengisi %s.',
-                'alpha_numeric_spaces'      => '%s tidak boleh berisi karakter lain',
-                'is_unique'     => 'Nama sudah digunakan.',
+                'required'      => '
+                <div style="margin-bottom: -20px"class="form-group row">
+								<div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+                ',
+                'alpha_numeric_spaces'      => '
+                <div style="margin-bottom: -20px" class="form-group row">
+                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                  <strong>Data belum benar!</strong> %s tidak boleh berisi karakter lain
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                </div>
+                ',
+                'is_unique'     => '
+                <div style="margin-bottom: -20px" class="form-group row">
+                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                  <strong>Data redundan!</strong> Nama sudah digunakan
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                </div>
+                ',
         )
     );
     $this->form_validation->set_rules(
         'jurusan', 'Departemen/Jurusan',
         'required|callback_check_default',
         array(
-                'required'      => 'Anda belum memilih %s.',
-                'check_default'      => 'Anda belum memilih %s.'
+                'required'      => '
+                <div style="margin-bottom: -20px"class="form-group row">
+								<div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+                ',
+                'check_default'      => '
+                <div style="margin-bottom: -20px"class="form-group row">
+                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                  <strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                </div>
+                '
         )
     );
     $this->form_validation->set_rules(
         'nim', 'Nomor Induk Mahasiswa (NIM)',
         'required|min_length[14]|max_length[14]|callback_nim_validation|numeric|is_unique[users.nim]',
         array(
-                'required'      => 'Mohon isi %s.',
-                'numeric'      => 'Format NIM hanya angka.',
-                'is_unique'     => '%s sudah digunakan.',
-                'min_length'     => 'Jumlah digit NIM kurang dari format.',
-                'max_length'     => 'Jumlah digit NIM melebihi format.',
+                'required'      => '
+                <div style="margin-bottom: -20px"class="form-group row">
+								<div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum mengisi %s.
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+                ',
+                'numeric'      => '
+                <div style="margin-bottom: -20px" class="form-group row">
+                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                  <strong>Data belum benar!</strong> NIM hanya diisi angka
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                </div>
+                ',
+                'is_unique'     => '
+                <div style="margin-bottom: -20px" class="form-group row">
+                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                  <strong>Data redundan!</strong> NIM sudah digunakan
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                </div>
+                ',
+                'min_length'     => '
+                <div style="margin-bottom: -20px" class="form-group row">
+                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                  <strong>NIM 14 digit!</strong> Jumlah digit NIM kurang dari format
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                </div>
+                ',
+                'max_length'     => '
+                <div style="margin-bottom: -20px" class="form-group row">
+                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                  <strong>NIM 14 digit!</strong> Jumlah digit NIM lebih dari format
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                </div>
+                ',
         )
     );
     $this->form_validation->set_rules(
         'email', 'Email',
         'required|valid_email|is_unique[users.email]',
         array(
-                'required'      => 'Mohon isi alamat %s.',
-                'is_unique'     => '%s sudah digunakan.',
-                'valid_email'     => '%s tidak valid.',
+                'required'      => '
+                <div style="margin-bottom: -20px"class="form-group row">
+								<div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+									<strong>Data belum lengkap!</strong> Anda belum mengisi %s
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+                ',
+                'is_unique'     => '
+                <div style="margin-bottom: -20px" class="form-group row">
+                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                  <strong>Data redundan!</strong> Email sudah digunakan
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                </div>
+                ',
+                'valid_email'     => '
+                <div style="margin-bottom: -20px" class="form-group row">
+                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                  <strong>Data belum benar!</strong> Format email tidak valid
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                </div>
+                ',
         )
     );
     $this->form_validation->set_rules(
         'password', 'Password',
         'required|matches[passwordconf]|min_length[5]',
         array(
-                'required'      => '%s perlu diisi untuk login.',
-                'matches'     => '%s tidak cocok.',
-                'min_length'     => '%s tidak boleh kurang dari 5 karakter.',
+                'required'      => '
+                <div style="margin-bottom: -20px"class="form-group row">
+                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                  <strong>Data belum lengkap!</strong>   %s perlu diisi untuk login.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                </div>
+                ',
+                'matches'     => '
+                <div style="margin-bottom: -20px"class="form-group row">
+                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                  <strong>Data belum benar!</strong>   %s tidak cocok
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                </div>
+                ',
+                'min_length'     => '
+                <div style="margin-bottom: -20px"class="form-group row">
+                <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+                  <strong>Data belum lengkap!</strong>  %s tidak boleh kurang dari 5 karakter
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                </div>
+                ',
         )
     );
     $this->form_validation->set_rules(
         'passwordconf', 'Konfirmasi Password',
         'required',
         array(
-                'required'      => '%s perlu diisi untuk konfirmasi.',
+                'required'      => '
+                <div style="margin-bottom: -20px"class="form-group row">
+								<div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
+									<strong>Data belum lengkap!</strong>   %s perlu diisi untuk konfirmasi
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								</div>
+                ',
         )
     );
-    // $this->form_validation->set_rules(
-    //     'agree', 'Ketentuan Keaslian Data',
-    //     'required',
-    //     array(
-    //             'required'      => 'Ketentuan harus disetujui.',
-    //     )
-    // );
-
-		// $this->form_validation->set_rules('agree', '...', 'callback_terms_check');
 
 		if ($this->form_validation->run() == true)
 		{
@@ -199,15 +343,5 @@ class Register extends CI_Controller
             return TRUE;
         }
     }
-    // $pattern = "|240|i";
-    // if (!preg_match($pattern, $nim_value))
-    //   {
-    //       $this->form_validation->set_message('nim_validation', "Bukan format nim fsm");
-    //       return FALSE;
-    //   }
-    //   else
-    //   {
-    //       return TRUE;
-    //   }
   }
 }

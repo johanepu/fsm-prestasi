@@ -17,14 +17,14 @@
 
 
           <?php if ($jml_prestasi <= 0): ?>
-            <div class="col-sm-12 col-xl-12">
+            <div class="col-sm-12 col-md-12 col-xl-12">
               <div class="card">
                 <div class="card-header">
                   <i class="fa fa-align-justify"></i> Notifikasi
                 </div>
                 <div class="card-body">
                   <div class="jumbotron">
-                    <h1 class="display-3">Selamat Datang !</h1>
+                    <h1 class="display-4">Selamat Datang !</h1>
                     <p class="lead">RewardMe merupakan sistem pendataan mahasiswa berprestasi FSM, sistem ini juga menghitung <strong>Reward Point</strong>
                       yang nantinya menjadi bahan pertimbangan keperluan akademis dan penilaian mahasiswa.</p>
                     <hr class="my-4">
@@ -41,7 +41,7 @@
           <?php else: ?>
             <!-- dashboard prestasi yg ada -->
             <div class="row">
-              <div class="col-sm-12 col-xl-12">
+              <div class="col-sm-12 col-md-12 col-xl-12">
                 <div class="card">
                   <div class="card-header">
                     <i class="fa fa-align-justify"></i> Pengumuman Sistem
@@ -50,7 +50,7 @@
                   </div>
                   <div class="card-body">
                     <div class="jumbotron">
-                      <h1 class="display-3" id="preview_judul">Preview Judul</h1>
+                      <h1 class="display-4" id="preview_judul">Preview Judul</h1>
                       <p class="lead" id="preview_pengumuman">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
                       <hr class="my-4">
                       <div class="row">
