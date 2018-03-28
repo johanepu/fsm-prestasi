@@ -165,6 +165,7 @@ class Register extends CI_Controller
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
+                </div>
                 ',
                 'min_length'     => '
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -205,7 +206,7 @@ class Register extends CI_Controller
 				'date_created'	=> date('Y-m-d H:i:s'),
 			);
 		}
-    if ($inputCaptcha === $sessCaptcha) {
+    if ($inputCaptcha != NULL && $sessCaptcha != NULL && $inputCaptcha === $sessCaptcha) {
       if ($this->form_validation->run() == true && $this->Register_model->register($data))
       {
         //check to see if we are creating the user
@@ -222,7 +223,7 @@ class Register extends CI_Controller
     }
 		else
 		{
-      if ($this->session->userdata('captchaCode') != 0) {
+      if ($inputCaptcha != NULL) {
         $this->session->set_flashdata('info2',
         '  <div class="alert alert-danger alert-dismissible fade show" role="alert">
           <strong>Captcha tidak sesuai!</strong> Silakan coba kembali

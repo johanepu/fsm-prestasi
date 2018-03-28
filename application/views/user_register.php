@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="CoreUI Bootstrap 4 Admin Template">
-  <meta name="author" content="Lukasz Holeczek">
-  <meta name="keyword" content="CoreUI Bootstrap 4 Admin Template">
-  <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
+  <meta name="description" content="RewardMe- Aplikasi Perhitungan Poin Prestasi Mahasiswa
+Fakultas Sains dan Matematika
+Universitas Diponegoro">
+  <meta name="author" content="Johan Eko Purnomo">
+  <meta name="keyword" content="RewardMe, FSM, Rewarding, Prestasi, Undip, Fakultas Sains dan Matematika">
+  <link rel="icon" href="<?php echo base_url(); ?>img/favicon-full.png" type="image/gif">
 
   <title>RewardMe - Registrasi User</title>
 

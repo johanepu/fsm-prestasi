@@ -8,10 +8,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="CoreUI Bootstrap 4 Admin Template">
-  <meta name="author" content="Lukasz Holeczek">
-  <meta name="keyword" content="CoreUI Bootstrap 4 Admin Template">
-  <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
+  <meta name="description" content="RewardMe- Aplikasi Perhitungan Poin Prestasi Mahasiswa
+Fakultas Sains dan Matematika
+Universitas Diponegoro">
+  <meta name="author" content="Johan Eko Purnomo">
+  <meta name="keyword" content="RewardMe, FSM, Rewarding, Prestasi, Undip, Fakultas Sains dan Matematika">
+  <link rel="icon" href="<?php echo base_url(); ?>img/favicon-full.png" type="image/gif">
 
   <title>RewardMe - Login Admin</title>
 
@@ -19,7 +21,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link type="text/css" href="<?php echo base_url(); ?>assets/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
   <link type="text/css" href="<?php echo base_url(); ?>assets/node_modules/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.3.2/css/simple-line-icons.css" rel="stylesheet" type="text/css">
-
 
   <!-- Main styles for this application -->
   <link type="text/css" href="<?php echo base_url(); ?>assets/src/css/style.css" rel="stylesheet">
@@ -88,7 +89,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <?php echo form_close(); ?>
             </div>
           </div>
-          <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+          <div class="card text-white bg-primary py-5 d-md-down-none">
             <div class="card-body text-center">
               <div>
                 <img width="180" src="<?php echo base_url(); ?>assets/src/img/logo_fsm_white.png">
