@@ -36,17 +36,52 @@ public function user_login_process() {
 			'nim', 'Nomor Induk Mahasiswa (NIM)',
 			'trim|required|min_length[14]|max_length[14]|numeric',
 			array(
-							'required'      => 'Mohon isi %s.',
-							'numeric'      => 'Format NIM hanya angka.',
-							'min_length'     => 'Jumlah digit NIM kurang dari format.',
-							'max_length'     => 'Jumlah digit NIM melebihi format.',
+							'required'      => '
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								Mohon isi %s, untuk login.
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							',
+							'numeric'      => '
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								Format NIM hanya angka.
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							',
+							'min_length'     => '
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								Jumlah digit NIM kurang dari format.
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							',
+							'max_length'     => '
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								Jumlah digit NIM lebih dari format.
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							',
 			)
 	);
 	$this->form_validation->set_rules(
 			'password', 'Password',
 			'trim|required',
 			array(
-							'required'      => '%s perlu diisi untuk login.'
+							'required'      => '
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								Mohon isi %s, untuk login.
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							'
 			)
 	);
 

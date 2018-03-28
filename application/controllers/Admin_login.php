@@ -33,14 +33,28 @@ public function admin_login_process() {
 			'username', 'Username',
 			'trim|required',
 			array(
-							'required'      => 'Mohon isi %s, niat login rak to.',
+							'required'      => '
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								Mohon isi %s, untuk login.
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							',
 			)
 	);
 	$this->form_validation->set_rules(
 			'password', 'Password',
 			'trim|required',
 			array(
-							'required'      => '%s perlu diisi untuk login.'
+							'required'      => '
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								Mohon isi %s, untuk login.
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							'
 			)
 	);
 
