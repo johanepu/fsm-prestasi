@@ -95,9 +95,9 @@ Universitas Diponegoro">
             <div class="card-body text-center">
               <div>
                 <img width="180" src="<?php echo base_url(); ?>assets/src/img/logo_fsm_white.png">
-                <h6>Aplikasi Perhitungan Poin Prestasi Mahasiswa
-Fakultas Sains dan Matematika
-Universitas Diponegoro</h6>
+                <h6>Aplikasi Perhitungan Poin Prestasi Mahasiswa</h6>
+                <h6>Fakultas Sains dan Matematika</h6>
+                <h6>Universitas Diponegoro</h6>
                 <p>Belum punya akun?</p>
                 <a class="btn btn-outline-register" href="<?php echo site_url('register'); ?>"  >Buat Akun</a>
               </div>

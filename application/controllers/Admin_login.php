@@ -84,7 +84,14 @@ public function admin_login_process() {
 				else
 				{
 					$data = array(
-					'error_message' => 'Akun belum terdaftar'
+					'error_message' => '
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						Akun belum terdaftar
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					'
 					);
 					$this->load->view('kucing/admin_login', $data);
 				}
@@ -127,7 +134,14 @@ public function logout() {
 		);
 		$this->session->unset_userdata('logged_in', $sess_array);
 		$this->session->sess_destroy();
-		$data['message_display'] = 'Berhasil Logout';
+		$data['message_display'] = '
+		<div class="alert alert-success alert-dismissible fade show" role="alert">
+			Berhasil logout
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+		</div>
+		';
 		redirect('Admin_login', $data);
 	}
 

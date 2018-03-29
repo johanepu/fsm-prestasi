@@ -116,7 +116,14 @@ public function user_login_process() {
 				else
 				{
 					$data = array(
-					'error_message' => 'Akun belum terdaftar'
+					'error_message' => '
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						Akun belum terdaftar
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					'
 					);
 					$this->load->view('user_login', $data);
 				}
@@ -160,7 +167,14 @@ public function logout() {
 		);
 		$this->session->unset_userdata('logged_in', $sess_array);
 		$this->session->sess_destroy();
-		$data['message_display'] = 'Berhasil Logout';
+		$data['logout_message'] = '
+		<div class="alert alert-success alert-dismissible fade show" role="alert">
+			Berhasil logout
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+		</div>
+		';
 		redirect('User_login', $data);
 	}
 

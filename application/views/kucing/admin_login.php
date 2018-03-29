@@ -38,6 +38,11 @@ Universitas Diponegoro">
           echo $this->session->flashdata('status');
         }
         ?>
+        <?php
+          if (isset($message_display)) {
+          echo $message_display;
+          }
+        ?>
         <div class="card-group">
           <div class="card p-4" style="background-color:rgba(255, 255, 255, 0.7);">
             <div class="card-body">
@@ -73,9 +78,9 @@ Universitas Diponegoro">
             <div class="card-body text-center">
               <div>
                 <img width="180" src="<?php echo base_url(); ?>assets/src/img/logo_fsm_white.png">
-                <h6>Aplikasi Perhitungan Poin Prestasi Mahasiswa
-Fakultas Sains dan Matematika
-Universitas Diponegoro</h6>
+                <h6>Aplikasi Perhitungan Poin Prestasi Mahasiswa</h6>
+                <h6>Fakultas Sains dan Matematika</h6>
+                <h6>Universitas Diponegoro</h6>
               </div>
             </div>
           </div>
