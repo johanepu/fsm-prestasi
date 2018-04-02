@@ -14,5 +14,7 @@ class Register_model extends CI_Model {
 		$id = $this->db->insert_id();
 
 		return (isset($id)) ? $id : FALSE;
+
+		return true;
 	}
 }

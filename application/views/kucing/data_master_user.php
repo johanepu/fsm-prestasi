@@ -89,8 +89,20 @@
                       }
                       ?></td>
                       <td ><?php echo $mhs->email; ?></td>
-                      <td ><?php echo $mhs->nomor_hp; ?></td>
-                      <td ><?php echo $mhs->tingkatan; ?></td>
+                      <td ><?php
+                        if ($mhs->nomor_hp == NULL) {
+                          echo "Belum diisi";
+                        } else {
+                          echo $mhs->nomor_hp;
+                        }
+                      ?></td>
+                      <td ><?php
+                        if ($mhs->tingkatan == 0) {
+                          echo "Belum diisi";
+                        } else {
+                          echo $mhs->tingkatan;
+                        }
+                      ?></td>
                       <!-- <td ><?php echo $reward_poin[$p]; ?></td> -->
                       <td >
                         <?php
