@@ -131,9 +131,17 @@ class Admin_setting extends CI_Controller {
 			'id_setting'=> $this->input->post('id_setting')
 		);
 
+		$this->session->set_flashdata('refresh',
+		'  <div class="col-md-12 alert alert-warning alert-dismissible fade show" role="alert">
+			<strong>Update set reward telah dilakukan!</strong> Jika pada tabel belum berubah silakan  <a href="./Admin_setting">refresh</a>.
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+		</div> ');
+
 		if ($this->Admin_model->updateSetReward($data,$where) == true && $this->Admin_model->updateSetPrestasi($data1,$where1) == true){
 			$this->session->set_flashdata('alrt1',
-			'<div class="col-md-12 alert alert-warning alert-dismissible fade show" role="alert">
+			'<div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">
         <strong>Perubahan set berhasil.Pembaruan Poin Diperlukan!</strong>  <br>
 				Data untuk periode tahun <strong>'.$thn.'</strong> semester <strong>'.$semester.'</strong>
 				perlu divalidasi ulang!
@@ -171,6 +179,15 @@ class Admin_setting extends CI_Controller {
 			'nama_level'=> $nama_level,
 			'poin'=> $this->input->post('poin')
 		);
+
+		$this->session->set_flashdata('refresh',
+		'  <div class="col-md-12 alert alert-warning alert-dismissible fade show" role="alert">
+			<strong>Simpan set reward telah dilakukan!</strong> Jika pada tabel belum ditambahkan silakan  <a href="./Admin_setting">refresh</a>.
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+		</div> ');
+
 		if ($this->Admin_model->simpanSetReward($data)) {
 			$this->session->set_flashdata('alrt1',
 			'  <div class="col-md-12 alert alert-success alert-dismissible fade show" role="alert">

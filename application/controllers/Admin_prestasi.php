@@ -73,87 +73,6 @@ class Admin_prestasi extends CI_Controller {
 		$this->load->view("kucing/admin_template.php",$data);
 	}
 
-	function view(){
-		$nim = $this->session->userdata('nim');
-		$where = array('nim' => $nim);
-		$jmlprestasi = $this->Prestasi_model->tampil_user_prestasi($nim);
-		$config['base_url'] = base_url('').'prestasi/';
-		$config['total_rows'] = count($jmlprestasi);
-		$config['per_page'] = 5;
-		$hal = $this->uri->segment(2);
-		$input  = $this->input->post('query');
-		if(!isset($input)){
-			$query = '';
-			$data['prestasi'] = $this->Prestasi_model->prestasi_per_page($config['per_page'], $hal, $where['nim'], $query)->result();
-			$this->pagination->initialize($config);
-			$data['content'] = 'data_prestasi.php';
-			$this->load->view("user_template.php",$data);
-		}else{
-			$output = '';
-			$query = $this->input->post('query');
-			$prestasi = $this->Prestasi_model->prestasi_per_page($config['per_page'], 0, $where['nim'], $query);
-			$prestasihasil = $prestasi->result();
-			if ($prestasi->num_rows() > 0){
-				foreach ($prestasihasil as $detail) {
-					$output .= '<tr>';
-					$output .= '<td>';
-					$output .= '<p>'.$detail->nama_prestasi.'</p>';
-					$output .= '</td>';
-					$output .= '<td>';
-					$output .= '<p>'.$detail->peringkat_prestasi.'</p>';
-					$output .= '</td>';
-					$output .= '<td>';
-						if ($detail->tipe_prestasi == "1") {
-					$output .= '<span class="label label-success label-mini">Akademik</span>';
-						}elseif ($detail->tipe_prestasi == "2") {
-					$output .= '<span class="label label-warning label-mini">Non-Akademik</span>';
-					$output .= '</td>';
-						}
-					$output .= '<td>';
-						if ($detail->jenis_prestasi == "1") {
-					$output .= '<span class="label label-success label-mini">Individu</span>';
-						}elseif ($detail->jenis_prestasi == "2") {
-					$output .= '<span class="label label-warning label-mini">Beregu</span>';
-					$output .= '</td>';
-						}
-					$output .= '<td>';
-						if ($detail->level_prestasi == "1") {
-					$output .= '<span class="label label-success label-mini">Lokal</span>';
-				}elseif ($detail->level_prestasi == "2") {
-					$output .= '<span class="label label-warning label-mini">Nasional</span>';
-				}elseif ($detail->level_prestasi == "3") {
-					$output .= '<span class="label label-warning label-mini">Regional</span>';
-				}elseif ($detail->level_prestasi == "4") {
-					$output .= '<span class="label label-warning label-mini">Internasional</span>';
-						}
-					$output .= '</td>';
-					$output .= '<td>';
-					$output .= '<p>'.$detail->tgl_prestasi_start.'</p>';
-					$output .= '</td>';
-					$output .= '<td align="right">';
-					$output .= '<div class="btn-group" >';
-					$output .= '<button class="btn btn-primary btn-edit" name="btn-edit" title="Edit Prestasi"  value="'.$detail->id_prestasi.'" type="button">';
-					$output .= '<i class="fa fa-fw s fa-pencil"></i></button>';
-					$output .= '<button class="btn btn-danger btn-delete" name="btn-delete" title="Hapus Prestasi" value="'.$detail->id_prestasi.'" type="button">';
-					$output .= '<i class="fa fa-fw fa-remove"></i></button>';
-					$output .= '</div>';
-					$output .= '</td>';
-					$output .= '</tr>';
-				}
-
-			} else {
-				$output .= '<tr>';
-				$output .= '<td colspan="8">';
-				$output .= '<p style="text-align:center">';
-				$output .= '<b >Belum ada data prestasi</b>';
-				$output .= '</p>';
-				$output .= '</td>';
-				$output .= '</tr>';
-			}
-			echo $output;
-		}
-	}
-
 	public function addPrestasi_admin()
 	{
 
@@ -545,6 +464,16 @@ class Admin_prestasi extends CI_Controller {
 			'nim'=> $this->input->post('nim')
 		);
 
+		{
+			$this->session->set_flashdata('status_prestasi',
+			'  <div class="col-md-12 alert alert-warning alert-dismissible fade show" role="alert">
+				<strong>Validasi telah dilakukan!</strong> Jika status prestasi berubah silakan <a href="./Admin_prestasi">refresh</a>.
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div> ');
+		}
+
 		if ($this->Prestasi_model->updatePrestasi($data1,$where1)==true && $this->Prestasi_model->updatePoin($data2,$where2)==true)
 		{
 			$this->session->set_flashdata('v_status',
@@ -581,6 +510,14 @@ class Admin_prestasi extends CI_Controller {
 		$where = array(
 			'id_prestasi'=> $this->input->post('id_prestasi')
 		);
+
+		$this->session->set_flashdata('status_prestasi',
+		'  <div class="col-md-12 alert alert-warning alert-dismissible fade show" role="alert">
+			<strong>Un-validasi telah dilakukan!</strong> Jika status prestasi berubah silakan  <a href="./Admin_prestasi">refresh</a>.
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+		</div> ');
 
 		if ($this->Prestasi_model->updatePrestasi($data1,$where)==true && $this->Prestasi_model->updatePoin($data2,$where)==true)
 		{

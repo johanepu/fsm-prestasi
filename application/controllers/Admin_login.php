@@ -86,7 +86,7 @@ public function admin_login_process() {
 					$data = array(
 					'error_message' => '
 					<div class="alert alert-danger alert-dismissible fade show" role="alert">
-						Akun belum terdaftar
+						Akun belum terdaftar, silakan cek kembali username dan password
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">×</span>
 						</button>
@@ -95,31 +95,7 @@ public function admin_login_process() {
 					);
 					$this->load->view('kucing/admin_login', $data);
 				}
-		// if ($result == TRUE) {
-		// 	$nim = $this->input->post('nim');
-		// 	$result = $this->Login_model->read_user_information($nim);
-		// 		if ($result != false) {
-		// 		$session_data = array(
-		// 			'nim' => $result[0]->nim,
-		// 			'namalengkap' => $result[0]->namalengkap,
-		// 			'jurusan' => $result[0]->jurusan,
-		// 			'email' => $result[0]->email
-		// 		);
-		// 		// Add user data in session
-		// 		$this->session->set_userdata('logged_in', $session_data);
-		// 		//set session
-	  //     $this->session->set_userdata('nim',$session_data['nim']);
-	  //     $this->session->set_userdata('namalengkap',$result[0]->namalengkap);
-	  //     $this->session->set_userdata('jurusan',$result['jurusan']);
-	  //     $this->session->set_userdata('email',$result['email']);
-		// 		redirect('User_home', 'refresh');
-		// 		}
-		// } else {
-		// 	$data = array(
-		// 	'error_message' => 'NIM atau password salah'
-		// 	);
-		// 	$this->load->view('user_login', $data);
-		// }
+
 	}
 }
 

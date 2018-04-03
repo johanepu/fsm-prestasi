@@ -206,7 +206,7 @@ class Register extends CI_Controller
 				'date_created'	=> date('Y-m-d H:i:s'),
 			);
 		}
-    if ($inputCaptcha != NULL && $inputCaptcha === $sessCaptcha) {
+    if ($inputCaptcha === $sessCaptcha) {
       if ($this->form_validation->run() == true && $this->Register_model->register($data) == true)
       {
         //check to see if we are creating the user

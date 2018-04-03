@@ -724,7 +724,7 @@ $(document).ready(function(){
         success: function(data){
         }
       });
-        location.reload();
+      location.reload();
     });
 
     $(document).on('click', 'button.btn-validate', function() {
@@ -802,10 +802,10 @@ $(document).ready(function(){
               },
               dataType:'json',
               success: function(data){
+                console.log(data);
               }
             });
           }
-        location.reload();
       }
       location.reload();
     });
@@ -866,11 +866,10 @@ $(document).ready(function(){
         data: {id_prestasi:id_prestasi},
         dataType:'json',
         success: function(data){
-        }
+          }
       });
-        location.reload();
+      location.reload();
     });
-
   })
 
   function hitungAnggota() {

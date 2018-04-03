@@ -34,13 +34,13 @@ Universitas Diponegoro">
     <div class="row justify-content-center">
 
       <div class="col-md-8">
-        <?php if($this->session->flashdata('status')){
-          echo $this->session->flashdata('status');
+        <?php if($this->session->flashdata('error_message')){
+          echo $this->session->flashdata('error_message');
         }
         ?>
         <?php
-          if (isset($message_display)) {
-          echo $message_display;
+          if (isset($error_message)) {
+          echo $error_message;
           }
         ?>
         <div class="card-group">

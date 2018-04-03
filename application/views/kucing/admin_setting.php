@@ -52,6 +52,10 @@
                           </div>
                         </div>
                         <div class="row mt">
+                          <?php if($this->session->flashdata('refresh')){
+                            echo $this->session->flashdata('refresh');
+                            }
+                          ?>
                           <?php if($this->session->flashdata('alrt1')){
                             echo $this->session->flashdata('alrt1');
                             }
