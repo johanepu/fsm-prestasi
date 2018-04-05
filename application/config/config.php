@@ -26,8 +26,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $root=(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST'];
 $root.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
-$config['base_url'] = $root;
-// $config['base_url'] = '';
+// $config['base_url'] = $root;
+$config['base_url'] = 'http://reward.fsm.undip.ac.id';
 
 /*
 |--------------------------------------------------------------------------
